@@ -12,3 +12,4 @@ demo_company/uploads/
 demo_company/docs/scenario_truth.json
 evals/predictions_*.jsonl
 evals/results_*.json
+demo_company/business_demo.db
