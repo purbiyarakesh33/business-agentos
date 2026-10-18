@@ -1,6 +1,8 @@
 """Standalone planner for human-reviewed business analysis plans."""
 from __future__ import annotations
 
+from public_safety import reserve_public_request
+
 from dataclasses import asdict, dataclass, replace
 from datetime import date
 import json
@@ -310,6 +312,7 @@ Return this JSON shape:
         method="POST",
     )
     try:
+        reserve_public_request()
         with urlopen(request, timeout=90) as response:
             result = json.loads(response.read().decode("utf-8"))
     except HTTPError as exc:

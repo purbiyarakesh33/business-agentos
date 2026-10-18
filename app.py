@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import secrets as token_secrets
 from dataclasses import asdict, is_dataclass
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
@@ -25,7 +26,8 @@ from jev import (
 )
 from planner import PlannerError, PlannerPlan, PlannerTask, approve_plan, plan_request
 from output_guardrails import screen_business_output
-from rag import RagError, ensure_index, ingest_uploaded_files, retrieve_relevant
+from rag import RagError, ensure_index, ingest_uploaded_files, retrieve_relevant, retrieval_tenant_scope
+from public_safety import PublicDemoError, configure_public_demo, public_demo_enabled, reserve_public_request
 
 
 _STREAMLIT_SECRET_NAMES = (
@@ -40,6 +42,9 @@ _STREAMLIT_SECRET_NAMES = (
     "FEATHERLESS_EMBEDDING_MODEL",
     "RAG_DATABASE_URL",
     "RAG_TENANT_ID",
+    "PUBLIC_DEMO_MODE",
+    "PUBLIC_DAILY_REQUEST_LIMIT",
+    "PUBLIC_HOURLY_REQUEST_LIMIT",
 )
 
 def _load_streamlit_secrets_into_environment() -> None:
@@ -58,6 +63,8 @@ def _load_streamlit_secrets_into_environment() -> None:
 
 
 _load_streamlit_secrets_into_environment()
+PUBLIC_DEMO_MODE = public_demo_enabled()
+configure_public_demo()
 
 
 SYSTEM_PROMPT = """You are a friendly general assistant in a business application.
@@ -118,10 +125,42 @@ def _is_document_question(question: str) -> bool:
     )
 
 
+def _public_upload_tenant() -> str | None:
+    if not PUBLIC_DEMO_MODE:
+        return None
+    if "public_upload_tenant" not in st.session_state:
+        st.session_state["public_upload_tenant"] = "public_upload_" + token_secrets.token_hex(16)
+    return str(st.session_state["public_upload_tenant"])
+
+
+def _retrieval_tenants() -> list[str] | None:
+    if not PUBLIC_DEMO_MODE:
+        return None
+    session_tenant = _public_upload_tenant()
+    return ["public_demo", session_tenant] if session_tenant else ["public_demo"]
+
+
+def _embedding_authorized() -> bool:
+    if PUBLIC_DEMO_MODE:
+        return bool(st.session_state.get("public_ai_provider_consent", False))
+    return bool(st.session_state.get("semantic_rag_embedding_approval", False))
+
+
+def _public_upload_preflight(files: list) -> str | None:
+    if not PUBLIC_DEMO_MODE or not files:
+        return None
+    if len(files) > 3:
+        return "Attach no more than three PDFs at a time in the public demo."
+    sizes = [len(item.getvalue()) for item in files]
+    if any(size > 5 * 1024 * 1024 for size in sizes) or sum(sizes) > 10 * 1024 * 1024:
+        return "Public demo PDFs are limited to 5 MB per file and 10 MB total per request."
+    return None
+
+
 def _answer_from_documents(question: str) -> str:
     """Answer an explicit document question using retrieved, untrusted passages only."""
     try:
-        passages = retrieve_relevant(question, top_k=5)
+        passages = retrieve_relevant(question, top_k=5, tenant_id=_retrieval_tenants())
     except RagError:
         return "I could not retrieve supporting document passages, so I did not generate an answer."
     if not passages:
@@ -136,9 +175,13 @@ def _answer_from_documents(question: str) -> str:
         excerpt_lines.append(f"[{source_ref}] {str(passage.get('content', ''))[:2400]}")
     user_content = question + "\n\n" + "\n\n".join(excerpt_lines)
     try:
-        return _chat_completion([{"role": "user", "content": user_content}])
+        reply = _chat_completion([{"role": "user", "content": user_content}])
     except ChatGatewayError as exc:
         return str(exc)
+    guard = screen_business_output(reply, passages)
+    if guard.action != "ALLOW":
+        return "The document-based answer was held by the output privacy screen. No answer was released."
+    return reply
 
 
 class ChatGatewayError(RuntimeError):
@@ -172,6 +215,7 @@ def _chat_completion(conversation: list[dict[str, str]]) -> str:
         method="POST",
     )
     try:
+        reserve_public_request()
         with urlopen(request, timeout=60) as response:
             result = json.loads(response.read().decode("utf-8"))
     except HTTPError as exc:
@@ -539,7 +583,8 @@ def _run_approved_entry(entry: dict, approved_plan: PlannerPlan) -> None:
         question = entry.get("question")
         if not isinstance(question, str):
             raise BusinessAgentError("The approved plan has no saved business question.")
-        result = execute_approved_plan(question, approved_plan)
+        with retrieval_tenant_scope(_retrieval_tenants()):
+            result = execute_approved_plan(question, approved_plan)
         evidence = result.get("evidence", [])
         guard = screen_business_output(result.get("content", ""), evidence)
         entry["_output_guard"] = asdict(guard)
@@ -564,6 +609,10 @@ def _run_approved_entry(entry: dict, approved_plan: PlannerPlan) -> None:
         entry["content"] = result["content"]
         entry["_evidence"] = evidence
         entry["_verification_issues"] = result.get("verification_issues", [])
+    except PublicDemoError as exc:
+        entry["_workflow_status"] = "held"
+        entry["_evidence"] = []
+        entry["content"] = str(exc)
     except (PlannerError, BusinessAgentError) as exc:
         entry["_workflow_status"] = "held"
         evidence = getattr(exc, "evidence", None)
@@ -627,6 +676,9 @@ def _rebuild_failed_plan(entry: dict, index: int) -> None:
             model=saved_decision.get("model", "saved Jev decision"),
         )
         plan = plan_request(question, decision)
+    except PublicDemoError as exc:
+        entry["content"] = str(exc)
+        return
     except (PlannerError, BusinessAgentError) as exc:
         entry["content"] = "Could not rebuild the plan safely. " + str(exc)
         return
@@ -644,7 +696,11 @@ def _render_message(entry: dict, index: int) -> None:
             if isinstance(attachments, list) and attachments:
                 st.caption("PDF attached: " + ", ".join(str(name) for name in attachments))
                 if entry.get("pdf_indexed"):
-                    st.caption("PDF indexed in the local knowledge base for retrieval.")
+                    st.caption(
+                        "PDF indexed in this browser session; it expires after 24 hours."
+                        if PUBLIC_DEMO_MODE else
+                        "PDF indexed in the local knowledge base for retrieval."
+                    )
             decision = entry.get("jev")
             if isinstance(decision, dict):
                 if decision.get("security") is None:
@@ -725,6 +781,7 @@ def _render_message(entry: dict, index: int) -> None:
                             entry["_approval_error"] = "Review the plan and check the approval box first."
                             st.rerun()
                         approved_plan = approve_plan(plan)
+                        entry["_plan"] = approved_plan
                         with st.spinner("Running approved specialists and checking their evidence..."):
                             _run_approved_entry(entry, approved_plan)
                         st.rerun()
@@ -885,54 +942,76 @@ with st.sidebar:
     st.caption(f"Input screening: {jev_model}")
     st.caption(f"General chat: {chat_model}")
     st.caption("Business questions: planner -> human approval -> read-only data specialists -> verification")
-    with st.expander("Semantic document knowledge base", expanded=False):
-        rag_ready = False
-        try:
-            rag_status = ensure_index()
-            rag_ready = True
-            st.caption(
-                f"{rag_status['backend']} | {rag_status['embedding_model']} | "
-                f"{rag_status['document_chunks']} document chunks + "
-                f"{rag_status['review_records']} review records indexed."
-            )
-        except RagError as exc:
-            st.warning(str(exc))
-            st.caption("Start the local vector database with: docker compose up -d")
+    if PUBLIC_DEMO_MODE:
+        st.caption("Public demo mode: synthetic Cedar & Stone data only.")
+        st.caption("Shared usage is capped. PDFs are isolated to this browser session and expire after 24 hours.")
+        st.checkbox(
+            "I understand questions and attached document text are sent to Featherless for AI processing.",
+            key="public_ai_provider_consent",
+        )
+        with st.expander("Synthetic document knowledge base", expanded=False):
+            try:
+                rag_status = ensure_index()
+            except RagError as exc:
+                st.warning(str(exc))
+            else:
+                st.caption(
+                    f"{rag_status['backend']} | {rag_status['embedding_model']} | "
+                    f"{rag_status['document_chunks']} synthetic document chunks + "
+                    f"{rag_status['review_records']} synthetic review records indexed."
+                )
+                if not rag_status["document_chunks"] and not rag_status["review_records"]:
+                    st.caption("The owner still needs to seed the bundled synthetic RAG data.")
+        st.caption("Do not enter confidential or personal information. Messages are sent to configured AI providers.")
+    else:
+        with st.expander("Semantic document knowledge base", expanded=False):
+            rag_ready = False
+            try:
+                rag_status = ensure_index()
+                rag_ready = True
+                st.caption(
+                    f"{rag_status['backend']} | {rag_status['embedding_model']} | "
+                    f"{rag_status['document_chunks']} document chunks + "
+                    f"{rag_status['review_records']} review records indexed."
+                )
+            except RagError as exc:
+                st.warning(str(exc))
+                st.caption("Start the local vector database with: docker compose up -d ragdb")
 
-        st.caption(
-            "Add PDF, DOCX, TXT, or Markdown files. Text is extracted, chunked, "
-            "embedded through Featherless, and indexed with source/page citations. "
-            "Uploaded files remain in the local knowledge base for future questions."
-        )
-        uploads = st.file_uploader(
-            "Company documents",
-            type=["pdf", "docx", "txt", "md", "json", "sql"],
-            accept_multiple_files=True,
-            key="semantic_rag_uploads",
-            disabled=not rag_ready,
-        )
-        approved_embedding = st.checkbox(
-            "I am authorized to send these documents, demo reviews, and retrieval queries to Featherless for embeddings.",
-            key="semantic_rag_embedding_approval",
-            disabled=not rag_ready,
-        )
-        if st.button(
-            "Index documents and demo reviews",
-            key="semantic_rag_index",
-            use_container_width=True,
-            disabled=not rag_ready or not approved_embedding,
-        ):
-            with st.spinner("Extracting text and creating semantic embeddings..."):
-                try:
-                    ingest_result = ingest_uploaded_files(uploads or [])
-                except RagError as exc:
-                    st.error("Indexing failed: " + str(exc))
-                else:
-                    st.success(
-                        f"Index updated with {ingest_result['document_chunks']} document chunks "
-                        f"and {ingest_result['review_records']} changed review records. "
-                        f"Unchanged sources skipped: {ingest_result['unchanged_sources']}."
-                    )
+            st.caption(
+                "Add PDF, DOCX, TXT, or Markdown files. Text is extracted, chunked, "
+                "embedded through Featherless, and indexed with source/page citations. "
+                "Uploaded files remain in the local knowledge base for future questions."
+            )
+            uploads = st.file_uploader(
+                "Company documents",
+                type=["pdf", "docx", "txt", "md", "json", "sql"],
+                accept_multiple_files=True,
+                key="semantic_rag_uploads",
+                disabled=not rag_ready,
+            )
+            approved_embedding = st.checkbox(
+                "I am authorized to send these documents, demo reviews, and retrieval queries to Featherless for embeddings.",
+                key="semantic_rag_embedding_approval",
+                disabled=not rag_ready,
+            )
+            if st.button(
+                "Index documents and demo reviews",
+                key="semantic_rag_index",
+                use_container_width=True,
+                disabled=not rag_ready or not approved_embedding,
+            ):
+                with st.spinner("Extracting text and creating semantic embeddings..."):
+                    try:
+                        ingest_result = ingest_uploaded_files(uploads or [])
+                    except RagError as exc:
+                        st.error("Indexing failed: " + str(exc))
+                    else:
+                        st.success(
+                            f"Index updated with {ingest_result['document_chunks']} document chunks "
+                            f"and {ingest_result['review_records']} changed review records. "
+                            f"Unchanged sources skipped: {ingest_result['unchanged_sources']}."
+                        )
     st.caption("Business totals and comparisons are calculated from SQL tables.")
     st.caption("Model IDs can be changed in .env.")
     if st.button("Clear conversation", use_container_width=True):
@@ -976,7 +1055,7 @@ if not st.session_state["visible_messages"]:
                 st.rerun()
 
 chat_submission = st.chat_input(
-    "Ask a question or attach a PDF",
+    "Ask a business question or attach a PDF",
     max_chars=4000,
     accept_file="multiple",
     file_type=["pdf"],
@@ -1004,6 +1083,16 @@ if prompt or attached_pdfs:
             "attachments": [str(getattr(item, "name", "attached.pdf")) for item in attached_pdfs],
         }
         st.session_state["visible_messages"].append(visible_user_message)
+        if PUBLIC_DEMO_MODE and not st.session_state.get("public_ai_provider_consent", False):
+            st.session_state["visible_messages"].append({
+                "role": "assistant",
+                "content": "Review and accept the AI-processing notice in the sidebar before sending a question.",
+            })
+            st.rerun()
+        upload_error = _public_upload_preflight(attached_pdfs)
+        if upload_error:
+            st.session_state["visible_messages"].append({"role": "assistant", "content": upload_error})
+            st.rerun()
         try:
             decision: JevDecision = classify_request(clean_prompt)
             visible_user_message["jev"] = {
@@ -1027,20 +1116,28 @@ if prompt or attached_pdfs:
                     "not sent. Please rephrase it and try again."
                 )
                 st.session_state["visible_messages"].append({"role": "assistant", "content": reply})
-            elif attached_pdfs and not st.session_state.get("semantic_rag_embedding_approval", False):
+            elif attached_pdfs and not _embedding_authorized():
                 st.session_state["visible_messages"].append({
                     "role": "assistant",
                     "content": (
-                        "The PDF was not processed. Open the document knowledge base in the sidebar and "
-                        "check its authorization box, then attach the PDF again. That allows Featherless "
-                        "to create embeddings; the PDF will be retained in the local knowledge base for "
-                        "future questions."
+                        "The PDF was not processed. Review the AI-processing notice in the sidebar, "
+                        "then attach it again. In public mode, its extracted text is isolated to this "
+                        "browser session and expires after 24 hours."
+                        if PUBLIC_DEMO_MODE else
+                        "The PDF was not processed. Open the document knowledge base in the sidebar, "
+                        "check its authorization box, and attach the PDF again."
                     ),
                 })
             elif attached_pdfs:
                 with st.spinner("Adding the PDF to the document knowledge base..."):
                     try:
-                        ingest_result = ingest_uploaded_files(attached_pdfs)
+                        ingest_result = ingest_uploaded_files(
+                            attached_pdfs,
+                            include_uploads=not PUBLIC_DEMO_MODE,
+                            include_demo_sources=not PUBLIC_DEMO_MODE,
+                            tenant_id=_public_upload_tenant(),
+                            prune_missing=not PUBLIC_DEMO_MODE,
+                        )
                     except RagError as exc:
                         st.session_state["visible_messages"].append({
                             "role": "assistant",
@@ -1088,7 +1185,9 @@ if prompt or attached_pdfs:
                         else:
                             conversation = st.session_state["allowed_conversation"]
                             try:
-                                passages = retrieve_relevant(clean_prompt, top_k=5)
+                                passages = retrieve_relevant(
+                                    clean_prompt, top_k=5, tenant_id=_retrieval_tenants()
+                                )
                             except RagError:
                                 reply = "I could not retrieve supporting passages from the PDF, so I did not generate an answer."
                             else:
@@ -1115,7 +1214,7 @@ if prompt or attached_pdfs:
                                         conversation.append({"role": "assistant", "content": reply})
                             st.session_state["visible_messages"].append({"role": "assistant", "content": reply})
             elif _is_document_question(clean_prompt):
-                if not st.session_state.get("semantic_rag_embedding_approval", False):
+                if not _embedding_authorized():
                     reply = (
                         "Document retrieval is paused until you authorize Featherless embeddings in the sidebar. "
                         "No document passages were sent."
@@ -1174,6 +1273,11 @@ if prompt or attached_pdfs:
                 else:
                     conversation.append({"role": "assistant", "content": reply})
                 st.session_state["visible_messages"].append({"role": "assistant", "content": reply})
+        except PublicDemoError as exc:
+            st.session_state["visible_messages"].append({
+                "role": "assistant",
+                "content": str(exc),
+            })
         except JevError as exc:
             visible_user_message["jev"] = {
                 "action": "REVIEW",

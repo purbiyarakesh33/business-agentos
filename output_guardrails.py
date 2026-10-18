@@ -16,6 +16,11 @@ _EMAIL_RE = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECA
 _SSN_RE = re.compile(r"\b\d{3}-\d{2}-\d{4}\b")
 _PHONE_RE = re.compile(r"(?<!\w)(?:\+?\d{1,3}[\s.-]?)?(?:\(?\d{3}\)?[\s.-])\d{3}[\s.-]\d{4}(?!\w)")
 _RECORD_ID_RE = re.compile(r"\b(?:CUST|CUSTOMER|USER|ORD|ORDER|RET|REF|PAY)[-_ ]?\d{3,}\b", re.IGNORECASE)
+_SYSTEM_PROMPT_MARKERS = (
+    "you are a friendly general assistant in a business application.",
+    "never guess or offer generic possible causes for company-specific",
+    "this app routes supported analysis requests to that workflow.",
+)
 _SECRET_RES = (
     re.compile(r"\bsk-[A-Za-z0-9_-]{20,}\b"),
     re.compile(r"\bAKIA[0-9A-Z]{16}\b"),
@@ -125,6 +130,9 @@ def screen_business_output(report: str, evidence: list[dict] | None = None) -> O
     text = "\n".join([report, *_strings(evidence)])
     if _EMAIL_RE.search(text) or _SSN_RE.search(text) or _PHONE_RE.search(text):
         reasons.add("personal_contact_or_identity_data")
+    normalized_report = report.casefold()
+    if any(marker in normalized_report for marker in _SYSTEM_PROMPT_MARKERS):
+        reasons.add("system_prompt_disclosure")
     if _RECORD_ID_RE.search(text):
         reasons.add("direct_customer_or_transaction_identifier")
     if any(pattern.search(text) for pattern in _SECRET_RES):

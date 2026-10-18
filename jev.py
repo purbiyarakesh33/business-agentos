@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from public_safety import reserve_public_request
+
 from dataclasses import dataclass
 import json
 import math
@@ -93,6 +95,7 @@ def _post_json(url: str, payload: dict, api_key: str | None = None) -> dict:
         method="POST",
     )
     try:
+        reserve_public_request()
         with urlopen(request, timeout=45) as response:
             result = json.loads(response.read().decode("utf-8"))
     except HTTPError as exc:

@@ -45,8 +45,9 @@ From PowerShell in the project directory:
         py -B evals/validate_golden_dataset.py
         py -B analyst_eval.py
         py -B planner_eval.py
+        py -B evals/public_safety_eval.py
 
-These checks are offline. The expected current results are golden-set validation passed, 33/33 analyst checks, and 7/7 planner checks. See evals/EVALUATION_STATUS.md for component metrics, DeepEval report metrics, current live smoke results, and caveats.
+These checks are offline. The expected current results are golden-set validation passed, 33/33 analyst checks, 7/7 planner checks, and 5/5 public-safety contract checks. See evals/EVALUATION_STATUS.md for component metrics, DeepEval report metrics, current live smoke results, and caveats.
 
 The eight live Streamlit smoke scenarios make Featherless requests. They are documented in evals/README.md and should be run when changing the workflow.
 
@@ -54,7 +55,11 @@ The eight live Streamlit smoke scenarios make Featherless requests. They are doc
 
 The app entrypoint, dependency file, and Streamlit configuration are already at the repository root (app.py, requirements.txt, and .streamlit/config.toml). Community Cloud deploys the app from a GitHub repository. Configure credentials in the app's Streamlit Secrets settings; never commit .env or secrets.toml. The app reads these root-level secrets: FEATHERLESS_API_KEY and, for document RAG, RAG_DATABASE_URL pointing to a remotely reachable PostgreSQL database with the pgvector extension. Optional model overrides use the names in .env.example.
 
-The SQLite business demo data is included with the source. The local Docker Compose database is not reachable from Community Cloud, so document retrieval needs an external pgvector database. Community Cloud does not guarantee persistence for files created during app use; indexed passages should live in the external database. Keep the app private for the initial deployment: a public app currently has no login, per-user isolation, or usage limits, and visitors could consume the configured Featherless credits or share the demo knowledge base.
+The SQLite business demo data is included with the source. The local Docker Compose database is not reachable from Community Cloud, so persistent document retrieval needs a hosted PostgreSQL database with pgvector. Supabase is the setup guide used here: enable the `vector` extension in Database → Extensions, then copy the Session pooler connection string from Connect. The app requires SSL and disables prepared statements for transaction-pooler compatibility; it also handles Supabase's `extensions` schema. Supabase's free database currently includes 500 MB and may pause after a week of low activity, so treat it as a demo service and check current plan details before relying on it. [pgvector setup](https://supabase.com/docs/guides/database/extensions/pgvector) · [connection modes](https://supabase.com/docs/guides/database/connecting-to-postgres) · [free-plan pausing](https://supabase.com/docs/guides/platform/free-project-pausing)
+
+For a public demo, add these Streamlit Secrets (never commit them): `FEATHERLESS_API_KEY`, `RAG_DATABASE_URL`, `PUBLIC_DEMO_MODE = "true"`, `PUBLIC_DAILY_REQUEST_LIMIT = "20"`, and `PUBLIC_HOURLY_REQUEST_LIMIT = "6"`. Keep the first two values private. Public mode uses one shared synthetic-data tenant, enforces atomic shared hourly/daily caps on each Featherless API request through PostgreSQL, and fails closed if the usage database is unavailable. PDF uploads are kept in a random per-browser-session tenant in Postgres and expire after 24 hours; visitor uploads are not written to the app's shared local folder. A consent checkbox explains that prompts and document text go to Featherless. This is still an unauthenticated demo, not a production security boundary.
+
+Before deploying, seed the public vector database with only the bundled synthetic documents and reviews. Set `RAG_DATABASE_URL` in your local environment to the hosted connection string, keep `FEATHERLESS_API_KEY` in the local `.env`, and run `py seed_public_demo_rag.py`. The seed command explicitly excludes the local uploads folder, so previous test PDFs are not included. Visitors should not enter confidential information. Streamlit Community Cloud stores app secrets in the app settings and deploys from GitHub: [secrets setup](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/secrets-management) · [deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy).
 
 ## Demo limits
 

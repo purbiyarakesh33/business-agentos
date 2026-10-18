@@ -6,6 +6,8 @@ unless their evidence references pass structural checks and the Verification Age
 """
 from __future__ import annotations
 
+from public_safety import reserve_public_request
+
 from datetime import date, timedelta
 import calendar
 import json
@@ -205,6 +207,7 @@ def _featherless_text(
         method="POST",
     )
     try:
+        reserve_public_request()
         with urlopen(request, timeout=180) as response:
             result = json.loads(response.read().decode("utf-8"))
     except HTTPError as exc:

@@ -7,7 +7,11 @@ PostgreSQL full-text search when an analyst explicitly requests retrieval.
 """
 from __future__ import annotations
 
+from public_safety import reserve_public_request
+
 from collections import defaultdict
+from contextlib import contextmanager
+from contextvars import ContextVar
 from hashlib import sha256
 from io import BytesIO
 import json
@@ -17,6 +21,7 @@ from pathlib import Path
 import re
 import sqlite3
 from typing import Any, Iterable
+from urllib.parse import urlsplit
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -34,15 +39,30 @@ DEFAULT_EMBEDDING_MODEL = "Qwen/Qwen3-Embedding-8B"
 EXCLUDED_DOCS = {"scenario_truth.json"}
 SUPPORTED_EXTENSIONS = {".md", ".txt", ".json", ".sql", ".pdf", ".docx"}
 TENANT_ENV = "RAG_TENANT_ID"
+_ACTIVE_RETRIEVAL_TENANTS: ContextVar[tuple[str, ...] | None] = ContextVar("active_retrieval_tenants", default=None)
+
+
+@contextmanager
+def retrieval_tenant_scope(tenant_ids: list[str] | tuple[str, ...] | None):
+    """Scope implicit specialist retrieval to the current Streamlit session."""
+    normalized = tuple(value for value in (tenant_ids or ()) if isinstance(value, str) and value.strip())
+    token = _ACTIVE_RETRIEVAL_TENANTS.set(normalized or None)
+    try:
+        yield
+    finally:
+        _ACTIVE_RETRIEVAL_TENANTS.reset(token)
 
 
 class RagError(RuntimeError):
     """Raised when retrieval, indexing, or document parsing cannot complete."""
 
 
-def _tenant_id() -> str:
-    load_local_environment()
-    value = os.getenv(TENANT_ENV, "demo").strip()
+def _tenant_id(tenant_id: str | None = None) -> str:
+    if tenant_id is None:
+        load_local_environment()
+        value = os.getenv(TENANT_ENV, "demo").strip()
+    else:
+        value = tenant_id.strip()
     if not value or len(value) > 128:
         raise RagError("RAG_TENANT_ID must be a non-empty value no longer than 128 characters.")
     return value
@@ -69,8 +89,17 @@ def _connect():
         import psycopg
     except ImportError as exc:
         raise RagError("Install the project dependencies with: py -m pip install -r requirements.txt") from exc
+    database_url = _database_url()
+    host = (urlsplit(database_url).hostname or "").casefold()
+    sslmode = "prefer" if host in {"localhost", "127.0.0.1", "::1"} else "require"
     try:
-        return psycopg.connect(_database_url(), connect_timeout=5)
+        # Supabase transaction poolers do not support prepared statements.
+        return psycopg.connect(
+            database_url,
+            connect_timeout=5,
+            prepare_threshold=None,
+            sslmode=sslmode,
+        )
     except Exception as exc:
         # Do not include driver details because connection errors can echo credentials.
         raise RagError(
@@ -81,7 +110,22 @@ def _connect():
 
 def _ensure_schema(connection: Any) -> None:
     try:
+        from psycopg import sql
+
         connection.execute("CREATE EXTENSION IF NOT EXISTS vector")
+        extension_schema = connection.execute(
+            """SELECT namespace.nspname
+               FROM pg_extension AS extension
+               JOIN pg_namespace AS namespace ON namespace.oid = extension.extnamespace
+               WHERE extension.extname = 'vector'"""
+        ).fetchone()
+        if not extension_schema:
+            raise RuntimeError("pgvector extension is not installed")
+        # Supabase commonly installs pgvector under `extensions`; local Docker
+        # installs it under `public`. Keep the path transaction-local for poolers.
+        connection.execute(
+            sql.SQL("SET LOCAL search_path TO public, {}").format(sql.Identifier(str(extension_schema[0])))
+        )
         connection.execute(
             f"""CREATE TABLE IF NOT EXISTS rag_chunks (
                 id BIGSERIAL PRIMARY KEY,
@@ -123,8 +167,7 @@ def _ensure_schema(connection: Any) -> None:
         )
     except Exception as exc:
         raise RagError(
-            "Could not initialize pgvector. Confirm the database uses the "
-            "pgvector/pgvector image and that the database user can create the vector extension."
+            "Could not initialize the RAG schema. Confirm pgvector is enabled and the database user can create the required tables and indexes."
         ) from exc
 
 
@@ -133,6 +176,16 @@ def ensure_index() -> dict[str, Any]:
     tenant = _tenant_id()
     with _connect() as connection:
         _ensure_schema(connection)
+        # Session uploads are private to one browser session and age out even
+        # when their owner never returns to the app.
+        connection.execute(
+            "DELETE FROM rag_chunks WHERE tenant_id ~ '^public_upload_[0-9a-f]{32}$' "
+            "AND updated_at < now() - interval '24 hours'"
+        )
+        connection.execute(
+            "DELETE FROM rag_sources WHERE tenant_id ~ '^public_upload_[0-9a-f]{32}$' "
+            "AND updated_at < now() - interval '24 hours'"
+        )
         counts = connection.execute(
             """SELECT source_type, count(*) FROM rag_chunks
                WHERE tenant_id = %s GROUP BY source_type""",
@@ -172,6 +225,7 @@ def _embedding_request(texts: list[str]) -> list[list[float]]:
         method="POST",
     )
     try:
+        reserve_public_request()
         with urlopen(request, timeout=90) as response:
             result = json.loads(response.read().decode("utf-8"))
     except HTTPError as exc:
@@ -387,12 +441,11 @@ def _read_file_chunks(path: Path, source_name: str) -> tuple[str, list[dict[str,
     return sha256(raw).hexdigest(), chunks
 
 
-def _collect_document_sources() -> dict[tuple[str, str], dict[str, Any]]:
+def _collect_document_sources(include_uploads: bool = True) -> dict[tuple[str, str], dict[str, Any]]:
     sources: dict[tuple[str, str], dict[str, Any]] = {}
-    folders = [
-        (DEFAULT_DOCS_PATH, "company_document", "company_docs"),
-        (DEFAULT_UPLOADS_PATH, "company_document", "uploads"),
-    ]
+    folders = [(DEFAULT_DOCS_PATH, "company_document", "company_docs")]
+    if include_uploads:
+        folders.append((DEFAULT_UPLOADS_PATH, "company_document", "uploads"))
     for folder, source_type, prefix in folders:
         if not folder.is_dir():
             continue
@@ -464,6 +517,51 @@ def _embedding_text(chunk: dict[str, str], source_type: str) -> str:
     return f"{prefix}Title: {chunk['title']}\nSection: {chunk['section']}\nPassage: {chunk['content']}"
 
 
+def _uploaded_document_sources(uploaded_files: Iterable[Any]) -> tuple[dict[tuple[str, str], dict[str, Any]], int]:
+    """Parse public session uploads in memory; never write them to shared disk."""
+    sources: dict[tuple[str, str], dict[str, Any]] = {}
+    total_bytes = 0
+    files = list(uploaded_files)
+    if len(files) > 3:
+        raise RagError("Attach no more than three documents at a time in the public demo.")
+    for uploaded in files:
+        name = Path(str(getattr(uploaded, "name", "upload.pdf"))).name
+        suffix = Path(name).suffix.casefold()
+        if suffix not in SUPPORTED_EXTENSIONS:
+            raise RagError(f"{name} is not a supported document type.")
+        raw = uploaded.getvalue()
+        if not isinstance(raw, bytes) or not raw:
+            continue
+        total_bytes += len(raw)
+        if len(raw) > 5 * 1024 * 1024 or total_bytes > 10 * 1024 * 1024:
+            raise RagError("Public demo uploads are limited to 5 MB per file and 10 MB per request.")
+        safe_name = re.sub(r"[^A-Za-z0-9._ -]+", "_", name).strip(" .")
+        safe_name = safe_name or ("uploaded_document" + suffix)
+        if suffix == ".pdf":
+            chunks = _pdf_chunks(safe_name, raw)
+        elif suffix == ".docx":
+            chunks = _docx_chunks(safe_name, raw)
+        else:
+            try:
+                text = raw.decode("utf-8")
+            except UnicodeDecodeError as exc:
+                raise RagError(f"{safe_name} is not valid UTF-8 text.") from exc
+            if suffix == ".json":
+                try:
+                    text = json.dumps(json.loads(text), ensure_ascii=False, indent=2)
+                except json.JSONDecodeError:
+                    pass
+            chunks = _text_document_chunks(safe_name, text)
+        if not chunks:
+            raise RagError(f"{safe_name} contains no extractable text.")
+        source_name = f"session_uploads/{safe_name}"
+        sources[("company_document", source_name)] = {
+            "content_hash": sha256(raw).hexdigest(),
+            "chunks": chunks,
+        }
+    return sources, len(sources)
+
+
 def _persist_uploaded_files(uploaded_files: Iterable[Any]) -> int:
     saved = 0
     for uploaded in uploaded_files:
@@ -489,12 +587,22 @@ def _persist_uploaded_files(uploaded_files: Iterable[Any]) -> int:
     return saved
 
 
-def ingest_company_sources(uploaded_files: Iterable[Any] = ()) -> dict[str, Any]:
-    """Index changed demo docs, uploaded files, and review text in batched embedding requests."""
-    uploaded_count = _persist_uploaded_files(uploaded_files)
-    sources = _collect_document_sources()
-    sources.update(_collect_review_sources())
-    tenant = _tenant_id()
+def ingest_company_sources(
+    uploaded_files: Iterable[Any] = (), *, include_uploads: bool = True,
+    include_demo_sources: bool = True, tenant_id: str | None = None,
+    prune_missing: bool = True,
+) -> dict[str, Any]:
+    """Index bundled sources and optionally local or session-isolated uploads."""
+    files = list(uploaded_files)
+    if tenant_id is not None:
+        sources, uploaded_count = _uploaded_document_sources(files)
+    else:
+        uploaded_count = _persist_uploaded_files(files) if include_uploads else 0
+        sources = {}
+    if include_demo_sources:
+        sources.update(_collect_document_sources(include_uploads=include_uploads and tenant_id is None))
+        sources.update(_collect_review_sources())
+    tenant = _tenant_id(tenant_id)
 
     result = {
         "new_sources": 0,
@@ -629,7 +737,7 @@ def ingest_company_sources(uploaded_files: Iterable[Any] = ()) -> dict[str, Any]
             result["updated_sources" if item["was_present"] else "new_sources"] += 1
 
         for old_type, old_name, _old_hash in manifest_rows:
-            if old_type == "company_document" and old_name not in current_document_names:
+            if prune_missing and old_type == "company_document" and old_name not in current_document_names:
                 connection.execute(
                     "DELETE FROM rag_chunks WHERE tenant_id = %s AND source_name = %s",
                     (tenant, old_name),
@@ -646,7 +754,7 @@ def ingest_company_sources(uploaded_files: Iterable[Any] = ()) -> dict[str, Any]
             (tenant,),
         ).fetchall()
         for (old_ref,) in stored_reviews:
-            if old_ref not in current_review_refs:
+            if prune_missing and old_ref not in current_review_refs:
                 connection.execute(
                     "DELETE FROM rag_chunks WHERE tenant_id = %s AND source_ref = %s",
                     (tenant, old_ref),
@@ -681,20 +789,27 @@ def _requested_product_categories(query: str) -> list[str]:
 def retrieve_relevant(
     query: str,
     top_k: int = 5,
-    tenant_id: str | None = None,
+    tenant_id: str | list[str] | tuple[str, ...] | None = None,
 ) -> list[dict[str, Any]]:
-    """Hybrid semantic-vector and full-text retrieval, filtered to one tenant."""
+    """Hybrid retrieval over the requested tenant(s), without crossing tenant boundaries."""
     if not isinstance(query, str) or not query.strip():
         return []
-    tenant = tenant_id.strip() if isinstance(tenant_id, str) else _tenant_id()
-    if not tenant or len(tenant) > 128:
+    if tenant_id is None:
+        active_tenants = _ACTIVE_RETRIEVAL_TENANTS.get()
+        tenants = list(active_tenants) if active_tenants else [_tenant_id()]
+    elif isinstance(tenant_id, str):
+        tenants = [tenant_id.strip()]
+    else:
+        tenants = [value.strip() for value in tenant_id if isinstance(value, str)]
+    tenants = list(dict.fromkeys(value for value in tenants if value))
+    if not tenants or any(len(value) > 128 for value in tenants):
         raise RagError("The retrieval tenant identifier is invalid.")
     limit = max(1, min(int(top_k), 10))
     with _connect() as connection:
         _ensure_schema(connection)
         total = connection.execute(
-            "SELECT count(*) FROM rag_chunks WHERE tenant_id = %s",
-            (tenant,),
+            "SELECT count(*) FROM rag_chunks WHERE tenant_id = ANY(%s)",
+            (tenants,),
         ).fetchone()[0]
         if not total:
             raise RagError("The semantic index is empty. Index company documents in the sidebar first.")
@@ -705,10 +820,10 @@ def retrieve_relevant(
             """SELECT id, source_type, source_name, source_ref, title, section, content,
                       1 - (embedding <=> %s::vector) AS score
                FROM rag_chunks
-               WHERE tenant_id = %s
+               WHERE tenant_id = ANY(%s)
                ORDER BY embedding <=> %s::vector
                LIMIT 25""",
-            (query_vector, tenant, query_vector),
+            (query_vector, tenants, query_vector),
         ).fetchall()
         lexical_terms = [token for token in re.findall(r"[A-Za-z0-9]+", query) if len(token) > 1]
         lexical_query = " | ".join(lexical_terms)
@@ -716,11 +831,11 @@ def retrieve_relevant(
             """SELECT id, source_type, source_name, source_ref, title, section, content,
                       ts_rank_cd(search_tsv, to_tsquery('english', %s)) AS score
                FROM rag_chunks
-               WHERE tenant_id = %s
+               WHERE tenant_id = ANY(%s)
                  AND search_tsv @@ to_tsquery('english', %s)
                ORDER BY score DESC
                LIMIT 25""",
-            (lexical_query, tenant, lexical_query),
+            (lexical_query, tenants, lexical_query),
         ).fetchall() if lexical_query else []
 
         # When both review polarities are requested, retrieve examples from each
@@ -747,10 +862,10 @@ def retrieve_relevant(
                     """SELECT id, source_type, source_name, source_ref, title, section, content,
                               1 - (embedding <=> %s::vector) AS score
                        FROM rag_chunks
-                       WHERE tenant_id = %s AND source_type = 'customer_review'"""
+                       WHERE tenant_id = ANY(%s) AND source_type = 'customer_review'"""
                     + category_clause + " AND " + rating_clause
                     + " ORDER BY embedding <=> %s::vector, source_ref LIMIT 100",
-                    (query_vector, tenant, *category_params, *rating_params, query_vector),
+                    (query_vector, tenants, *category_params, *rating_params, query_vector),
                 ).fetchall()
                 # Repeated synthetic/customer phrases otherwise occupy most of
                 # the nearest-neighbor slots. Keep the nearest distinct text themes.
@@ -833,8 +948,10 @@ def retrieve_relevant(
         for item_id in ranked[:limit]
     ]
 
-def ingest_uploaded_files(uploaded_files: Iterable[Any] = ()) -> dict[str, Any]:
-    """Public alias used by the UI; indexes uploaded and bundled sources together."""
-    return ingest_company_sources(uploaded_files=uploaded_files)
+def ingest_uploaded_files(
+    uploaded_files: Iterable[Any] = (), **options: Any
+) -> dict[str, Any]:
+    """UI alias; local uploads persist, public uploads stay in their session tenant."""
+    return ingest_company_sources(uploaded_files=uploaded_files, **options)
 
 
