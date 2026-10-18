@@ -1,0 +1,164 @@
+[
+  {
+    "id": "customers",
+    "name": "customers.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per customer",
+    "fields": [
+      "customer_id",
+      "region",
+      "segment",
+      "first_order_date",
+      "acquisition_channel"
+    ],
+    "row_count": 800,
+    "sqlite_table": "customers",
+    "synthetic": true
+  },
+  {
+    "id": "products",
+    "name": "products.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per product",
+    "fields": [
+      "product_id",
+      "product_name",
+      "category",
+      "unit_price",
+      "unit_cost",
+      "supplier_id",
+      "active"
+    ],
+    "row_count": 20,
+    "sqlite_table": "products",
+    "synthetic": true
+  },
+  {
+    "id": "orders",
+    "name": "orders.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per order",
+    "fields": [
+      "order_id",
+      "order_date",
+      "customer_id",
+      "region",
+      "channel",
+      "status",
+      "subtotal",
+      "discount_amount",
+      "shipping_amount",
+      "order_total"
+    ],
+    "row_count": 2678,
+    "sqlite_table": "orders",
+    "synthetic": true
+  },
+  {
+    "id": "order_items",
+    "name": "order_items.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per order item",
+    "fields": [
+      "order_item_id",
+      "order_id",
+      "product_id",
+      "quantity",
+      "unit_price",
+      "discount_amount",
+      "unit_cost",
+      "line_net_sales",
+      "line_gross_profit"
+    ],
+    "row_count": 4312,
+    "sqlite_table": "order_items",
+    "synthetic": true
+  },
+  {
+    "id": "inventory_snapshots",
+    "name": "inventory_snapshots.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per product per snapshot",
+    "fields": [
+      "snapshot_id",
+      "product_id",
+      "snapshot_date",
+      "on_hand_units",
+      "warehouse"
+    ],
+    "row_count": 496,
+    "sqlite_table": "inventory_snapshots",
+    "synthetic": true
+  },
+  {
+    "id": "marketing_campaigns",
+    "name": "marketing_campaigns.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per month and campaign type/sales channel",
+    "fields": [
+      "campaign_id",
+      "month",
+      "campaign_type",
+      "sales_channel",
+      "spend",
+      "impressions",
+      "clicks",
+      "attributed_orders"
+    ],
+    "row_count": 72,
+    "sqlite_table": "marketing_campaigns",
+    "synthetic": true
+  },
+  {
+    "id": "fulfillment",
+    "name": "fulfillment.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per shipped order",
+    "fields": [
+      "fulfillment_id",
+      "order_id",
+      "ship_date",
+      "promised_delivery_date",
+      "delivered_date",
+      "delivery_status",
+      "carrier"
+    ],
+    "row_count": 2504,
+    "sqlite_table": "fulfillment",
+    "synthetic": true
+  },
+  {
+    "id": "returns",
+    "name": "returns.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per returned order item",
+    "fields": [
+      "return_id",
+      "order_item_id",
+      "return_date",
+      "quantity_returned",
+      "reason",
+      "refund_amount"
+    ],
+    "row_count": 233,
+    "sqlite_table": "returns",
+    "synthetic": true
+  },
+  {
+    "id": "reviews",
+    "name": "reviews.csv",
+    "type": "synthetic_csv_and_sqlite",
+    "description": "One row per review",
+    "fields": [
+      "review_id",
+      "order_id",
+      "product_id",
+      "rating",
+      "review_text",
+      "review_date"
+    ],
+    "row_count": 926,
+    "sqlite_table": "reviews",
+    "synthetic": true
+  }
+]

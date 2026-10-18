@@ -1,0 +1,16 @@
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+.venv/
+.eval-venv/
+.deepeval/
+__pycache__/
+*.py[cod]
+*.log
+evals/
+analyst_eval.py
+planner_eval.py
+demo_company/docs/scenario_truth.json
+demo_company/uploads/

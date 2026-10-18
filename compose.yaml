@@ -1,0 +1,57 @@
+services:
+  ragdb:
+    image: pgvector/pgvector:pg17
+    container_name: business-agentos-rag
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: agentos_rag
+      POSTGRES_USER: agentos
+      # Local demo default. Override POSTGRES_PASSWORD in .env outside local development.
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-agentos-local-demo-only}"
+    ports:
+      - "127.0.0.1:5433:5432"
+    volumes:
+      - agentos_rag_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentos -d agentos_rag"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: business-agentos-app
+    restart: unless-stopped
+    depends_on:
+      ragdb:
+        condition: service_healthy
+    environment:
+      FEATHERLESS_API_KEY: "${FEATHERLESS_API_KEY:-}"
+      FEATHERLESS_BASE_URL: "${FEATHERLESS_BASE_URL:-https://api.featherless.ai/v1}"
+      FEATHERLESS_JEV_BASE_URL: "${FEATHERLESS_JEV_BASE_URL:-https://simple-jev-demo-api.featherless.ai/v1}"
+      FEATHERLESS_JEV_MODEL: "${FEATHERLESS_JEV_MODEL:-featherless-ai/Qwen3.6-35B-A3B-classifier}"
+      FEATHERLESS_CHAT_MODEL: "${FEATHERLESS_CHAT_MODEL:-Qwen/Qwen2.5-7B-Instruct}"
+      FEATHERLESS_PLANNER_MODEL: "${FEATHERLESS_PLANNER_MODEL:-zai-org/GLM-5.3-Flash}"
+      FEATHERLESS_PLANNER_REASONING_EFFORT: "${FEATHERLESS_PLANNER_REASONING_EFFORT:-high}"
+      FEATHERLESS_ANALYST_MODEL: "${FEATHERLESS_ANALYST_MODEL:-Qwen/Qwen3-30B-A3B-Instruct-2507}"
+      FEATHERLESS_EMBEDDING_MODEL: "${FEATHERLESS_EMBEDDING_MODEL:-Qwen/Qwen3-Embedding-8B}"
+      RAG_DATABASE_URL: "postgresql://agentos:${POSTGRES_PASSWORD:-agentos-local-demo-only}@ragdb:5432/agentos_rag"
+      RAG_TENANT_ID: "${RAG_TENANT_ID:-demo}"
+      STREAMLIT_SERVER_HEADLESS: "true"
+      STREAMLIT_BROWSER_GATHER_USAGE_STATS: "false"
+    ports:
+      - "127.0.0.1:8501:8501"
+    volumes:
+      - agentos_uploads:/app/demo_company/uploads
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+volumes:
+  agentos_rag_data:
+  agentos_uploads:

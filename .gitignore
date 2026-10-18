@@ -1,0 +1,14 @@
+.env
+.env.*
+!.env.example
+.venv/
+.eval-venv/
+.deepeval/
+__pycache__/
+*.py[cod]
+*.log
+.streamlit/secrets.toml
+demo_company/uploads/
+demo_company/docs/scenario_truth.json
+evals/predictions_*.jsonl
+evals/results_*.json

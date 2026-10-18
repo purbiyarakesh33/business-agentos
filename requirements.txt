@@ -1,0 +1,5 @@
+streamlit>=1.46,<2
+pandas>=2.0,<3
+psycopg[binary]>=3.2,<4
+pypdf>=5,<7
+python-docx>=1.1,<2

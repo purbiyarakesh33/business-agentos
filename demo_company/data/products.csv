@@ -1,0 +1,21 @@
+﻿product_id,product_name,category,unit_price,unit_cost,supplier_id,active
+P001,Stackable Bin,Storage,80.84,43.80,SUP01,true
+P002,Wall Sconce,Storage,134.48,67.56,SUP02,true
+P003,Prep Bowl Set,Storage,117.44,51.20,SUP03,true
+P004,Cotton Duvet,Storage,97.42,53.59,SUP04,true
+P005,Ceramic Vase,Lighting,127.15,71.49,SUP05,true
+P006,Drawer Organizer,Lighting,31.68,13.83,SUP01,true
+P007,Desk Lamp,Lighting,28.21,12.46,SUP02,true
+P008,Spice Rack,Lighting,91.09,42.67,SUP03,true
+P009,Linen Sheet Set,Kitchen,45.65,18.29,SUP04,true
+P010,Table Runner,Kitchen,81.33,35.05,SUP05,true
+P011,Woven Basket,Kitchen,39.09,21.71,SUP01,true
+P012,Pendant Light,Kitchen,76.14,29.47,SUP02,true
+P013,Chef Knife,Bedding,30.39,14.73,SUP03,true
+P014,Quilted Coverlet,Bedding,41.19,18.35,SUP04,true
+P015,Stoneware Tray,Bedding,67.17,29.20,SUP05,true
+P016,Underbed Box,Bedding,135.05,58.67,SUP01,true
+P017,Reading Lamp,Decor,82.79,41.31,SUP02,true
+P018,Pantry Canister,Decor,98.01,42.99,SUP03,true
+P019,Bath Towel Set,Decor,44.60,17.99,SUP04,true
+P020,Candle Holder,Decor,137.04,82.92,SUP05,true

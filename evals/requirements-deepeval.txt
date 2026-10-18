@@ -1,0 +1,2 @@
+# Evaluation-only dependency; keep separate from the Business AgentOS runtime.
+deepeval==4.2.8

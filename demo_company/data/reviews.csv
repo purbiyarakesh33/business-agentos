@@ -1,0 +1,927 @@
+﻿review_id,order_id,product_id,rating,review_text,review_date
+REV000001,ORD000007,P008,4,Good quality and arrived on time.,2024-01-21
+REV000002,ORD000011,P017,5,Excellent quality; I would buy it again.,2024-01-19
+REV000003,ORD000014,P016,5,Beautiful finish and fast delivery.,2024-01-17
+REV000004,ORD000015,P013,5,Beautiful finish and fast delivery.,2024-01-27
+REV000005,ORD000016,P013,4,Nice product and easy to use.,2024-01-14
+REV000006,ORD000018,P004,4,Good quality and arrived on time.,2024-01-12
+REV000007,ORD000023,P016,3,"It is fine, but nothing special.",2024-02-07
+REV000008,ORD000024,P013,2,Delivery took too long for this order.,2024-02-07
+REV000009,ORD000032,P008,5,Excellent quality; I would buy it again.,2024-01-22
+REV000010,ORD000038,P011,4,Nice product and easy to use.,2024-01-24
+REV000011,ORD000044,P014,3,Works as described; average experience.,2024-02-03
+REV000012,ORD000047,P015,4,Good quality and arrived on time.,2024-01-30
+REV000013,ORD000048,P018,4,Nice product and easy to use.,2024-01-12
+REV000014,ORD000050,P018,5,Excellent quality; I would buy it again.,2024-02-11
+REV000015,ORD000052,P018,5,Excellent quality; I would buy it again.,2024-02-02
+REV000016,ORD000053,P008,5,Excellent quality; I would buy it again.,2024-01-17
+REV000017,ORD000057,P005,4,Nice product and easy to use.,2024-02-05
+REV000018,ORD000062,P017,5,Beautiful finish and fast delivery.,2024-01-10
+REV000019,ORD000066,P001,5,Beautiful finish and fast delivery.,2024-01-28
+REV000020,ORD000067,P018,1,Arrived damaged and did not match the listing.,2024-01-06
+REV000021,ORD000070,P001,4,Nice product and easy to use.,2024-01-12
+REV000022,ORD000072,P017,5,Excellent quality; I would buy it again.,2024-02-03
+REV000023,ORD000075,P009,5,Excellent quality; I would buy it again.,2024-01-27
+REV000024,ORD000076,P020,4,Nice product and easy to use.,2024-02-02
+REV000025,ORD000077,P011,5,Excellent quality; I would buy it again.,2024-02-15
+REV000026,ORD000078,P005,5,Excellent quality; I would buy it again.,2024-01-16
+REV000027,ORD000082,P008,5,Beautiful finish and fast delivery.,2024-02-14
+REV000028,ORD000090,P010,2,The item feels cheaper than expected.,2024-01-28
+REV000029,ORD000095,P008,2,Delivery took too long for this order.,2024-01-22
+REV000030,ORD000096,P018,4,Good quality and arrived on time.,2024-01-20
+REV000031,ORD000103,P011,4,Nice product and easy to use.,2024-02-29
+REV000032,ORD000104,P014,5,Beautiful finish and fast delivery.,2024-02-17
+REV000033,ORD000106,P011,3,Works as described; average experience.,2024-03-03
+REV000034,ORD000109,P008,5,Beautiful finish and fast delivery.,2024-03-09
+REV000035,ORD000110,P002,4,Nice product and easy to use.,2024-02-19
+REV000036,ORD000113,P004,4,Nice product and easy to use.,2024-02-21
+REV000037,ORD000115,P012,5,Excellent quality; I would buy it again.,2024-02-25
+REV000038,ORD000123,P001,1,Arrived damaged and did not match the listing.,2024-03-10
+REV000039,ORD000126,P014,3,"It is fine, but nothing special.",2024-02-26
+REV000040,ORD000128,P020,5,Excellent quality; I would buy it again.,2024-02-23
+REV000041,ORD000129,P019,5,Beautiful finish and fast delivery.,2024-02-18
+REV000042,ORD000131,P004,5,Excellent quality; I would buy it again.,2024-02-08
+REV000043,ORD000136,P018,5,Excellent quality; I would buy it again.,2024-02-14
+REV000044,ORD000138,P002,4,Good quality and arrived on time.,2024-02-25
+REV000045,ORD000144,P001,4,Nice product and easy to use.,2024-03-05
+REV000046,ORD000149,P002,4,Nice product and easy to use.,2024-03-02
+REV000047,ORD000151,P018,4,Nice product and easy to use.,2024-03-10
+REV000048,ORD000152,P013,5,Excellent quality; I would buy it again.,2024-03-04
+REV000049,ORD000155,P003,4,Nice product and easy to use.,2024-02-22
+REV000050,ORD000158,P002,5,Excellent quality; I would buy it again.,2024-02-29
+REV000051,ORD000162,P004,5,Beautiful finish and fast delivery.,2024-03-08
+REV000052,ORD000164,P018,5,Beautiful finish and fast delivery.,2024-02-21
+REV000053,ORD000181,P018,4,Good quality and arrived on time.,2024-03-10
+REV000054,ORD000182,P019,4,Good quality and arrived on time.,2024-03-10
+REV000055,ORD000185,P005,5,Beautiful finish and fast delivery.,2024-03-26
+REV000056,ORD000186,P015,5,Beautiful finish and fast delivery.,2024-03-22
+REV000057,ORD000188,P016,5,Excellent quality; I would buy it again.,2024-04-07
+REV000058,ORD000189,P008,4,Good quality and arrived on time.,2024-03-27
+REV000059,ORD000191,P010,4,Good quality and arrived on time.,2024-03-22
+REV000060,ORD000194,P018,3,"It is fine, but nothing special.",2024-03-13
+REV000061,ORD000198,P006,3,Works as described; average experience.,2024-03-16
+REV000062,ORD000202,P016,5,Beautiful finish and fast delivery.,2024-04-02
+REV000063,ORD000206,P003,5,Beautiful finish and fast delivery.,2024-04-15
+REV000064,ORD000209,P001,5,Excellent quality; I would buy it again.,2024-04-07
+REV000065,ORD000210,P007,5,Excellent quality; I would buy it again.,2024-03-24
+REV000066,ORD000212,P002,4,Nice product and easy to use.,2024-04-01
+REV000067,ORD000213,P013,5,Excellent quality; I would buy it again.,2024-03-23
+REV000068,ORD000214,P005,4,Nice product and easy to use.,2024-03-19
+REV000069,ORD000215,P001,5,Beautiful finish and fast delivery.,2024-03-06
+REV000070,ORD000218,P008,3,"It is fine, but nothing special.",2024-03-12
+REV000071,ORD000228,P020,3,Works as described; average experience.,2024-04-17
+REV000072,ORD000230,P008,4,Good quality and arrived on time.,2024-03-08
+REV000073,ORD000236,P004,5,Beautiful finish and fast delivery.,2024-03-22
+REV000074,ORD000238,P020,5,Beautiful finish and fast delivery.,2024-03-23
+REV000075,ORD000240,P001,5,Excellent quality; I would buy it again.,2024-03-22
+REV000076,ORD000241,P013,5,Beautiful finish and fast delivery.,2024-03-13
+REV000077,ORD000242,P009,5,Excellent quality; I would buy it again.,2024-03-28
+REV000078,ORD000244,P014,3,"It is fine, but nothing special.",2024-04-05
+REV000079,ORD000246,P018,3,"It is fine, but nothing special.",2024-03-26
+REV000080,ORD000248,P009,3,Works as described; average experience.,2024-04-13
+REV000081,ORD000249,P011,4,Good quality and arrived on time.,2024-04-04
+REV000082,ORD000250,P009,2,The item feels cheaper than expected.,2024-03-19
+REV000083,ORD000251,P005,5,Excellent quality; I would buy it again.,2024-03-31
+REV000084,ORD000252,P006,4,Nice product and easy to use.,2024-04-06
+REV000085,ORD000256,P006,4,Nice product and easy to use.,2024-03-17
+REV000086,ORD000258,P002,4,Good quality and arrived on time.,2024-03-22
+REV000087,ORD000259,P009,3,Works as described; average experience.,2024-04-04
+REV000088,ORD000260,P016,3,"It is fine, but nothing special.",2024-03-28
+REV000089,ORD000262,P018,4,Good quality and arrived on time.,2024-03-27
+REV000090,ORD000265,P006,5,Excellent quality; I would buy it again.,2024-04-04
+REV000091,ORD000269,P010,4,Good quality and arrived on time.,2024-03-23
+REV000092,ORD000272,P012,5,Beautiful finish and fast delivery.,2024-03-27
+REV000093,ORD000274,P001,5,Excellent quality; I would buy it again.,2024-04-18
+REV000094,ORD000278,P010,4,Good quality and arrived on time.,2024-04-24
+REV000095,ORD000285,P010,3,Works as described; average experience.,2024-04-25
+REV000096,ORD000287,P005,5,Beautiful finish and fast delivery.,2024-04-14
+REV000097,ORD000289,P004,4,Nice product and easy to use.,2024-04-28
+REV000098,ORD000292,P001,4,Nice product and easy to use.,2024-05-06
+REV000099,ORD000293,P009,3,"It is fine, but nothing special.",2024-04-26
+REV000100,ORD000294,P020,4,Good quality and arrived on time.,2024-04-14
+REV000101,ORD000295,P017,5,Excellent quality; I would buy it again.,2024-04-26
+REV000102,ORD000296,P009,4,Good quality and arrived on time.,2024-04-16
+REV000103,ORD000299,P004,2,The item feels cheaper than expected.,2024-04-22
+REV000104,ORD000302,P012,5,Excellent quality; I would buy it again.,2024-05-06
+REV000105,ORD000303,P013,4,Nice product and easy to use.,2024-04-28
+REV000106,ORD000305,P006,4,Good quality and arrived on time.,2024-04-26
+REV000107,ORD000307,P003,5,Beautiful finish and fast delivery.,2024-04-22
+REV000108,ORD000312,P006,1,Very disappointed with the quality.,2024-04-18
+REV000109,ORD000314,P016,1,Very disappointed with the quality.,2024-04-17
+REV000110,ORD000315,P013,1,Arrived damaged and did not match the listing.,2024-04-25
+REV000111,ORD000316,P010,4,Good quality and arrived on time.,2024-04-12
+REV000112,ORD000319,P003,4,Good quality and arrived on time.,2024-04-07
+REV000113,ORD000321,P009,4,Good quality and arrived on time.,2024-05-11
+REV000114,ORD000323,P004,4,Nice product and easy to use.,2024-04-13
+REV000115,ORD000330,P011,4,Nice product and easy to use.,2024-04-17
+REV000116,ORD000331,P011,4,Nice product and easy to use.,2024-05-06
+REV000117,ORD000334,P018,3,Works as described; average experience.,2024-04-28
+REV000118,ORD000336,P004,5,Beautiful finish and fast delivery.,2024-05-02
+REV000119,ORD000343,P006,4,Good quality and arrived on time.,2024-04-30
+REV000120,ORD000344,P002,3,"It is fine, but nothing special.",2024-04-21
+REV000121,ORD000345,P007,4,Nice product and easy to use.,2024-04-10
+REV000122,ORD000346,P001,1,Very disappointed with the quality.,2024-04-28
+REV000123,ORD000347,P009,5,Beautiful finish and fast delivery.,2024-05-17
+REV000124,ORD000348,P012,1,Arrived damaged and did not match the listing.,2024-05-13
+REV000125,ORD000356,P019,5,Beautiful finish and fast delivery.,2024-04-28
+REV000126,ORD000357,P017,5,Beautiful finish and fast delivery.,2024-04-30
+REV000127,ORD000359,P018,3,"It is fine, but nothing special.",2024-04-30
+REV000128,ORD000363,P015,3,Works as described; average experience.,2024-04-25
+REV000129,ORD000367,P018,4,Good quality and arrived on time.,2024-04-21
+REV000130,ORD000368,P018,4,Good quality and arrived on time.,2024-04-16
+REV000131,ORD000369,P009,3,"It is fine, but nothing special.",2024-04-17
+REV000132,ORD000373,P007,2,The item feels cheaper than expected.,2024-05-15
+REV000133,ORD000374,P009,3,Works as described; average experience.,2024-05-20
+REV000134,ORD000375,P016,1,Arrived damaged and did not match the listing.,2024-06-06
+REV000135,ORD000376,P005,3,"It is fine, but nothing special.",2024-05-27
+REV000136,ORD000379,P004,4,Good quality and arrived on time.,2024-05-10
+REV000137,ORD000382,P005,5,Excellent quality; I would buy it again.,2024-05-17
+REV000138,ORD000386,P014,4,Good quality and arrived on time.,2024-05-28
+REV000139,ORD000387,P012,5,Beautiful finish and fast delivery.,2024-06-07
+REV000140,ORD000388,P012,5,Beautiful finish and fast delivery.,2024-05-24
+REV000141,ORD000391,P004,4,Nice product and easy to use.,2024-06-13
+REV000142,ORD000396,P019,4,Good quality and arrived on time.,2024-05-21
+REV000143,ORD000403,P013,4,Good quality and arrived on time.,2024-05-29
+REV000144,ORD000404,P006,5,Excellent quality; I would buy it again.,2024-05-26
+REV000145,ORD000406,P019,5,Excellent quality; I would buy it again.,2024-06-07
+REV000146,ORD000407,P009,5,Beautiful finish and fast delivery.,2024-05-27
+REV000147,ORD000410,P010,2,Delivery took too long for this order.,2024-06-03
+REV000148,ORD000411,P017,4,Good quality and arrived on time.,2024-05-20
+REV000149,ORD000413,P015,5,Excellent quality; I would buy it again.,2024-06-05
+REV000150,ORD000420,P006,2,Delivery took too long for this order.,2024-05-21
+REV000151,ORD000424,P006,3,"It is fine, but nothing special.",2024-06-09
+REV000152,ORD000430,P019,4,Nice product and easy to use.,2024-05-27
+REV000153,ORD000433,P011,5,Excellent quality; I would buy it again.,2024-05-21
+REV000154,ORD000434,P010,5,Beautiful finish and fast delivery.,2024-05-12
+REV000155,ORD000437,P010,4,Good quality and arrived on time.,2024-05-26
+REV000156,ORD000439,P005,4,Good quality and arrived on time.,2024-06-06
+REV000157,ORD000445,P012,5,Beautiful finish and fast delivery.,2024-05-22
+REV000158,ORD000448,P019,5,Excellent quality; I would buy it again.,2024-05-23
+REV000159,ORD000452,P015,5,Beautiful finish and fast delivery.,2024-06-03
+REV000160,ORD000459,P005,3,"It is fine, but nothing special.",2024-05-27
+REV000161,ORD000460,P015,2,The item feels cheaper than expected.,2024-05-16
+REV000162,ORD000473,P010,5,Beautiful finish and fast delivery.,2024-05-18
+REV000163,ORD000478,P010,4,Nice product and easy to use.,2024-07-05
+REV000164,ORD000482,P019,4,Nice product and easy to use.,2024-06-13
+REV000165,ORD000484,P004,4,Nice product and easy to use.,2024-06-29
+REV000166,ORD000489,P005,5,Excellent quality; I would buy it again.,2024-06-25
+REV000167,ORD000491,P003,5,Beautiful finish and fast delivery.,2024-06-16
+REV000168,ORD000495,P015,3,"It is fine, but nothing special.",2024-06-22
+REV000169,ORD000497,P017,5,Excellent quality; I would buy it again.,2024-06-25
+REV000170,ORD000502,P018,5,Beautiful finish and fast delivery.,2024-06-20
+REV000171,ORD000503,P007,4,Nice product and easy to use.,2024-06-20
+REV000172,ORD000506,P015,4,Nice product and easy to use.,2024-07-02
+REV000173,ORD000507,P014,4,Good quality and arrived on time.,2024-07-06
+REV000174,ORD000511,P007,4,Good quality and arrived on time.,2024-06-16
+REV000175,ORD000514,P004,5,Excellent quality; I would buy it again.,2024-06-15
+REV000176,ORD000515,P020,5,Beautiful finish and fast delivery.,2024-06-15
+REV000177,ORD000520,P006,5,Beautiful finish and fast delivery.,2024-06-30
+REV000178,ORD000522,P014,3,"It is fine, but nothing special.",2024-06-22
+REV000179,ORD000524,P005,4,Good quality and arrived on time.,2024-07-05
+REV000180,ORD000525,P015,1,Arrived damaged and did not match the listing.,2024-06-09
+REV000181,ORD000527,P011,3,"It is fine, but nothing special.",2024-06-29
+REV000182,ORD000528,P014,4,Good quality and arrived on time.,2024-06-17
+REV000183,ORD000529,P018,5,Beautiful finish and fast delivery.,2024-07-10
+REV000184,ORD000532,P003,4,Nice product and easy to use.,2024-06-14
+REV000185,ORD000538,P009,5,Excellent quality; I would buy it again.,2024-06-22
+REV000186,ORD000540,P003,4,Nice product and easy to use.,2024-07-01
+REV000187,ORD000549,P007,5,Excellent quality; I would buy it again.,2024-06-25
+REV000188,ORD000550,P007,5,Excellent quality; I would buy it again.,2024-06-17
+REV000189,ORD000554,P020,5,Excellent quality; I would buy it again.,2024-06-20
+REV000190,ORD000556,P017,2,The item feels cheaper than expected.,2024-06-26
+REV000191,ORD000557,P018,3,"It is fine, but nothing special.",2024-06-27
+REV000192,ORD000560,P005,4,Nice product and easy to use.,2024-06-13
+REV000193,ORD000561,P010,5,Beautiful finish and fast delivery.,2024-07-03
+REV000194,ORD000562,P004,5,Excellent quality; I would buy it again.,2024-07-03
+REV000195,ORD000565,P020,5,Excellent quality; I would buy it again.,2024-07-05
+REV000196,ORD000568,P009,5,Beautiful finish and fast delivery.,2024-06-12
+REV000197,ORD000569,P001,4,Good quality and arrived on time.,2024-06-25
+REV000198,ORD000575,P007,3,Works as described; average experience.,2024-06-23
+REV000199,ORD000577,P018,5,Beautiful finish and fast delivery.,2024-06-20
+REV000200,ORD000583,P010,5,Beautiful finish and fast delivery.,2024-07-11
+REV000201,ORD000586,P010,3,Works as described; average experience.,2024-08-03
+REV000202,ORD000590,P003,3,"It is fine, but nothing special.",2024-07-23
+REV000203,ORD000592,P010,5,Excellent quality; I would buy it again.,2024-08-01
+REV000204,ORD000598,P013,4,Good quality and arrived on time.,2024-08-05
+REV000205,ORD000600,P007,3,"It is fine, but nothing special.",2024-07-21
+REV000206,ORD000601,P001,4,Good quality and arrived on time.,2024-08-05
+REV000207,ORD000602,P003,3,Works as described; average experience.,2024-07-30
+REV000208,ORD000603,P020,4,Nice product and easy to use.,2024-07-23
+REV000209,ORD000604,P008,4,Nice product and easy to use.,2024-08-05
+REV000210,ORD000608,P004,3,Works as described; average experience.,2024-07-24
+REV000211,ORD000610,P010,2,The item feels cheaper than expected.,2024-07-16
+REV000212,ORD000611,P006,5,Beautiful finish and fast delivery.,2024-07-25
+REV000213,ORD000612,P019,2,The item feels cheaper than expected.,2024-08-13
+REV000214,ORD000615,P008,5,Excellent quality; I would buy it again.,2024-07-16
+REV000215,ORD000616,P014,5,Beautiful finish and fast delivery.,2024-08-08
+REV000216,ORD000618,P007,4,Nice product and easy to use.,2024-07-26
+REV000217,ORD000620,P009,5,Beautiful finish and fast delivery.,2024-08-03
+REV000218,ORD000622,P010,5,Beautiful finish and fast delivery.,2024-08-05
+REV000219,ORD000629,P013,5,Beautiful finish and fast delivery.,2024-07-23
+REV000220,ORD000630,P018,5,Beautiful finish and fast delivery.,2024-08-04
+REV000221,ORD000636,P013,4,Good quality and arrived on time.,2024-07-31
+REV000222,ORD000638,P018,4,Nice product and easy to use.,2024-07-13
+REV000223,ORD000645,P009,2,Delivery took too long for this order.,2024-07-24
+REV000224,ORD000652,P020,5,Excellent quality; I would buy it again.,2024-07-22
+REV000225,ORD000656,P007,4,Good quality and arrived on time.,2024-08-07
+REV000226,ORD000662,P001,5,Excellent quality; I would buy it again.,2024-08-02
+REV000227,ORD000663,P002,5,Beautiful finish and fast delivery.,2024-07-24
+REV000228,ORD000664,P014,5,Beautiful finish and fast delivery.,2024-08-16
+REV000229,ORD000665,P014,5,Beautiful finish and fast delivery.,2024-07-16
+REV000230,ORD000667,P001,3,Works as described; average experience.,2024-07-26
+REV000231,ORD000668,P013,4,Nice product and easy to use.,2024-07-22
+REV000232,ORD000670,P017,3,Works as described; average experience.,2024-08-08
+REV000233,ORD000675,P016,5,Excellent quality; I would buy it again.,2024-08-07
+REV000234,ORD000685,P003,5,Beautiful finish and fast delivery.,2024-07-30
+REV000235,ORD000691,P011,2,The item feels cheaper than expected.,2024-08-23
+REV000236,ORD000693,P018,2,Delivery took too long for this order.,2024-09-08
+REV000237,ORD000694,P007,3,"It is fine, but nothing special.",2024-08-29
+REV000238,ORD000696,P001,5,Excellent quality; I would buy it again.,2024-08-30
+REV000239,ORD000702,P002,4,Nice product and easy to use.,2024-08-25
+REV000240,ORD000710,P017,2,Delivery took too long for this order.,2024-08-28
+REV000241,ORD000716,P012,3,"It is fine, but nothing special.",2024-09-06
+REV000242,ORD000721,P004,2,The item feels cheaper than expected.,2024-08-10
+REV000243,ORD000723,P013,3,"It is fine, but nothing special.",2024-08-11
+REV000244,ORD000725,P012,5,Beautiful finish and fast delivery.,2024-08-23
+REV000245,ORD000727,P020,3,Works as described; average experience.,2024-09-08
+REV000246,ORD000731,P002,3,Works as described; average experience.,2024-08-18
+REV000247,ORD000733,P010,4,Nice product and easy to use.,2024-08-23
+REV000248,ORD000740,P013,4,Good quality and arrived on time.,2024-09-01
+REV000249,ORD000741,P014,5,Beautiful finish and fast delivery.,2024-08-25
+REV000250,ORD000744,P013,3,Works as described; average experience.,2024-08-30
+REV000251,ORD000746,P018,4,Nice product and easy to use.,2024-08-28
+REV000252,ORD000751,P004,5,Excellent quality; I would buy it again.,2024-08-16
+REV000253,ORD000753,P011,1,Very disappointed with the quality.,2024-08-26
+REV000254,ORD000756,P003,2,Delivery took too long for this order.,2024-08-27
+REV000255,ORD000757,P008,2,Delivery took too long for this order.,2024-08-16
+REV000256,ORD000758,P005,4,Nice product and easy to use.,2024-08-23
+REV000257,ORD000762,P019,4,Good quality and arrived on time.,2024-08-08
+REV000258,ORD000764,P004,3,"It is fine, but nothing special.",2024-08-20
+REV000259,ORD000768,P003,4,Nice product and easy to use.,2024-08-13
+REV000260,ORD000773,P016,3,"It is fine, but nothing special.",2024-08-13
+REV000261,ORD000774,P017,5,Beautiful finish and fast delivery.,2024-08-24
+REV000262,ORD000775,P012,4,Good quality and arrived on time.,2024-09-03
+REV000263,ORD000779,P010,4,Good quality and arrived on time.,2024-08-12
+REV000264,ORD000781,P004,1,Arrived damaged and did not match the listing.,2024-09-03
+REV000265,ORD000789,P017,5,Beautiful finish and fast delivery.,2024-09-04
+REV000266,ORD000790,P018,5,Excellent quality; I would buy it again.,2024-08-21
+REV000267,ORD000793,P016,4,Nice product and easy to use.,2024-09-01
+REV000268,ORD000796,P001,4,Good quality and arrived on time.,2024-09-12
+REV000269,ORD000801,P017,2,The item feels cheaper than expected.,2024-09-26
+REV000270,ORD000806,P014,5,Beautiful finish and fast delivery.,2024-10-11
+REV000271,ORD000809,P018,5,Beautiful finish and fast delivery.,2024-10-17
+REV000272,ORD000810,P002,3,Works as described; average experience.,2024-09-28
+REV000273,ORD000812,P007,3,Works as described; average experience.,2024-10-05
+REV000274,ORD000813,P014,5,Beautiful finish and fast delivery.,2024-10-06
+REV000275,ORD000815,P019,4,Good quality and arrived on time.,2024-09-14
+REV000276,ORD000818,P016,4,Nice product and easy to use.,2024-09-19
+REV000277,ORD000820,P016,3,"It is fine, but nothing special.",2024-09-19
+REV000278,ORD000823,P014,5,Excellent quality; I would buy it again.,2024-09-18
+REV000279,ORD000826,P020,5,Beautiful finish and fast delivery.,2024-09-21
+REV000280,ORD000828,P019,5,Beautiful finish and fast delivery.,2024-09-22
+REV000281,ORD000829,P007,4,Good quality and arrived on time.,2024-09-18
+REV000282,ORD000832,P020,4,Good quality and arrived on time.,2024-09-18
+REV000283,ORD000837,P009,4,Good quality and arrived on time.,2024-10-10
+REV000284,ORD000840,P016,4,Good quality and arrived on time.,2024-09-29
+REV000285,ORD000842,P001,5,Beautiful finish and fast delivery.,2024-09-22
+REV000286,ORD000843,P019,4,Nice product and easy to use.,2024-10-10
+REV000287,ORD000845,P001,5,Beautiful finish and fast delivery.,2024-09-19
+REV000288,ORD000848,P005,4,Nice product and easy to use.,2024-09-21
+REV000289,ORD000850,P019,1,Very disappointed with the quality.,2024-09-23
+REV000290,ORD000851,P016,3,"It is fine, but nothing special.",2024-09-15
+REV000291,ORD000854,P015,1,Arrived damaged and did not match the listing.,2024-10-06
+REV000292,ORD000856,P012,4,Nice product and easy to use.,2024-09-24
+REV000293,ORD000862,P010,4,Good quality and arrived on time.,2024-10-02
+REV000294,ORD000864,P013,3,Works as described; average experience.,2024-10-01
+REV000295,ORD000867,P013,4,Nice product and easy to use.,2024-09-27
+REV000296,ORD000868,P014,3,Works as described; average experience.,2024-10-02
+REV000297,ORD000870,P019,5,Beautiful finish and fast delivery.,2024-09-21
+REV000298,ORD000872,P003,4,Nice product and easy to use.,2024-09-14
+REV000299,ORD000874,P011,5,Beautiful finish and fast delivery.,2024-10-06
+REV000300,ORD000876,P003,4,Nice product and easy to use.,2024-10-01
+REV000301,ORD000881,P014,5,Excellent quality; I would buy it again.,2024-09-14
+REV000302,ORD000884,P017,4,Good quality and arrived on time.,2024-09-08
+REV000303,ORD000886,P011,3,"It is fine, but nothing special.",2024-09-12
+REV000304,ORD000887,P013,5,Excellent quality; I would buy it again.,2024-09-29
+REV000305,ORD000891,P009,4,Nice product and easy to use.,2024-10-10
+REV000306,ORD000893,P013,3,Works as described; average experience.,2024-10-01
+REV000307,ORD000899,P020,2,The item feels cheaper than expected.,2024-10-23
+REV000308,ORD000901,P011,5,Beautiful finish and fast delivery.,2024-10-08
+REV000309,ORD000904,P005,5,Beautiful finish and fast delivery.,2024-10-06
+REV000310,ORD000905,P011,4,Good quality and arrived on time.,2024-10-19
+REV000311,ORD000906,P016,5,Excellent quality; I would buy it again.,2024-10-27
+REV000312,ORD000911,P007,4,Nice product and easy to use.,2024-10-24
+REV000313,ORD000912,P007,5,Excellent quality; I would buy it again.,2024-11-07
+REV000314,ORD000914,P013,5,Beautiful finish and fast delivery.,2024-10-15
+REV000315,ORD000918,P007,4,Good quality and arrived on time.,2024-11-13
+REV000316,ORD000923,P015,3,Works as described; average experience.,2024-10-28
+REV000317,ORD000924,P007,1,Very disappointed with the quality.,2024-10-22
+REV000318,ORD000929,P011,4,Nice product and easy to use.,2024-10-26
+REV000319,ORD000934,P012,5,Excellent quality; I would buy it again.,2024-10-26
+REV000320,ORD000936,P008,1,Arrived damaged and did not match the listing.,2024-11-08
+REV000321,ORD000941,P009,4,Nice product and easy to use.,2024-11-06
+REV000322,ORD000946,P011,4,Good quality and arrived on time.,2024-10-22
+REV000323,ORD000947,P006,5,Excellent quality; I would buy it again.,2024-10-08
+REV000324,ORD000952,P016,5,Excellent quality; I would buy it again.,2024-10-16
+REV000325,ORD000953,P005,4,Nice product and easy to use.,2024-11-06
+REV000326,ORD000956,P012,4,Nice product and easy to use.,2024-11-03
+REV000327,ORD000960,P016,4,Nice product and easy to use.,2024-10-15
+REV000328,ORD000962,P011,4,Nice product and easy to use.,2024-11-10
+REV000329,ORD000963,P001,5,Beautiful finish and fast delivery.,2024-11-03
+REV000330,ORD000964,P010,4,Nice product and easy to use.,2024-10-18
+REV000331,ORD000965,P009,3,"It is fine, but nothing special.",2024-10-30
+REV000332,ORD000969,P006,2,The item feels cheaper than expected.,2024-11-08
+REV000333,ORD000970,P020,5,Excellent quality; I would buy it again.,2024-11-03
+REV000334,ORD000971,P009,5,Beautiful finish and fast delivery.,2024-10-27
+REV000335,ORD000972,P001,5,Beautiful finish and fast delivery.,2024-10-16
+REV000336,ORD000975,P009,4,Nice product and easy to use.,2024-10-25
+REV000337,ORD000976,P019,5,Excellent quality; I would buy it again.,2024-10-27
+REV000338,ORD000979,P012,3,Works as described; average experience.,2024-11-05
+REV000339,ORD000980,P010,5,Excellent quality; I would buy it again.,2024-10-13
+REV000340,ORD000982,P012,5,Beautiful finish and fast delivery.,2024-10-09
+REV000341,ORD000984,P010,4,Nice product and easy to use.,2024-10-20
+REV000342,ORD000985,P009,5,Excellent quality; I would buy it again.,2024-10-22
+REV000343,ORD000986,P018,4,Nice product and easy to use.,2024-10-11
+REV000344,ORD000992,P016,4,Nice product and easy to use.,2024-11-05
+REV000345,ORD000994,P019,4,Nice product and easy to use.,2024-10-11
+REV000346,ORD000995,P016,5,Beautiful finish and fast delivery.,2024-10-10
+REV000347,ORD000996,P003,4,Nice product and easy to use.,2024-10-11
+REV000348,ORD000999,P008,5,Beautiful finish and fast delivery.,2024-12-02
+REV000349,ORD001002,P017,2,Delivery took too long for this order.,2024-11-24
+REV000350,ORD001005,P003,3,"It is fine, but nothing special.",2024-12-12
+REV000351,ORD001007,P005,5,Beautiful finish and fast delivery.,2024-12-10
+REV000352,ORD001009,P020,4,Nice product and easy to use.,2024-11-16
+REV000353,ORD001012,P004,5,Excellent quality; I would buy it again.,2024-11-24
+REV000354,ORD001013,P019,5,Beautiful finish and fast delivery.,2024-12-02
+REV000355,ORD001014,P004,4,Nice product and easy to use.,2024-11-22
+REV000356,ORD001017,P005,4,Nice product and easy to use.,2024-12-19
+REV000357,ORD001019,P001,3,Works as described; average experience.,2024-12-04
+REV000358,ORD001025,P012,2,The item feels cheaper than expected.,2024-12-01
+REV000359,ORD001028,P008,4,Good quality and arrived on time.,2024-11-13
+REV000360,ORD001036,P013,4,Nice product and easy to use.,2024-11-29
+REV000361,ORD001039,P020,5,Excellent quality; I would buy it again.,2024-11-14
+REV000362,ORD001041,P014,5,Excellent quality; I would buy it again.,2024-12-03
+REV000363,ORD001043,P015,5,Beautiful finish and fast delivery.,2024-12-02
+REV000364,ORD001044,P009,3,Works as described; average experience.,2024-12-18
+REV000365,ORD001050,P014,2,Delivery took too long for this order.,2024-11-17
+REV000366,ORD001058,P002,4,Nice product and easy to use.,2024-11-28
+REV000367,ORD001060,P020,4,Nice product and easy to use.,2024-11-18
+REV000368,ORD001062,P018,3,"It is fine, but nothing special.",2024-11-26
+REV000369,ORD001067,P020,4,Nice product and easy to use.,2024-12-02
+REV000370,ORD001068,P014,3,Works as described; average experience.,2024-11-24
+REV000371,ORD001070,P001,4,Good quality and arrived on time.,2024-11-22
+REV000372,ORD001071,P013,4,Nice product and easy to use.,2024-11-29
+REV000373,ORD001073,P017,5,Excellent quality; I would buy it again.,2024-11-20
+REV000374,ORD001076,P006,2,Delivery took too long for this order.,2024-11-23
+REV000375,ORD001077,P002,4,Nice product and easy to use.,2024-12-08
+REV000376,ORD001090,P011,3,"It is fine, but nothing special.",2024-12-02
+REV000377,ORD001091,P020,5,Excellent quality; I would buy it again.,2024-12-09
+REV000378,ORD001094,P009,4,Good quality and arrived on time.,2024-11-23
+REV000379,ORD001095,P016,1,Arrived damaged and did not match the listing.,2024-11-24
+REV000380,ORD001096,P001,3,"It is fine, but nothing special.",2024-11-24
+REV000381,ORD001097,P019,2,Delivery took too long for this order.,2024-11-18
+REV000382,ORD001100,P005,4,Nice product and easy to use.,2024-12-05
+REV000383,ORD001101,P018,4,Good quality and arrived on time.,2024-12-09
+REV000384,ORD001109,P007,5,Excellent quality; I would buy it again.,2024-11-25
+REV000385,ORD001113,P015,5,Beautiful finish and fast delivery.,2024-12-06
+REV000386,ORD001115,P010,1,Arrived damaged and did not match the listing.,2024-12-10
+REV000387,ORD001123,P013,3,"It is fine, but nothing special.",2024-11-22
+REV000388,ORD001125,P010,4,Nice product and easy to use.,2024-11-11
+REV000389,ORD001126,P020,3,Works as described; average experience.,2024-12-01
+REV000390,ORD001127,P008,3,Works as described; average experience.,2024-11-11
+REV000391,ORD001130,P018,4,Nice product and easy to use.,2024-12-06
+REV000392,ORD001137,P011,5,Beautiful finish and fast delivery.,2024-12-25
+REV000393,ORD001146,P017,4,Nice product and easy to use.,2024-12-25
+REV000394,ORD001148,P007,3,Works as described; average experience.,2024-12-31
+REV000395,ORD001149,P020,4,Nice product and easy to use.,2024-12-30
+REV000396,ORD001152,P018,5,Excellent quality; I would buy it again.,2025-01-03
+REV000397,ORD001153,P003,3,Works as described; average experience.,2024-12-21
+REV000398,ORD001155,P017,5,Beautiful finish and fast delivery.,2025-01-12
+REV000399,ORD001157,P002,3,"It is fine, but nothing special.",2024-12-18
+REV000400,ORD001160,P007,5,Excellent quality; I would buy it again.,2025-01-08
+REV000401,ORD001170,P005,5,Beautiful finish and fast delivery.,2024-12-24
+REV000402,ORD001171,P010,4,Good quality and arrived on time.,2024-12-10
+REV000403,ORD001178,P008,5,Beautiful finish and fast delivery.,2025-01-04
+REV000404,ORD001180,P003,4,Good quality and arrived on time.,2024-12-25
+REV000405,ORD001183,P006,3,"It is fine, but nothing special.",2024-12-22
+REV000406,ORD001189,P002,4,Good quality and arrived on time.,2024-12-18
+REV000407,ORD001194,P005,2,Delivery took too long for this order.,2025-01-09
+REV000408,ORD001195,P013,5,Excellent quality; I would buy it again.,2024-12-22
+REV000409,ORD001196,P019,4,Good quality and arrived on time.,2024-12-29
+REV000410,ORD001197,P012,5,Excellent quality; I would buy it again.,2025-01-15
+REV000411,ORD001199,P019,5,Excellent quality; I would buy it again.,2024-12-15
+REV000412,ORD001203,P005,5,Excellent quality; I would buy it again.,2024-12-16
+REV000413,ORD001205,P016,4,Good quality and arrived on time.,2024-12-28
+REV000414,ORD001206,P004,2,The item feels cheaper than expected.,2025-01-03
+REV000415,ORD001210,P003,4,Good quality and arrived on time.,2024-12-14
+REV000416,ORD001212,P009,4,Nice product and easy to use.,2024-12-28
+REV000417,ORD001215,P020,5,Beautiful finish and fast delivery.,2025-01-06
+REV000418,ORD001218,P004,4,Nice product and easy to use.,2024-12-26
+REV000419,ORD001220,P006,4,Nice product and easy to use.,2024-12-19
+REV000420,ORD001221,P016,5,Excellent quality; I would buy it again.,2024-12-29
+REV000421,ORD001226,P006,5,Beautiful finish and fast delivery.,2025-01-03
+REV000422,ORD001228,P002,3,"It is fine, but nothing special.",2024-12-07
+REV000423,ORD001229,P005,1,Very disappointed with the quality.,2024-12-28
+REV000424,ORD001235,P018,4,Good quality and arrived on time.,2024-12-23
+REV000425,ORD001238,P001,5,Beautiful finish and fast delivery.,2024-12-31
+REV000426,ORD001239,P006,4,Nice product and easy to use.,2024-12-13
+REV000427,ORD001245,P020,5,Excellent quality; I would buy it again.,2024-12-26
+REV000428,ORD001246,P017,4,Good quality and arrived on time.,2024-12-12
+REV000429,ORD001251,P012,4,Good quality and arrived on time.,2024-12-21
+REV000430,ORD001258,P018,4,Nice product and easy to use.,2024-12-28
+REV000431,ORD001262,P020,3,"It is fine, but nothing special.",2024-12-16
+REV000432,ORD001267,P016,5,Beautiful finish and fast delivery.,2024-12-14
+REV000433,ORD001270,P001,4,Nice product and easy to use.,2025-01-11
+REV000434,ORD001271,P001,5,Beautiful finish and fast delivery.,2024-12-28
+REV000435,ORD001278,P005,5,Excellent quality; I would buy it again.,2024-12-30
+REV000436,ORD001281,P001,5,Beautiful finish and fast delivery.,2024-12-25
+REV000437,ORD001284,P017,5,Beautiful finish and fast delivery.,2025-01-12
+REV000438,ORD001286,P001,5,Beautiful finish and fast delivery.,2025-01-16
+REV000439,ORD001287,P018,5,Excellent quality; I would buy it again.,2025-01-16
+REV000440,ORD001293,P002,4,Nice product and easy to use.,2025-02-05
+REV000441,ORD001296,P009,4,Good quality and arrived on time.,2025-02-14
+REV000442,ORD001300,P009,5,Beautiful finish and fast delivery.,2025-01-29
+REV000443,ORD001301,P003,5,Excellent quality; I would buy it again.,2025-02-01
+REV000444,ORD001303,P017,4,Nice product and easy to use.,2025-02-08
+REV000445,ORD001306,P013,5,Excellent quality; I would buy it again.,2025-02-03
+REV000446,ORD001312,P014,5,Excellent quality; I would buy it again.,2025-01-13
+REV000447,ORD001313,P007,5,Beautiful finish and fast delivery.,2025-02-03
+REV000448,ORD001318,P020,4,Nice product and easy to use.,2025-01-21
+REV000449,ORD001320,P006,4,Good quality and arrived on time.,2025-01-24
+REV000450,ORD001326,P017,3,Works as described; average experience.,2025-01-18
+REV000451,ORD001328,P006,5,Beautiful finish and fast delivery.,2025-02-05
+REV000452,ORD001330,P013,5,Excellent quality; I would buy it again.,2025-01-23
+REV000453,ORD001334,P001,4,Nice product and easy to use.,2025-01-18
+REV000454,ORD001335,P004,4,Good quality and arrived on time.,2025-02-05
+REV000455,ORD001340,P006,5,Beautiful finish and fast delivery.,2025-02-09
+REV000456,ORD001343,P008,5,Beautiful finish and fast delivery.,2025-02-10
+REV000457,ORD001345,P019,5,Excellent quality; I would buy it again.,2025-02-01
+REV000458,ORD001346,P018,5,Excellent quality; I would buy it again.,2025-02-15
+REV000459,ORD001351,P011,1,Arrived damaged and did not match the listing.,2025-02-05
+REV000460,ORD001353,P011,5,Excellent quality; I would buy it again.,2025-02-04
+REV000461,ORD001355,P007,3,"It is fine, but nothing special.",2025-02-01
+REV000462,ORD001358,P020,3,Works as described; average experience.,2025-01-18
+REV000463,ORD001360,P009,3,"It is fine, but nothing special.",2025-02-06
+REV000464,ORD001363,P001,4,Nice product and easy to use.,2025-01-10
+REV000465,ORD001365,P005,4,Good quality and arrived on time.,2025-02-08
+REV000466,ORD001366,P009,1,Very disappointed with the quality.,2025-01-25
+REV000467,ORD001370,P011,2,Delivery took too long for this order.,2025-01-21
+REV000468,ORD001375,P002,4,Good quality and arrived on time.,2025-01-12
+REV000469,ORD001381,P013,3,"It is fine, but nothing special.",2025-01-29
+REV000470,ORD001394,P008,3,"It is fine, but nothing special.",2025-02-27
+REV000471,ORD001395,P012,3,Works as described; average experience.,2025-02-13
+REV000472,ORD001398,P011,2,Delivery took too long for this order.,2025-03-06
+REV000473,ORD001399,P010,5,Beautiful finish and fast delivery.,2025-03-07
+REV000474,ORD001404,P019,4,Good quality and arrived on time.,2025-03-07
+REV000475,ORD001407,P010,4,Nice product and easy to use.,2025-03-03
+REV000476,ORD001408,P013,4,Good quality and arrived on time.,2025-02-28
+REV000477,ORD001411,P011,5,Excellent quality; I would buy it again.,2025-02-16
+REV000478,ORD001416,P008,5,Excellent quality; I would buy it again.,2025-03-13
+REV000479,ORD001422,P006,4,Nice product and easy to use.,2025-02-27
+REV000480,ORD001423,P012,4,Nice product and easy to use.,2025-02-15
+REV000481,ORD001424,P017,3,Works as described; average experience.,2025-02-08
+REV000482,ORD001425,P019,4,Nice product and easy to use.,2025-02-14
+REV000483,ORD001431,P005,4,Good quality and arrived on time.,2025-02-28
+REV000484,ORD001437,P012,5,Beautiful finish and fast delivery.,2025-03-01
+REV000485,ORD001438,P016,5,Excellent quality; I would buy it again.,2025-02-16
+REV000486,ORD001439,P007,4,Nice product and easy to use.,2025-02-14
+REV000487,ORD001444,P010,4,Nice product and easy to use.,2025-02-28
+REV000488,ORD001445,P009,5,Beautiful finish and fast delivery.,2025-03-12
+REV000489,ORD001447,P010,3,Works as described; average experience.,2025-02-23
+REV000490,ORD001453,P001,4,Good quality and arrived on time.,2025-02-26
+REV000491,ORD001454,P007,5,Excellent quality; I would buy it again.,2025-03-04
+REV000492,ORD001455,P005,4,Nice product and easy to use.,2025-03-01
+REV000493,ORD001456,P017,4,Good quality and arrived on time.,2025-02-27
+REV000494,ORD001457,P014,4,Nice product and easy to use.,2025-03-02
+REV000495,ORD001459,P018,5,Beautiful finish and fast delivery.,2025-02-11
+REV000496,ORD001461,P019,1,Arrived damaged and did not match the listing.,2025-02-16
+REV000497,ORD001464,P008,4,Good quality and arrived on time.,2025-02-23
+REV000498,ORD001469,P008,5,Excellent quality; I would buy it again.,2025-02-21
+REV000499,ORD001471,P009,4,Nice product and easy to use.,2025-02-07
+REV000500,ORD001479,P016,5,Beautiful finish and fast delivery.,2025-03-01
+REV000501,ORD001482,P012,5,Excellent quality; I would buy it again.,2025-03-01
+REV000502,ORD001485,P015,5,Excellent quality; I would buy it again.,2025-03-19
+REV000503,ORD001487,P017,4,Nice product and easy to use.,2025-04-17
+REV000504,ORD001489,P009,4,Nice product and easy to use.,2025-04-05
+REV000505,ORD001491,P018,4,Good quality and arrived on time.,2025-03-15
+REV000506,ORD001492,P009,5,Beautiful finish and fast delivery.,2025-03-25
+REV000507,ORD001495,P002,3,"It is fine, but nothing special.",2025-03-27
+REV000508,ORD001497,P004,5,Excellent quality; I would buy it again.,2025-04-07
+REV000509,ORD001498,P003,4,Nice product and easy to use.,2025-03-26
+REV000510,ORD001503,P015,5,Beautiful finish and fast delivery.,2025-03-14
+REV000511,ORD001506,P019,5,Excellent quality; I would buy it again.,2025-04-05
+REV000512,ORD001508,P012,5,Excellent quality; I would buy it again.,2025-03-24
+REV000513,ORD001511,P003,5,Beautiful finish and fast delivery.,2025-03-19
+REV000514,ORD001512,P008,5,Excellent quality; I would buy it again.,2025-04-01
+REV000515,ORD001513,P020,4,Good quality and arrived on time.,2025-04-08
+REV000516,ORD001516,P009,3,"It is fine, but nothing special.",2025-03-25
+REV000517,ORD001520,P017,4,Nice product and easy to use.,2025-03-31
+REV000518,ORD001523,P020,5,Excellent quality; I would buy it again.,2025-04-17
+REV000519,ORD001524,P020,3,"It is fine, but nothing special.",2025-03-14
+REV000520,ORD001526,P014,2,The item feels cheaper than expected.,2025-03-20
+REV000521,ORD001529,P006,3,Works as described; average experience.,2025-04-05
+REV000522,ORD001531,P008,5,Beautiful finish and fast delivery.,2025-04-01
+REV000523,ORD001533,P005,4,Good quality and arrived on time.,2025-03-31
+REV000524,ORD001543,P002,5,Excellent quality; I would buy it again.,2025-03-16
+REV000525,ORD001545,P013,5,Beautiful finish and fast delivery.,2025-04-10
+REV000526,ORD001549,P014,4,Good quality and arrived on time.,2025-03-23
+REV000527,ORD001554,P010,4,Nice product and easy to use.,2025-03-31
+REV000528,ORD001559,P010,5,Beautiful finish and fast delivery.,2025-03-21
+REV000529,ORD001561,P020,5,Beautiful finish and fast delivery.,2025-03-23
+REV000530,ORD001567,P011,4,Nice product and easy to use.,2025-03-17
+REV000531,ORD001568,P004,5,Excellent quality; I would buy it again.,2025-03-05
+REV000532,ORD001569,P017,2,The item feels cheaper than expected.,2025-03-26
+REV000533,ORD001570,P011,5,Beautiful finish and fast delivery.,2025-04-09
+REV000534,ORD001575,P004,5,Beautiful finish and fast delivery.,2025-04-06
+REV000535,ORD001576,P015,3,Works as described; average experience.,2025-04-07
+REV000536,ORD001577,P013,4,Good quality and arrived on time.,2025-03-19
+REV000537,ORD001580,P020,2,The item feels cheaper than expected.,2025-04-09
+REV000538,ORD001581,P020,3,"It is fine, but nothing special.",2025-03-17
+REV000539,ORD001582,P005,4,Good quality and arrived on time.,2025-04-02
+REV000540,ORD001583,P003,2,Delivery took too long for this order.,2025-04-09
+REV000541,ORD001585,P006,4,Nice product and easy to use.,2025-04-10
+REV000542,ORD001587,P007,2,Delivery took too long for this order.,2025-04-20
+REV000543,ORD001588,P002,4,Nice product and easy to use.,2025-05-02
+REV000544,ORD001589,P006,4,Good quality and arrived on time.,2025-04-22
+REV000545,ORD001590,P010,5,Excellent quality; I would buy it again.,2025-04-28
+REV000546,ORD001591,P016,4,Nice product and easy to use.,2025-04-13
+REV000547,ORD001592,P004,3,"It is fine, but nothing special.",2025-04-18
+REV000548,ORD001595,P014,4,Good quality and arrived on time.,2025-04-25
+REV000549,ORD001597,P009,3,"It is fine, but nothing special.",2025-05-10
+REV000550,ORD001600,P006,4,Good quality and arrived on time.,2025-04-11
+REV000551,ORD001601,P011,5,Excellent quality; I would buy it again.,2025-05-04
+REV000552,ORD001603,P020,5,Excellent quality; I would buy it again.,2025-04-18
+REV000553,ORD001605,P002,4,Nice product and easy to use.,2025-04-18
+REV000554,ORD001607,P016,4,Good quality and arrived on time.,2025-04-26
+REV000555,ORD001610,P018,1,Very disappointed with the quality.,2025-04-18
+REV000556,ORD001612,P010,2,Delivery took too long for this order.,2025-04-19
+REV000557,ORD001613,P005,5,Beautiful finish and fast delivery.,2025-05-01
+REV000558,ORD001615,P016,5,Beautiful finish and fast delivery.,2025-05-04
+REV000559,ORD001616,P004,3,"It is fine, but nothing special.",2025-05-10
+REV000560,ORD001619,P018,1,Arrived damaged and did not match the listing.,2025-04-26
+REV000561,ORD001620,P014,5,Beautiful finish and fast delivery.,2025-04-14
+REV000562,ORD001625,P002,5,Beautiful finish and fast delivery.,2025-04-27
+REV000563,ORD001630,P020,5,Beautiful finish and fast delivery.,2025-04-19
+REV000564,ORD001632,P010,4,Good quality and arrived on time.,2025-04-06
+REV000565,ORD001635,P004,5,Beautiful finish and fast delivery.,2025-04-15
+REV000566,ORD001636,P009,2,Delivery took too long for this order.,2025-05-04
+REV000567,ORD001639,P009,4,Good quality and arrived on time.,2025-05-07
+REV000568,ORD001642,P013,5,Beautiful finish and fast delivery.,2025-05-03
+REV000569,ORD001644,P011,5,Beautiful finish and fast delivery.,2025-05-02
+REV000570,ORD001647,P020,5,Beautiful finish and fast delivery.,2025-05-01
+REV000571,ORD001649,P007,5,Beautiful finish and fast delivery.,2025-04-19
+REV000572,ORD001650,P013,4,Nice product and easy to use.,2025-05-05
+REV000573,ORD001651,P020,4,Nice product and easy to use.,2025-04-22
+REV000574,ORD001657,P012,3,"It is fine, but nothing special.",2025-05-09
+REV000575,ORD001658,P020,2,The item feels cheaper than expected.,2025-04-22
+REV000576,ORD001659,P013,1,Very disappointed with the quality.,2025-04-15
+REV000577,ORD001660,P009,5,Excellent quality; I would buy it again.,2025-04-23
+REV000578,ORD001663,P015,2,Delivery took too long for this order.,2025-04-24
+REV000579,ORD001664,P014,2,Delivery took too long for this order.,2025-04-26
+REV000580,ORD001665,P016,4,Nice product and easy to use.,2025-04-28
+REV000581,ORD001671,P010,5,Beautiful finish and fast delivery.,2025-04-29
+REV000582,ORD001673,P011,4,Good quality and arrived on time.,2025-05-15
+REV000583,ORD001674,P017,1,Arrived damaged and did not match the listing.,2025-05-09
+REV000584,ORD001678,P013,3,Works as described; average experience.,2025-05-13
+REV000585,ORD001682,P003,4,Nice product and easy to use.,2025-04-20
+REV000586,ORD001683,P006,3,"It is fine, but nothing special.",2025-04-24
+REV000587,ORD001684,P007,5,Excellent quality; I would buy it again.,2025-04-26
+REV000588,ORD001687,P003,3,"It is fine, but nothing special.",2025-05-07
+REV000589,ORD001692,P002,5,Excellent quality; I would buy it again.,2025-04-15
+REV000590,ORD001695,P004,2,The item feels cheaper than expected.,2025-05-16
+REV000591,ORD001697,P008,4,Good quality and arrived on time.,2025-06-11
+REV000592,ORD001698,P009,4,Nice product and easy to use.,2025-06-11
+REV000593,ORD001699,P017,5,Beautiful finish and fast delivery.,2025-05-28
+REV000594,ORD001702,P003,3,Works as described; average experience.,2025-06-06
+REV000595,ORD001707,P008,5,Excellent quality; I would buy it again.,2025-06-05
+REV000596,ORD001711,P004,3,Works as described; average experience.,2025-05-17
+REV000597,ORD001714,P017,3,Works as described; average experience.,2025-06-06
+REV000598,ORD001715,P019,3,"It is fine, but nothing special.",2025-05-19
+REV000599,ORD001716,P010,5,Beautiful finish and fast delivery.,2025-05-15
+REV000600,ORD001717,P019,3,"It is fine, but nothing special.",2025-05-21
+REV000601,ORD001718,P012,4,Nice product and easy to use.,2025-06-13
+REV000602,ORD001724,P007,5,Beautiful finish and fast delivery.,2025-05-26
+REV000603,ORD001725,P015,5,Excellent quality; I would buy it again.,2025-05-26
+REV000604,ORD001726,P002,4,Nice product and easy to use.,2025-05-22
+REV000605,ORD001728,P015,5,Excellent quality; I would buy it again.,2025-06-05
+REV000606,ORD001737,P003,4,Good quality and arrived on time.,2025-06-03
+REV000607,ORD001739,P012,5,Beautiful finish and fast delivery.,2025-06-01
+REV000608,ORD001740,P013,5,Beautiful finish and fast delivery.,2025-06-09
+REV000609,ORD001742,P011,4,Good quality and arrived on time.,2025-06-04
+REV000610,ORD001745,P003,5,Beautiful finish and fast delivery.,2025-05-14
+REV000611,ORD001746,P004,4,Nice product and easy to use.,2025-05-29
+REV000612,ORD001747,P001,3,Works as described; average experience.,2025-06-06
+REV000613,ORD001753,P011,4,Nice product and easy to use.,2025-05-20
+REV000614,ORD001755,P007,5,Excellent quality; I would buy it again.,2025-06-08
+REV000615,ORD001759,P014,4,Nice product and easy to use.,2025-05-09
+REV000616,ORD001763,P001,2,Delivery took too long for this order.,2025-05-03
+REV000617,ORD001764,P002,5,Beautiful finish and fast delivery.,2025-06-07
+REV000618,ORD001772,P018,4,Nice product and easy to use.,2025-05-23
+REV000619,ORD001773,P005,5,Excellent quality; I would buy it again.,2025-06-06
+REV000620,ORD001774,P011,5,Beautiful finish and fast delivery.,2025-06-10
+REV000621,ORD001779,P007,4,Good quality and arrived on time.,2025-05-16
+REV000622,ORD001782,P010,4,Nice product and easy to use.,2025-05-24
+REV000623,ORD001785,P019,5,Beautiful finish and fast delivery.,2025-05-30
+REV000624,ORD001786,P020,5,Excellent quality; I would buy it again.,2025-05-12
+REV000625,ORD001789,P020,4,Nice product and easy to use.,2025-06-05
+REV000626,ORD001790,P003,5,Excellent quality; I would buy it again.,2025-05-17
+REV000627,ORD001795,P008,3,"It is fine, but nothing special.",2025-05-21
+REV000628,ORD001796,P013,3,Works as described; average experience.,2025-06-05
+REV000629,ORD001798,P012,5,Excellent quality; I would buy it again.,2025-05-27
+REV000630,ORD001800,P018,1,Very disappointed with the quality.,2025-05-20
+REV000631,ORD001801,P017,2,Delivery took too long for this order.,2025-06-02
+REV000632,ORD001802,P010,3,Works as described; average experience.,2025-06-02
+REV000633,ORD001805,P003,5,Excellent quality; I would buy it again.,2025-06-26
+REV000634,ORD001810,P015,5,Beautiful finish and fast delivery.,2025-06-19
+REV000635,ORD001811,P008,4,Good quality and arrived on time.,2025-07-06
+REV000636,ORD001816,P014,5,Beautiful finish and fast delivery.,2025-07-15
+REV000637,ORD001818,P002,5,Beautiful finish and fast delivery.,2025-07-10
+REV000638,ORD001820,P013,4,Nice product and easy to use.,2025-06-24
+REV000639,ORD001821,P014,4,Nice product and easy to use.,2025-06-15
+REV000640,ORD001825,P015,3,Works as described; average experience.,2025-06-27
+REV000641,ORD001833,P016,5,Excellent quality; I would buy it again.,2025-06-22
+REV000642,ORD001835,P002,5,Excellent quality; I would buy it again.,2025-06-20
+REV000643,ORD001852,P007,4,Nice product and easy to use.,2025-06-21
+REV000644,ORD001857,P007,4,Good quality and arrived on time.,2025-06-17
+REV000645,ORD001858,P003,2,The item feels cheaper than expected.,2025-06-26
+REV000646,ORD001867,P007,5,Excellent quality; I would buy it again.,2025-06-30
+REV000647,ORD001875,P014,5,Beautiful finish and fast delivery.,2025-07-07
+REV000648,ORD001880,P014,5,Beautiful finish and fast delivery.,2025-06-21
+REV000649,ORD001887,P001,4,Nice product and easy to use.,2025-06-15
+REV000650,ORD001888,P010,4,Nice product and easy to use.,2025-07-03
+REV000651,ORD001889,P007,4,Good quality and arrived on time.,2025-06-22
+REV000652,ORD001890,P017,4,Nice product and easy to use.,2025-06-11
+REV000653,ORD001892,P012,5,Beautiful finish and fast delivery.,2025-07-03
+REV000654,ORD001893,P007,5,Excellent quality; I would buy it again.,2025-07-01
+REV000655,ORD001898,P006,5,Beautiful finish and fast delivery.,2025-07-02
+REV000656,ORD001902,P019,4,Nice product and easy to use.,2025-06-25
+REV000657,ORD001906,P018,5,Beautiful finish and fast delivery.,2025-07-04
+REV000658,ORD001907,P018,5,Excellent quality; I would buy it again.,2025-06-30
+REV000659,ORD001910,P006,5,Beautiful finish and fast delivery.,2025-06-29
+REV000660,ORD001912,P018,3,"It is fine, but nothing special.",2025-06-10
+REV000661,ORD001915,P014,4,Good quality and arrived on time.,2025-06-16
+REV000662,ORD001918,P001,3,Works as described; average experience.,2025-06-22
+REV000663,ORD001923,P009,4,Nice product and easy to use.,2025-08-01
+REV000664,ORD001925,P002,4,Good quality and arrived on time.,2025-08-03
+REV000665,ORD001928,P017,5,Beautiful finish and fast delivery.,2025-08-03
+REV000666,ORD001929,P007,4,Nice product and easy to use.,2025-07-18
+REV000667,ORD001936,P012,4,Nice product and easy to use.,2025-07-27
+REV000668,ORD001941,P004,4,Nice product and easy to use.,2025-07-16
+REV000669,ORD001945,P015,4,Good quality and arrived on time.,2025-07-14
+REV000670,ORD001947,P006,5,Excellent quality; I would buy it again.,2025-08-07
+REV000671,ORD001949,P006,3,Works as described; average experience.,2025-07-15
+REV000672,ORD001950,P008,4,Nice product and easy to use.,2025-07-15
+REV000673,ORD001952,P004,5,Beautiful finish and fast delivery.,2025-07-14
+REV000674,ORD001953,P014,5,Beautiful finish and fast delivery.,2025-07-23
+REV000675,ORD001955,P018,3,"It is fine, but nothing special.",2025-08-05
+REV000676,ORD001957,P018,4,Good quality and arrived on time.,2025-08-13
+REV000677,ORD001963,P015,4,Good quality and arrived on time.,2025-07-26
+REV000678,ORD001967,P003,4,Good quality and arrived on time.,2025-08-02
+REV000679,ORD001968,P004,5,Excellent quality; I would buy it again.,2025-07-06
+REV000680,ORD001971,P002,4,Nice product and easy to use.,2025-08-02
+REV000681,ORD001976,P007,3,"It is fine, but nothing special.",2025-07-17
+REV000682,ORD001982,P019,4,Good quality and arrived on time.,2025-07-29
+REV000683,ORD001986,P008,4,Nice product and easy to use.,2025-08-06
+REV000684,ORD001987,P013,5,Excellent quality; I would buy it again.,2025-07-17
+REV000685,ORD001994,P014,3,Works as described; average experience.,2025-07-31
+REV000686,ORD001995,P004,3,Works as described; average experience.,2025-07-30
+REV000687,ORD002000,P020,4,Nice product and easy to use.,2025-07-21
+REV000688,ORD002002,P019,4,Good quality and arrived on time.,2025-07-29
+REV000689,ORD002005,P004,4,Good quality and arrived on time.,2025-07-09
+REV000690,ORD002008,P017,3,Works as described; average experience.,2025-07-29
+REV000691,ORD002012,P007,3,"It is fine, but nothing special.",2025-07-25
+REV000692,ORD002013,P014,1,Arrived damaged and did not match the listing.,2025-07-29
+REV000693,ORD002018,P013,5,Beautiful finish and fast delivery.,2025-08-06
+REV000694,ORD002022,P013,5,Excellent quality; I would buy it again.,2025-08-12
+REV000695,ORD002024,P001,4,Nice product and easy to use.,2025-08-06
+REV000696,ORD002025,P001,3,"It is fine, but nothing special.",2025-07-17
+REV000697,ORD002026,P001,2,The item feels cheaper than expected.,2025-07-20
+REV000698,ORD002028,P004,4,Nice product and easy to use.,2025-07-19
+REV000699,ORD002031,P010,3,"It is fine, but nothing special.",2025-07-14
+REV000700,ORD002032,P006,5,Beautiful finish and fast delivery.,2025-08-01
+REV000701,ORD002039,P017,3,Works as described; average experience.,2025-08-19
+REV000702,ORD002040,P019,4,Good quality and arrived on time.,2025-08-30
+REV000703,ORD002042,P020,4,Good quality and arrived on time.,2025-08-21
+REV000704,ORD002045,P006,4,Good quality and arrived on time.,2025-09-07
+REV000705,ORD002050,P004,3,"It is fine, but nothing special.",2025-08-12
+REV000706,ORD002052,P003,5,Excellent quality; I would buy it again.,2025-08-26
+REV000707,ORD002056,P014,5,Beautiful finish and fast delivery.,2025-08-21
+REV000708,ORD002060,P018,5,Excellent quality; I would buy it again.,2025-09-07
+REV000709,ORD002061,P013,4,Nice product and easy to use.,2025-08-30
+REV000710,ORD002067,P011,3,"It is fine, but nothing special.",2025-08-30
+REV000711,ORD002068,P002,5,Excellent quality; I would buy it again.,2025-09-07
+REV000712,ORD002071,P007,3,Works as described; average experience.,2025-09-03
+REV000713,ORD002073,P006,2,Delivery took too long for this order.,2025-09-03
+REV000714,ORD002075,P008,4,Good quality and arrived on time.,2025-09-04
+REV000715,ORD002076,P011,5,Excellent quality; I would buy it again.,2025-08-25
+REV000716,ORD002080,P002,2,Delivery took too long for this order.,2025-08-29
+REV000717,ORD002087,P014,5,Beautiful finish and fast delivery.,2025-09-02
+REV000718,ORD002089,P001,4,Good quality and arrived on time.,2025-09-06
+REV000719,ORD002091,P011,5,Excellent quality; I would buy it again.,2025-08-16
+REV000720,ORD002098,P007,5,Excellent quality; I would buy it again.,2025-09-03
+REV000721,ORD002099,P002,4,Nice product and easy to use.,2025-08-25
+REV000722,ORD002101,P014,4,Nice product and easy to use.,2025-09-08
+REV000723,ORD002109,P006,5,Beautiful finish and fast delivery.,2025-08-30
+REV000724,ORD002112,P012,5,Beautiful finish and fast delivery.,2025-09-06
+REV000725,ORD002113,P016,3,"It is fine, but nothing special.",2025-08-29
+REV000726,ORD002120,P007,5,Excellent quality; I would buy it again.,2025-08-30
+REV000727,ORD002122,P005,5,Excellent quality; I would buy it again.,2025-08-09
+REV000728,ORD002123,P009,5,Beautiful finish and fast delivery.,2025-08-24
+REV000729,ORD002125,P017,4,Good quality and arrived on time.,2025-08-24
+REV000730,ORD002126,P001,5,Beautiful finish and fast delivery.,2025-09-03
+REV000731,ORD002127,P006,3,Works as described; average experience.,2025-09-16
+REV000732,ORD002128,P003,5,Excellent quality; I would buy it again.,2025-09-03
+REV000733,ORD002132,P013,1,Very disappointed with the quality.,2025-09-10
+REV000734,ORD002134,P003,5,Beautiful finish and fast delivery.,2025-09-10
+REV000735,ORD002137,P020,3,Works as described; average experience.,2025-09-14
+REV000736,ORD002141,P013,3,"It is fine, but nothing special.",2025-09-11
+REV000737,ORD002142,P004,3,Works as described; average experience.,2025-08-12
+REV000738,ORD002145,P010,3,Works as described; average experience.,2025-09-02
+REV000739,ORD002146,P013,4,Good quality and arrived on time.,2025-08-31
+REV000740,ORD002148,P016,3,"It is fine, but nothing special.",2025-08-25
+REV000741,ORD002149,P003,5,Excellent quality; I would buy it again.,2025-09-14
+REV000742,ORD002153,P016,4,Nice product and easy to use.,2025-09-09
+REV000743,ORD002154,P016,4,Nice product and easy to use.,2025-08-19
+REV000744,ORD002157,P012,4,Good quality and arrived on time.,2025-08-10
+REV000745,ORD002159,P015,5,Beautiful finish and fast delivery.,2025-09-16
+REV000746,ORD002160,P009,3,"It is fine, but nothing special.",2025-09-13
+REV000747,ORD002169,P006,4,Nice product and easy to use.,2025-09-19
+REV000748,ORD002170,P011,4,Nice product and easy to use.,2025-10-01
+REV000749,ORD002173,P016,3,Works as described; average experience.,2025-10-09
+REV000750,ORD002176,P015,4,Nice product and easy to use.,2025-09-21
+REV000751,ORD002177,P005,4,Nice product and easy to use.,2025-09-20
+REV000752,ORD002181,P005,4,Good quality and arrived on time.,2025-09-30
+REV000753,ORD002182,P010,4,Nice product and easy to use.,2025-10-10
+REV000754,ORD002184,P015,5,Beautiful finish and fast delivery.,2025-10-03
+REV000755,ORD002185,P009,5,Excellent quality; I would buy it again.,2025-10-08
+REV000756,ORD002186,P006,4,Good quality and arrived on time.,2025-10-11
+REV000757,ORD002187,P012,2,Delivery took too long for this order.,2025-09-19
+REV000758,ORD002192,P014,4,Good quality and arrived on time.,2025-10-10
+REV000759,ORD002194,P009,4,Good quality and arrived on time.,2025-09-17
+REV000760,ORD002196,P001,5,Excellent quality; I would buy it again.,2025-09-25
+REV000761,ORD002199,P007,4,Good quality and arrived on time.,2025-09-19
+REV000762,ORD002200,P006,5,Excellent quality; I would buy it again.,2025-10-12
+REV000763,ORD002203,P004,3,"It is fine, but nothing special.",2025-09-26
+REV000764,ORD002207,P018,5,Excellent quality; I would buy it again.,2025-09-22
+REV000765,ORD002209,P006,5,Excellent quality; I would buy it again.,2025-10-03
+REV000766,ORD002211,P014,4,Nice product and easy to use.,2025-09-17
+REV000767,ORD002212,P006,3,Works as described; average experience.,2025-10-05
+REV000768,ORD002218,P017,5,Beautiful finish and fast delivery.,2025-10-03
+REV000769,ORD002220,P008,5,Excellent quality; I would buy it again.,2025-10-07
+REV000770,ORD002221,P020,5,Excellent quality; I would buy it again.,2025-10-04
+REV000771,ORD002222,P016,3,Works as described; average experience.,2025-10-11
+REV000772,ORD002224,P012,5,Excellent quality; I would buy it again.,2025-10-01
+REV000773,ORD002227,P014,2,Delivery took too long for this order.,2025-09-18
+REV000774,ORD002232,P002,4,Good quality and arrived on time.,2025-09-15
+REV000775,ORD002234,P016,5,Beautiful finish and fast delivery.,2025-09-12
+REV000776,ORD002237,P008,3,Works as described; average experience.,2025-09-22
+REV000777,ORD002238,P002,4,Nice product and easy to use.,2025-09-20
+REV000778,ORD002242,P017,1,Arrived damaged and did not match the listing.,2025-11-02
+REV000779,ORD002245,P016,5,Excellent quality; I would buy it again.,2025-11-15
+REV000780,ORD002249,P003,2,Delivery took too long for this order.,2025-10-21
+REV000781,ORD002251,P012,4,Good quality and arrived on time.,2025-10-31
+REV000782,ORD002253,P006,3,Works as described; average experience.,2025-11-02
+REV000783,ORD002256,P004,5,Excellent quality; I would buy it again.,2025-10-26
+REV000784,ORD002257,P016,5,Beautiful finish and fast delivery.,2025-11-09
+REV000785,ORD002258,P012,5,Excellent quality; I would buy it again.,2025-11-02
+REV000786,ORD002259,P010,3,Works as described; average experience.,2025-10-13
+REV000787,ORD002262,P003,4,Nice product and easy to use.,2025-11-11
+REV000788,ORD002267,P014,3,"It is fine, but nothing special.",2025-11-09
+REV000789,ORD002268,P010,5,Excellent quality; I would buy it again.,2025-11-12
+REV000790,ORD002269,P010,5,Beautiful finish and fast delivery.,2025-10-27
+REV000791,ORD002271,P001,4,Nice product and easy to use.,2025-10-16
+REV000792,ORD002274,P008,2,The item feels cheaper than expected.,2025-11-10
+REV000793,ORD002279,P001,5,Excellent quality; I would buy it again.,2025-10-25
+REV000794,ORD002282,P018,4,Good quality and arrived on time.,2025-11-12
+REV000795,ORD002283,P009,5,Beautiful finish and fast delivery.,2025-10-31
+REV000796,ORD002289,P019,5,Beautiful finish and fast delivery.,2025-11-03
+REV000797,ORD002295,P020,5,Beautiful finish and fast delivery.,2025-10-17
+REV000798,ORD002296,P006,1,Arrived damaged and did not match the listing.,2025-10-14
+REV000799,ORD002299,P013,4,Good quality and arrived on time.,2025-10-25
+REV000800,ORD002306,P002,5,Beautiful finish and fast delivery.,2025-11-01
+REV000801,ORD002308,P017,1,Very disappointed with the quality.,2025-10-27
+REV000802,ORD002309,P017,3,"It is fine, but nothing special.",2025-10-23
+REV000803,ORD002312,P006,4,Good quality and arrived on time.,2025-11-04
+REV000804,ORD002313,P003,5,Excellent quality; I would buy it again.,2025-11-04
+REV000805,ORD002314,P001,4,Good quality and arrived on time.,2025-10-26
+REV000806,ORD002327,P014,5,Beautiful finish and fast delivery.,2025-11-01
+REV000807,ORD002329,P003,5,Excellent quality; I would buy it again.,2025-11-07
+REV000808,ORD002334,P017,5,Beautiful finish and fast delivery.,2025-10-15
+REV000809,ORD002338,P002,5,Beautiful finish and fast delivery.,2025-11-06
+REV000810,ORD002339,P014,2,The item feels cheaper than expected.,2025-10-22
+REV000811,ORD002343,P012,5,Beautiful finish and fast delivery.,2025-11-09
+REV000812,ORD002344,P019,4,Nice product and easy to use.,2025-10-27
+REV000813,ORD002345,P004,5,Excellent quality; I would buy it again.,2025-10-29
+REV000814,ORD002355,P006,4,Nice product and easy to use.,2025-10-09
+REV000815,ORD002361,P019,4,Nice product and easy to use.,2025-11-17
+REV000816,ORD002362,P017,5,Beautiful finish and fast delivery.,2025-11-06
+REV000817,ORD002364,P014,4,Nice product and easy to use.,2025-11-25
+REV000818,ORD002368,P017,5,Beautiful finish and fast delivery.,2025-12-12
+REV000819,ORD002370,P006,5,Beautiful finish and fast delivery.,2025-11-16
+REV000820,ORD002371,P003,5,Beautiful finish and fast delivery.,2025-11-30
+REV000821,ORD002380,P017,4,Nice product and easy to use.,2025-11-19
+REV000822,ORD002381,P013,4,Nice product and easy to use.,2025-12-09
+REV000823,ORD002382,P015,3,Works as described; average experience.,2025-12-09
+REV000824,ORD002384,P018,5,Beautiful finish and fast delivery.,2025-11-24
+REV000825,ORD002385,P001,4,Nice product and easy to use.,2025-11-13
+REV000826,ORD002386,P019,4,Nice product and easy to use.,2025-11-19
+REV000827,ORD002390,P020,5,Excellent quality; I would buy it again.,2025-11-26
+REV000828,ORD002392,P020,4,Good quality and arrived on time.,2025-11-24
+REV000829,ORD002393,P002,5,Beautiful finish and fast delivery.,2025-11-24
+REV000830,ORD002396,P006,4,Good quality and arrived on time.,2025-11-10
+REV000831,ORD002398,P020,5,Beautiful finish and fast delivery.,2025-11-13
+REV000832,ORD002404,P009,3,Works as described; average experience.,2025-11-23
+REV000833,ORD002407,P008,5,Excellent quality; I would buy it again.,2025-11-19
+REV000834,ORD002410,P007,2,The item feels cheaper than expected.,2025-11-28
+REV000835,ORD002411,P015,5,Excellent quality; I would buy it again.,2025-11-16
+REV000836,ORD002420,P015,4,Good quality and arrived on time.,2025-11-29
+REV000837,ORD002422,P004,4,Good quality and arrived on time.,2025-11-06
+REV000838,ORD002429,P005,5,Beautiful finish and fast delivery.,2025-11-06
+REV000839,ORD002438,P005,4,Good quality and arrived on time.,2025-11-16
+REV000840,ORD002441,P003,4,Nice product and easy to use.,2025-11-21
+REV000841,ORD002447,P011,4,Nice product and easy to use.,2025-11-30
+REV000842,ORD002452,P010,5,Excellent quality; I would buy it again.,2025-11-19
+REV000843,ORD002453,P002,3,"It is fine, but nothing special.",2025-11-30
+REV000844,ORD002455,P005,3,Works as described; average experience.,2025-11-13
+REV000845,ORD002456,P001,3,Works as described; average experience.,2025-11-14
+REV000846,ORD002457,P018,5,Beautiful finish and fast delivery.,2025-11-16
+REV000847,ORD002462,P001,5,Excellent quality; I would buy it again.,2025-11-13
+REV000848,ORD002465,P011,3,"It is fine, but nothing special.",2025-11-21
+REV000849,ORD002467,P007,5,Excellent quality; I would buy it again.,2025-12-12
+REV000850,ORD002469,P017,3,"It is fine, but nothing special.",2025-12-02
+REV000851,ORD002477,P001,4,Good quality and arrived on time.,2025-11-22
+REV000852,ORD002480,P018,4,Nice product and easy to use.,2025-12-07
+REV000853,ORD002481,P004,5,Excellent quality; I would buy it again.,2025-11-17
+REV000854,ORD002482,P014,3,"It is fine, but nothing special.",2025-11-20
+REV000855,ORD002486,P004,4,Nice product and easy to use.,2025-11-17
+REV000856,ORD002487,P019,5,Excellent quality; I would buy it again.,2025-12-08
+REV000857,ORD002489,P008,4,Good quality and arrived on time.,2025-11-19
+REV000858,ORD002490,P011,4,Nice product and easy to use.,2025-11-25
+REV000859,ORD002494,P002,4,Nice product and easy to use.,2025-12-05
+REV000860,ORD002495,P019,5,Excellent quality; I would buy it again.,2025-11-17
+REV000861,ORD002496,P003,4,Nice product and easy to use.,2025-12-05
+REV000862,ORD002503,P003,5,Beautiful finish and fast delivery.,2025-12-06
+REV000863,ORD002510,P017,4,Nice product and easy to use.,2025-11-23
+REV000864,ORD002512,P010,5,Excellent quality; I would buy it again.,2025-11-29
+REV000865,ORD002515,P019,5,Beautiful finish and fast delivery.,2025-11-24
+REV000866,ORD002516,P005,4,Nice product and easy to use.,2025-11-25
+REV000867,ORD002518,P016,5,Excellent quality; I would buy it again.,2026-01-03
+REV000868,ORD002521,P009,2,Delivery took too long for this order.,2025-12-14
+REV000869,ORD002524,P009,4,Good quality and arrived on time.,2026-01-01
+REV000870,ORD002527,P008,4,Nice product and easy to use.,2025-12-21
+REV000871,ORD002530,P013,5,Excellent quality; I would buy it again.,2025-12-14
+REV000872,ORD002532,P019,1,Very disappointed with the quality.,2025-12-22
+REV000873,ORD002533,P016,5,Beautiful finish and fast delivery.,2026-01-07
+REV000874,ORD002535,P009,4,Nice product and easy to use.,2025-12-10
+REV000875,ORD002536,P011,5,Beautiful finish and fast delivery.,2026-01-16
+REV000876,ORD002538,P001,5,Beautiful finish and fast delivery.,2025-12-11
+REV000877,ORD002541,P018,4,Good quality and arrived on time.,2025-12-20
+REV000878,ORD002546,P006,5,Excellent quality; I would buy it again.,2026-01-20
+REV000879,ORD002548,P009,5,Beautiful finish and fast delivery.,2025-12-20
+REV000880,ORD002552,P005,4,Good quality and arrived on time.,2025-12-30
+REV000881,ORD002558,P015,2,Delivery took too long for this order.,2025-12-26
+REV000882,ORD002564,P006,5,Beautiful finish and fast delivery.,2025-12-30
+REV000883,ORD002565,P015,3,"It is fine, but nothing special.",2025-12-19
+REV000884,ORD002567,P001,4,Good quality and arrived on time.,2026-01-10
+REV000885,ORD002570,P008,4,Nice product and easy to use.,2025-12-14
+REV000886,ORD002571,P012,3,Works as described; average experience.,2025-12-22
+REV000887,ORD002573,P019,3,Works as described; average experience.,2026-01-10
+REV000888,ORD002574,P010,5,Beautiful finish and fast delivery.,2025-12-24
+REV000889,ORD002575,P011,4,Good quality and arrived on time.,2025-12-09
+REV000890,ORD002579,P019,1,Arrived damaged and did not match the listing.,2025-12-23
+REV000891,ORD002584,P013,4,Good quality and arrived on time.,2026-01-15
+REV000892,ORD002585,P010,2,The item feels cheaper than expected.,2025-12-17
+REV000893,ORD002587,P018,3,"It is fine, but nothing special.",2025-12-28
+REV000894,ORD002588,P020,5,Excellent quality; I would buy it again.,2025-12-14
+REV000895,ORD002592,P016,3,"It is fine, but nothing special.",2025-12-14
+REV000896,ORD002594,P004,3,Works as described; average experience.,2025-12-17
+REV000897,ORD002596,P015,1,Arrived damaged and did not match the listing.,2026-01-07
+REV000898,ORD002597,P014,3,"It is fine, but nothing special.",2025-12-22
+REV000899,ORD002598,P008,3,Works as described; average experience.,2026-01-01
+REV000900,ORD002599,P012,2,Delivery took too long for this order.,2026-01-07
+REV000901,ORD002600,P017,5,Beautiful finish and fast delivery.,2026-01-12
+REV000902,ORD002601,P005,1,Very disappointed with the quality.,2026-01-09
+REV000903,ORD002604,P012,2,Delivery took too long for this order.,2026-01-10
+REV000904,ORD002605,P019,4,Nice product and easy to use.,2026-01-02
+REV000905,ORD002607,P014,4,Good quality and arrived on time.,2026-01-08
+REV000906,ORD002608,P008,4,Good quality and arrived on time.,2026-01-10
+REV000907,ORD002609,P008,5,Excellent quality; I would buy it again.,2026-01-04
+REV000908,ORD002612,P013,5,Beautiful finish and fast delivery.,2025-12-29
+REV000909,ORD002615,P010,5,Beautiful finish and fast delivery.,2025-12-13
+REV000910,ORD002617,P003,4,Nice product and easy to use.,2025-12-27
+REV000911,ORD002623,P008,4,Nice product and easy to use.,2025-12-26
+REV000912,ORD002627,P013,5,Excellent quality; I would buy it again.,2025-12-25
+REV000913,ORD002629,P013,4,Nice product and easy to use.,2025-12-23
+REV000914,ORD002630,P003,5,Excellent quality; I would buy it again.,2026-01-07
+REV000915,ORD002636,P004,4,Nice product and easy to use.,2026-01-18
+REV000916,ORD002637,P007,5,Beautiful finish and fast delivery.,2025-12-25
+REV000917,ORD002641,P004,5,Excellent quality; I would buy it again.,2025-12-15
+REV000918,ORD002644,P013,5,Excellent quality; I would buy it again.,2026-01-06
+REV000919,ORD002647,P011,3,"It is fine, but nothing special.",2026-01-11
+REV000920,ORD002650,P002,4,Good quality and arrived on time.,2025-12-14
+REV000921,ORD002652,P014,4,Nice product and easy to use.,2025-12-16
+REV000922,ORD002655,P007,2,The item feels cheaper than expected.,2025-12-12
+REV000923,ORD002659,P001,5,Beautiful finish and fast delivery.,2025-12-24
+REV000924,ORD002665,P002,5,Excellent quality; I would buy it again.,2025-12-18
+REV000925,ORD002667,P009,3,Works as described; average experience.,2026-01-03
+REV000926,ORD002673,P019,4,Good quality and arrived on time.,2026-01-01

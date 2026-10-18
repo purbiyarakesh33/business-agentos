@@ -1,0 +1,801 @@
+﻿customer_id,region,segment,first_order_date,acquisition_channel
+C0001,West,core,,Web
+C0002,North,core,,Retail Partner
+C0003,East,core,2024-04-26,Retail Partner
+C0004,East,core,2024-09-22,Marketplace
+C0005,East,core,2024-02-04,Retail Partner
+C0006,West,premium,2024-01-14,Retail Partner
+C0007,North,value,2025-02-12,Web
+C0008,West,value,2024-06-10,Web
+C0009,West,core,2024-04-09,Marketplace
+C0010,East,value,2024-01-14,Retail Partner
+C0011,North,value,2024-05-13,Web
+C0012,West,premium,2024-07-16,Retail Partner
+C0013,North,core,2024-02-18,Web
+C0014,East,value,2024-08-19,Retail Partner
+C0015,North,core,2024-02-01,Web
+C0016,North,core,2024-10-13,Web
+C0017,West,value,2024-05-09,Web
+C0018,West,core,2024-06-15,Retail Partner
+C0019,West,value,2025-12-13,Marketplace
+C0020,South,core,2024-05-18,Web
+C0021,West,core,2024-01-23,Retail Partner
+C0022,West,core,,Marketplace
+C0023,North,premium,2024-11-26,Marketplace
+C0024,West,value,2024-01-15,Marketplace
+C0025,North,core,2024-11-22,Retail Partner
+C0026,North,premium,2024-06-19,Marketplace
+C0027,East,core,,Marketplace
+C0028,West,value,2024-02-21,Web
+C0029,West,value,2024-10-17,Marketplace
+C0030,North,core,2025-01-20,Retail Partner
+C0031,West,core,2024-11-29,Retail Partner
+C0032,North,core,2024-10-06,Web
+C0033,East,value,2025-01-29,Web
+C0034,West,value,,Marketplace
+C0035,West,core,2025-03-05,Web
+C0036,North,core,2024-12-09,Web
+C0037,West,core,2025-08-30,Retail Partner
+C0038,North,premium,2024-07-29,Web
+C0039,West,core,2024-08-25,Retail Partner
+C0040,East,core,2025-04-01,Marketplace
+C0041,North,core,2024-06-12,Marketplace
+C0042,South,core,2024-08-13,Web
+C0043,West,core,2024-05-16,Marketplace
+C0044,South,value,2024-09-14,Marketplace
+C0045,North,value,2024-02-13,Retail Partner
+C0046,West,value,2024-03-17,Web
+C0047,West,value,2024-03-03,Web
+C0048,South,value,2024-06-17,Retail Partner
+C0049,South,core,2025-11-03,Web
+C0050,South,premium,2024-06-22,Web
+C0051,West,value,2024-05-01,Web
+C0052,West,premium,2025-06-17,Web
+C0053,South,core,2024-04-26,Web
+C0054,North,core,2024-03-25,Retail Partner
+C0055,West,premium,2024-03-17,Retail Partner
+C0056,North,value,2024-11-16,Marketplace
+C0057,North,value,2024-06-29,Retail Partner
+C0058,South,core,2024-03-12,Web
+C0059,South,core,2024-01-07,Marketplace
+C0060,South,value,2024-08-03,Web
+C0061,North,core,2024-05-09,Web
+C0062,North,value,2024-10-08,Web
+C0063,West,value,2025-12-04,Retail Partner
+C0064,North,core,2024-03-10,Web
+C0065,East,core,2024-05-08,Retail Partner
+C0066,West,core,2024-11-24,Marketplace
+C0067,South,core,2024-09-03,Marketplace
+C0068,South,core,2024-12-31,Web
+C0069,East,core,,Web
+C0070,North,core,2024-06-20,Web
+C0071,South,core,2024-09-25,Retail Partner
+C0072,North,premium,2024-11-04,Web
+C0073,South,core,2024-04-09,Retail Partner
+C0074,South,value,2024-05-06,Retail Partner
+C0075,North,value,2025-03-30,Web
+C0076,North,value,2024-12-11,Web
+C0077,West,core,2024-01-23,Marketplace
+C0078,North,core,2024-12-07,Marketplace
+C0079,North,core,2024-05-09,Marketplace
+C0080,South,core,2024-04-17,Web
+C0081,East,core,2024-11-05,Web
+C0082,North,core,2024-10-04,Web
+C0083,North,premium,2024-04-07,Retail Partner
+C0084,North,value,2025-01-30,Web
+C0085,North,core,2024-03-02,Retail Partner
+C0086,North,premium,2024-12-10,Marketplace
+C0087,South,core,2024-01-03,Retail Partner
+C0088,North,value,2024-06-19,Retail Partner
+C0089,North,value,2024-05-12,Marketplace
+C0090,West,core,2024-09-25,Marketplace
+C0091,East,core,2024-07-19,Web
+C0092,North,value,2024-11-09,Retail Partner
+C0093,North,core,2024-02-16,Retail Partner
+C0094,East,premium,2024-09-20,Web
+C0095,North,core,2024-02-01,Web
+C0096,South,core,2024-11-30,Marketplace
+C0097,East,premium,2025-04-27,Web
+C0098,South,core,2025-07-14,Marketplace
+C0099,South,value,,Marketplace
+C0100,East,value,2024-03-19,Retail Partner
+C0101,North,core,2024-12-13,Retail Partner
+C0102,West,value,2024-04-09,Web
+C0103,North,premium,2024-04-03,Marketplace
+C0104,West,core,2024-06-15,Retail Partner
+C0105,West,core,2025-07-01,Web
+C0106,East,core,2025-01-28,Web
+C0107,West,core,2024-09-02,Marketplace
+C0108,North,core,2024-03-04,Web
+C0109,South,value,2024-07-10,Retail Partner
+C0110,North,value,2024-06-12,Marketplace
+C0111,West,value,2025-05-13,Web
+C0112,North,core,2024-06-24,Web
+C0113,North,core,2024-04-02,Web
+C0114,North,value,2024-01-28,Retail Partner
+C0115,South,value,2025-05-20,Web
+C0116,North,core,2024-12-11,Marketplace
+C0117,South,value,2024-10-19,Marketplace
+C0118,South,value,2024-01-22,Web
+C0119,North,core,2025-11-20,Marketplace
+C0120,South,core,2024-03-11,Retail Partner
+C0121,South,value,2024-01-01,Marketplace
+C0122,North,core,2024-04-16,Retail Partner
+C0123,North,value,2024-06-16,Marketplace
+C0124,East,core,2024-02-24,Marketplace
+C0125,West,core,2024-05-26,Web
+C0126,South,core,2025-07-18,Web
+C0127,East,value,2024-10-03,Web
+C0128,North,value,2024-08-01,Marketplace
+C0129,West,core,2024-05-09,Marketplace
+C0130,West,premium,2025-02-23,Marketplace
+C0131,South,core,2024-03-02,Marketplace
+C0132,North,core,2024-02-03,Web
+C0133,East,value,2024-05-30,Marketplace
+C0134,North,value,2024-03-29,Retail Partner
+C0135,North,core,2024-06-27,Retail Partner
+C0136,South,core,2024-03-24,Retail Partner
+C0137,North,core,2024-03-10,Retail Partner
+C0138,South,core,2024-04-21,Marketplace
+C0139,South,premium,2024-07-26,Marketplace
+C0140,West,core,2025-11-26,Web
+C0141,East,core,2024-03-22,Marketplace
+C0142,West,value,2025-02-02,Web
+C0143,West,premium,2024-05-30,Retail Partner
+C0144,East,core,2024-05-09,Marketplace
+C0145,West,core,2024-06-29,Web
+C0146,West,core,2024-08-21,Web
+C0147,South,value,2024-04-27,Web
+C0148,South,core,2024-10-01,Marketplace
+C0149,South,core,2024-02-04,Retail Partner
+C0150,West,core,2024-07-24,Web
+C0151,West,core,2024-06-06,Retail Partner
+C0152,West,core,2024-01-25,Retail Partner
+C0153,South,value,2024-07-23,Marketplace
+C0154,South,core,2024-05-14,Marketplace
+C0155,West,core,2024-11-28,Retail Partner
+C0156,East,value,2024-05-04,Web
+C0157,North,core,2024-09-08,Web
+C0158,South,core,2024-04-06,Retail Partner
+C0159,East,core,,Web
+C0160,South,value,2024-02-18,Marketplace
+C0161,West,core,,Retail Partner
+C0162,South,value,2025-08-31,Retail Partner
+C0163,South,core,2024-08-23,Web
+C0164,West,value,,Web
+C0165,West,core,2025-08-03,Marketplace
+C0166,West,core,,Web
+C0167,West,premium,2024-04-16,Marketplace
+C0168,North,core,2025-02-01,Retail Partner
+C0169,North,core,2024-04-16,Web
+C0170,South,premium,2024-04-17,Web
+C0171,East,core,2025-04-25,Marketplace
+C0172,North,core,2024-12-11,Web
+C0173,East,core,2025-04-27,Web
+C0174,East,value,2024-12-14,Retail Partner
+C0175,West,value,2024-04-02,Retail Partner
+C0176,North,value,2025-02-13,Retail Partner
+C0177,South,premium,2025-01-14,Marketplace
+C0178,North,value,2024-10-05,Web
+C0179,West,core,2024-11-02,Web
+C0180,West,value,2025-03-14,Retail Partner
+C0181,West,core,2024-07-08,Retail Partner
+C0182,West,core,2024-01-14,Web
+C0183,North,premium,2024-05-19,Web
+C0184,South,core,2024-01-23,Web
+C0185,South,core,2024-02-29,Retail Partner
+C0186,East,premium,2024-06-21,Web
+C0187,East,premium,2024-01-09,Web
+C0188,West,core,2024-02-22,Retail Partner
+C0189,North,core,2024-05-18,Web
+C0190,West,core,2024-11-04,Web
+C0191,East,core,,Retail Partner
+C0192,South,premium,2024-02-11,Retail Partner
+C0193,East,core,2024-02-20,Retail Partner
+C0194,South,value,2024-04-25,Web
+C0195,North,premium,,Retail Partner
+C0196,North,core,2024-09-01,Marketplace
+C0197,South,core,2024-11-21,Marketplace
+C0198,East,core,2024-02-22,Marketplace
+C0199,North,core,2024-01-20,Marketplace
+C0200,South,premium,2024-06-12,Marketplace
+C0201,West,core,2024-02-24,Retail Partner
+C0202,South,value,2024-05-20,Web
+C0203,North,value,2024-02-06,Retail Partner
+C0204,South,core,2024-12-04,Retail Partner
+C0205,East,core,2025-05-30,Retail Partner
+C0206,South,value,2024-03-13,Web
+C0207,East,core,2024-10-15,Web
+C0208,South,core,2024-03-03,Retail Partner
+C0209,East,core,2024-07-02,Retail Partner
+C0210,East,value,2025-04-27,Web
+C0211,South,value,2024-01-04,Marketplace
+C0212,North,core,2024-01-11,Retail Partner
+C0213,South,core,2024-02-18,Retail Partner
+C0214,West,core,2025-01-17,Web
+C0215,South,core,2024-03-18,Web
+C0216,West,value,2024-04-03,Marketplace
+C0217,North,core,2024-05-18,Retail Partner
+C0218,South,value,2024-11-23,Web
+C0219,East,value,2025-02-16,Web
+C0220,South,value,2024-09-10,Marketplace
+C0221,East,value,,Web
+C0222,West,core,2024-07-18,Marketplace
+C0223,East,value,2024-05-12,Web
+C0224,East,core,2024-06-01,Marketplace
+C0225,West,value,2024-04-01,Retail Partner
+C0226,East,core,2024-07-22,Web
+C0227,West,core,2024-01-28,Web
+C0228,West,core,2024-11-04,Marketplace
+C0229,East,premium,2024-01-18,Web
+C0230,East,premium,2024-02-01,Retail Partner
+C0231,South,premium,2024-03-18,Marketplace
+C0232,South,core,2025-01-28,Marketplace
+C0233,West,core,2024-03-09,Retail Partner
+C0234,West,premium,,Retail Partner
+C0235,North,core,2024-09-03,Retail Partner
+C0236,West,core,2024-03-03,Web
+C0237,East,value,,Web
+C0238,West,core,2024-08-30,Marketplace
+C0239,North,value,2024-12-14,Marketplace
+C0240,West,core,2025-08-22,Retail Partner
+C0241,West,value,2024-05-15,Retail Partner
+C0242,North,core,2024-05-15,Retail Partner
+C0243,West,value,2024-02-13,Web
+C0244,West,core,2024-01-26,Web
+C0245,West,core,2025-04-14,Web
+C0246,East,core,2024-05-24,Marketplace
+C0247,North,core,2024-05-11,Web
+C0248,East,value,2024-01-05,Retail Partner
+C0249,North,core,2024-08-04,Retail Partner
+C0250,North,core,2024-04-13,Retail Partner
+C0251,South,core,2025-06-30,Marketplace
+C0252,West,core,2024-03-06,Web
+C0253,West,core,2024-10-05,Web
+C0254,North,value,2025-10-09,Web
+C0255,South,premium,2024-03-13,Retail Partner
+C0256,North,value,2024-05-02,Retail Partner
+C0257,West,core,2024-03-29,Retail Partner
+C0258,North,value,2025-04-23,Web
+C0259,East,value,2024-08-10,Web
+C0260,East,core,2024-05-02,Retail Partner
+C0261,South,core,2024-06-07,Marketplace
+C0262,South,core,2024-02-09,Web
+C0263,West,core,2024-08-20,Marketplace
+C0264,North,core,2025-01-14,Retail Partner
+C0265,South,core,2024-06-01,Retail Partner
+C0266,East,value,2024-04-17,Web
+C0267,North,value,2025-03-16,Web
+C0268,West,core,2024-11-07,Retail Partner
+C0269,West,core,2024-12-11,Retail Partner
+C0270,West,value,2024-08-20,Web
+C0271,East,value,2024-06-11,Marketplace
+C0272,South,core,2024-08-05,Marketplace
+C0273,South,value,2024-10-02,Retail Partner
+C0274,South,premium,2025-05-21,Retail Partner
+C0275,East,core,2024-11-24,Marketplace
+C0276,West,premium,2024-02-17,Web
+C0277,South,premium,2024-02-29,Web
+C0278,South,core,2025-03-23,Web
+C0279,North,core,2024-01-26,Web
+C0280,South,value,2024-06-28,Marketplace
+C0281,South,value,,Marketplace
+C0282,West,core,2024-04-20,Retail Partner
+C0283,East,value,2024-10-10,Retail Partner
+C0284,East,value,2024-03-28,Web
+C0285,South,value,2024-09-23,Web
+C0286,South,core,2025-06-20,Retail Partner
+C0287,North,value,2024-01-07,Web
+C0288,West,core,2024-09-16,Web
+C0289,West,value,2025-10-21,Web
+C0290,East,value,2024-02-10,Marketplace
+C0291,East,premium,2024-09-16,Marketplace
+C0292,West,core,2025-02-12,Web
+C0293,West,premium,2024-07-20,Marketplace
+C0294,West,value,2024-01-14,Web
+C0295,West,core,2024-07-14,Marketplace
+C0296,East,value,2024-01-16,Marketplace
+C0297,West,value,2024-02-22,Retail Partner
+C0298,West,value,2024-06-18,Web
+C0299,North,value,2024-03-27,Web
+C0300,North,core,2024-09-20,Marketplace
+C0301,West,premium,2024-12-05,Marketplace
+C0302,East,value,2024-01-07,Marketplace
+C0303,South,core,2024-07-26,Marketplace
+C0304,West,core,,Marketplace
+C0305,North,value,2025-08-30,Retail Partner
+C0306,South,core,2024-06-11,Retail Partner
+C0307,East,core,2024-09-09,Retail Partner
+C0308,North,core,2024-12-22,Retail Partner
+C0309,East,value,2024-08-30,Marketplace
+C0310,South,core,2024-06-19,Web
+C0311,South,core,2024-11-07,Retail Partner
+C0312,North,core,2024-01-25,Marketplace
+C0313,East,premium,2024-08-04,Marketplace
+C0314,North,core,2024-07-06,Web
+C0315,South,value,2024-09-30,Web
+C0316,North,core,2024-03-09,Web
+C0317,South,premium,2024-08-30,Web
+C0318,East,core,2025-06-15,Marketplace
+C0319,West,core,2025-10-20,Marketplace
+C0320,South,core,2024-08-20,Marketplace
+C0321,East,premium,2024-07-15,Web
+C0322,South,premium,2024-07-18,Marketplace
+C0323,West,core,2024-12-11,Marketplace
+C0324,South,core,2025-12-31,Marketplace
+C0325,South,core,2024-08-08,Web
+C0326,North,value,,Web
+C0327,North,premium,2024-04-08,Retail Partner
+C0328,West,core,2024-08-14,Web
+C0329,North,value,2024-11-19,Marketplace
+C0330,West,premium,,Retail Partner
+C0331,East,core,2025-02-01,Retail Partner
+C0332,South,core,2024-02-07,Marketplace
+C0333,East,core,2024-06-08,Retail Partner
+C0334,East,premium,2024-05-25,Marketplace
+C0335,North,premium,2025-05-19,Web
+C0336,South,core,2024-02-28,Web
+C0337,South,core,2024-06-12,Web
+C0338,North,value,2024-10-09,Web
+C0339,North,core,2024-04-21,Web
+C0340,North,value,2025-03-11,Retail Partner
+C0341,South,core,2024-03-02,Marketplace
+C0342,North,core,2025-05-03,Web
+C0343,West,core,2024-10-31,Web
+C0344,South,core,2024-04-17,Marketplace
+C0345,West,core,2024-12-25,Marketplace
+C0346,North,value,2024-03-30,Retail Partner
+C0347,South,value,2025-07-29,Retail Partner
+C0348,South,value,2025-06-20,Web
+C0349,East,core,2025-08-14,Web
+C0350,West,core,2024-12-12,Marketplace
+C0351,West,value,2025-01-27,Web
+C0352,West,value,2025-01-28,Marketplace
+C0353,South,core,2024-02-22,Web
+C0354,West,value,2024-09-27,Marketplace
+C0355,North,value,2024-05-27,Web
+C0356,North,core,2024-02-13,Retail Partner
+C0357,East,core,2024-03-16,Marketplace
+C0358,East,premium,2025-05-02,Retail Partner
+C0359,West,core,2024-09-20,Marketplace
+C0360,South,value,2024-03-07,Retail Partner
+C0361,West,core,2025-01-10,Retail Partner
+C0362,North,value,2024-08-06,Web
+C0363,East,premium,2025-09-25,Web
+C0364,South,core,2024-10-03,Web
+C0365,East,core,2024-12-18,Marketplace
+C0366,North,core,,Marketplace
+C0367,South,core,2024-06-17,Retail Partner
+C0368,West,value,2024-03-26,Web
+C0369,East,value,2025-04-23,Marketplace
+C0370,West,value,2025-02-06,Web
+C0371,West,value,2024-02-10,Marketplace
+C0372,West,core,2024-03-12,Marketplace
+C0373,North,core,2024-09-15,Web
+C0374,West,value,2024-03-03,Retail Partner
+C0375,North,value,2024-01-01,Web
+C0376,West,premium,2024-01-21,Retail Partner
+C0377,South,core,2024-09-05,Retail Partner
+C0378,West,premium,2024-01-27,Marketplace
+C0379,East,premium,2024-06-13,Retail Partner
+C0380,South,core,,Retail Partner
+C0381,South,core,2024-06-06,Web
+C0382,East,core,2024-02-16,Retail Partner
+C0383,West,value,2024-05-05,Web
+C0384,West,core,,Marketplace
+C0385,West,core,,Retail Partner
+C0386,South,premium,2025-07-05,Retail Partner
+C0387,South,premium,2024-03-05,Retail Partner
+C0388,South,core,2024-02-21,Marketplace
+C0389,South,value,2024-07-18,Web
+C0390,West,core,2024-05-09,Web
+C0391,West,core,2024-05-13,Web
+C0392,North,core,2024-09-23,Web
+C0393,South,core,2024-10-23,Retail Partner
+C0394,South,core,2025-03-22,Marketplace
+C0395,North,core,2024-03-01,Retail Partner
+C0396,South,premium,2025-11-10,Marketplace
+C0397,North,core,2024-09-18,Retail Partner
+C0398,West,core,2024-09-10,Retail Partner
+C0399,East,core,2024-09-15,Retail Partner
+C0400,West,core,2024-05-27,Web
+C0401,South,value,2024-07-31,Retail Partner
+C0402,North,premium,2024-04-15,Marketplace
+C0403,West,core,2025-10-05,Marketplace
+C0404,East,value,2024-05-04,Marketplace
+C0405,East,value,2024-01-25,Retail Partner
+C0406,East,value,2024-01-07,Web
+C0407,West,core,2024-01-24,Web
+C0408,North,value,2025-11-30,Web
+C0409,East,value,2024-01-28,Web
+C0410,North,premium,2024-07-13,Web
+C0411,East,core,2024-04-03,Web
+C0412,West,value,2024-11-09,Retail Partner
+C0413,North,core,2024-10-08,Web
+C0414,South,value,2024-04-02,Marketplace
+C0415,North,premium,2024-03-06,Retail Partner
+C0416,West,core,2025-11-08,Retail Partner
+C0417,East,value,2024-05-19,Web
+C0418,West,value,2024-10-31,Web
+C0419,East,value,2024-05-30,Marketplace
+C0420,North,core,2024-01-07,Retail Partner
+C0421,South,core,2024-01-21,Web
+C0422,North,value,2024-02-19,Retail Partner
+C0423,South,core,2024-05-17,Web
+C0424,South,core,2024-08-05,Web
+C0425,North,core,2025-05-12,Web
+C0426,East,value,2024-06-11,Retail Partner
+C0427,East,core,2024-04-22,Web
+C0428,West,core,2024-12-23,Marketplace
+C0429,South,core,2024-01-07,Retail Partner
+C0430,North,premium,2024-01-19,Marketplace
+C0431,East,value,2025-01-26,Retail Partner
+C0432,North,value,2024-01-30,Retail Partner
+C0433,North,core,2025-12-19,Retail Partner
+C0434,North,core,2024-10-03,Retail Partner
+C0435,North,value,2024-03-27,Marketplace
+C0436,East,value,2024-04-03,Web
+C0437,East,premium,2024-04-26,Web
+C0438,East,value,2024-12-17,Retail Partner
+C0439,South,value,2024-06-06,Retail Partner
+C0440,East,premium,2024-12-27,Retail Partner
+C0441,South,core,2025-06-02,Marketplace
+C0442,North,premium,2024-08-19,Retail Partner
+C0443,West,core,2025-04-25,Web
+C0444,North,core,2024-04-25,Retail Partner
+C0445,West,core,2024-04-10,Web
+C0446,East,value,2024-08-10,Marketplace
+C0447,South,core,,Retail Partner
+C0448,West,core,2024-12-07,Marketplace
+C0449,North,value,2024-02-22,Web
+C0450,South,core,,Web
+C0451,North,value,2025-01-29,Retail Partner
+C0452,North,core,2024-06-15,Retail Partner
+C0453,South,core,2025-02-17,Retail Partner
+C0454,South,core,2024-12-07,Marketplace
+C0455,East,premium,2024-06-27,Web
+C0456,West,core,2025-01-14,Marketplace
+C0457,East,value,2024-03-09,Marketplace
+C0458,West,core,2024-01-16,Web
+C0459,East,core,2024-07-15,Retail Partner
+C0460,South,premium,2024-11-30,Web
+C0461,East,core,2024-09-30,Marketplace
+C0462,South,value,2024-08-15,Marketplace
+C0463,North,value,2024-03-15,Web
+C0464,North,premium,2024-01-04,Marketplace
+C0465,East,core,2024-03-04,Web
+C0466,East,core,2024-11-18,Marketplace
+C0467,East,core,2024-01-24,Marketplace
+C0468,South,value,2025-01-06,Retail Partner
+C0469,South,value,2024-06-16,Marketplace
+C0470,South,value,2024-03-23,Marketplace
+C0471,North,core,2025-08-09,Retail Partner
+C0472,East,core,2024-11-10,Marketplace
+C0473,South,value,2024-02-11,Web
+C0474,South,value,2025-03-15,Retail Partner
+C0475,East,core,2024-02-02,Retail Partner
+C0476,West,core,2024-01-08,Retail Partner
+C0477,West,value,2024-04-29,Marketplace
+C0478,East,core,2024-06-10,Marketplace
+C0479,South,value,2024-02-17,Web
+C0480,North,premium,2025-12-14,Marketplace
+C0481,East,core,2025-04-02,Retail Partner
+C0482,North,value,2024-11-16,Web
+C0483,North,core,2024-07-30,Retail Partner
+C0484,East,value,2025-07-14,Web
+C0485,North,value,2025-08-17,Retail Partner
+C0486,North,core,2024-01-15,Web
+C0487,West,value,2024-05-29,Retail Partner
+C0488,North,core,2024-02-03,Marketplace
+C0489,East,core,2024-02-05,Retail Partner
+C0490,West,core,2024-08-24,Marketplace
+C0491,East,premium,2024-03-17,Marketplace
+C0492,South,core,2024-09-10,Marketplace
+C0493,North,value,2024-08-28,Marketplace
+C0494,North,value,2024-01-28,Web
+C0495,South,core,2024-07-28,Marketplace
+C0496,North,premium,2024-03-20,Web
+C0497,North,value,2025-10-18,Marketplace
+C0498,North,core,2024-07-20,Marketplace
+C0499,North,core,2024-12-04,Marketplace
+C0500,West,value,,Retail Partner
+C0501,North,core,2024-07-15,Retail Partner
+C0502,North,value,2024-02-24,Web
+C0503,South,premium,2025-11-20,Retail Partner
+C0504,East,value,2025-01-10,Marketplace
+C0505,West,premium,2024-01-17,Retail Partner
+C0506,East,premium,2025-06-10,Marketplace
+C0507,East,core,2024-07-02,Web
+C0508,North,premium,2025-06-28,Retail Partner
+C0509,West,core,2025-08-19,Retail Partner
+C0510,West,core,2025-02-23,Retail Partner
+C0511,West,premium,2024-01-05,Retail Partner
+C0512,East,premium,2024-01-03,Web
+C0513,North,value,2025-05-27,Retail Partner
+C0514,West,core,2024-03-26,Marketplace
+C0515,West,core,2024-07-29,Marketplace
+C0516,West,value,2024-08-05,Marketplace
+C0517,South,core,2024-05-30,Marketplace
+C0518,West,value,2024-04-06,Web
+C0519,South,core,2024-11-27,Web
+C0520,East,value,2025-10-14,Marketplace
+C0521,South,value,,Retail Partner
+C0522,South,value,,Marketplace
+C0523,North,core,2024-01-17,Web
+C0524,North,core,2024-06-09,Marketplace
+C0525,North,core,2024-12-18,Marketplace
+C0526,West,value,2024-05-31,Retail Partner
+C0527,West,core,2024-08-04,Marketplace
+C0528,East,premium,2024-04-18,Marketplace
+C0529,East,core,2024-03-01,Retail Partner
+C0530,South,core,2025-11-02,Web
+C0531,East,value,2024-08-10,Retail Partner
+C0532,North,core,2025-11-19,Marketplace
+C0533,North,premium,2025-11-28,Retail Partner
+C0534,South,premium,2024-01-08,Web
+C0535,West,core,2024-05-01,Retail Partner
+C0536,South,value,2024-05-14,Web
+C0537,West,value,2024-07-30,Web
+C0538,North,value,2024-02-08,Marketplace
+C0539,East,core,2024-05-01,Marketplace
+C0540,West,core,2025-01-24,Web
+C0541,East,core,2024-01-22,Web
+C0542,South,core,2024-02-17,Retail Partner
+C0543,South,value,2024-05-06,Web
+C0544,North,value,2024-01-05,Retail Partner
+C0545,East,core,2024-05-27,Web
+C0546,South,core,2024-01-02,Retail Partner
+C0547,South,core,2024-03-21,Marketplace
+C0548,South,core,2025-02-20,Marketplace
+C0549,West,core,2025-02-03,Marketplace
+C0550,North,value,2024-06-19,Web
+C0551,East,core,2024-06-04,Retail Partner
+C0552,East,value,2024-03-01,Web
+C0553,South,core,2024-12-07,Retail Partner
+C0554,North,core,2024-08-02,Retail Partner
+C0555,East,core,2024-12-01,Marketplace
+C0556,South,core,2024-02-10,Retail Partner
+C0557,East,core,2025-04-01,Marketplace
+C0558,North,value,2024-03-07,Web
+C0559,West,value,2024-05-19,Web
+C0560,East,core,2024-04-03,Marketplace
+C0561,North,core,2024-02-22,Marketplace
+C0562,South,core,2024-03-06,Retail Partner
+C0563,South,value,2024-01-09,Web
+C0564,East,premium,2025-12-01,Web
+C0565,North,value,2024-01-01,Retail Partner
+C0566,North,value,2024-08-19,Retail Partner
+C0567,South,core,2024-05-27,Web
+C0568,West,value,2025-06-19,Marketplace
+C0569,South,premium,2024-06-13,Marketplace
+C0570,North,core,2024-01-01,Retail Partner
+C0571,South,value,2024-05-21,Marketplace
+C0572,West,core,2024-01-27,Retail Partner
+C0573,West,value,2024-05-15,Web
+C0574,East,core,2024-02-12,Web
+C0575,North,value,2024-04-14,Retail Partner
+C0576,South,core,2025-05-25,Marketplace
+C0577,West,premium,2025-03-09,Web
+C0578,North,premium,2024-01-06,Marketplace
+C0579,West,core,2024-03-02,Web
+C0580,South,core,2025-02-08,Marketplace
+C0581,South,core,2024-01-29,Marketplace
+C0582,East,value,2024-07-27,Retail Partner
+C0583,West,core,2024-04-15,Web
+C0584,East,core,2024-02-14,Retail Partner
+C0585,South,value,2024-03-14,Web
+C0586,West,core,2024-02-25,Marketplace
+C0587,East,core,2024-10-27,Web
+C0588,North,value,2024-01-01,Marketplace
+C0589,North,core,2025-06-11,Retail Partner
+C0590,South,core,2024-02-09,Marketplace
+C0591,East,core,2024-02-10,Marketplace
+C0592,West,core,,Web
+C0593,South,core,2024-03-28,Web
+C0594,East,value,2024-06-09,Web
+C0595,South,premium,,Marketplace
+C0596,North,value,2024-03-21,Retail Partner
+C0597,East,core,2024-03-25,Retail Partner
+C0598,North,value,2024-04-12,Retail Partner
+C0599,East,premium,2024-01-04,Marketplace
+C0600,East,premium,2025-10-06,Web
+C0601,East,premium,2024-03-08,Retail Partner
+C0602,North,core,2024-01-06,Marketplace
+C0603,North,core,2025-08-04,Marketplace
+C0604,South,core,2024-07-25,Marketplace
+C0605,West,core,2024-03-30,Web
+C0606,North,value,2024-04-01,Web
+C0607,West,core,2024-05-14,Marketplace
+C0608,East,core,2024-09-13,Retail Partner
+C0609,West,core,2024-01-11,Retail Partner
+C0610,East,core,2024-01-27,Marketplace
+C0611,North,core,2024-03-27,Marketplace
+C0612,West,value,2024-03-14,Web
+C0613,East,value,2024-05-13,Retail Partner
+C0614,South,value,2024-10-29,Retail Partner
+C0615,North,core,2024-02-22,Marketplace
+C0616,South,value,2024-02-27,Retail Partner
+C0617,North,value,2024-03-21,Retail Partner
+C0618,North,value,2024-01-30,Marketplace
+C0619,East,value,2024-02-16,Web
+C0620,East,value,2024-07-19,Web
+C0621,North,core,2024-06-28,Marketplace
+C0622,South,core,2024-08-21,Retail Partner
+C0623,East,core,2024-10-06,Marketplace
+C0624,North,premium,2024-01-14,Retail Partner
+C0625,East,core,2024-03-01,Web
+C0626,East,core,2024-06-11,Web
+C0627,North,value,2024-03-11,Marketplace
+C0628,West,value,2024-07-30,Web
+C0629,East,value,2024-01-02,Retail Partner
+C0630,South,core,2024-04-18,Retail Partner
+C0631,East,value,,Marketplace
+C0632,East,core,2024-01-06,Marketplace
+C0633,North,premium,2024-03-23,Retail Partner
+C0634,West,premium,2025-03-12,Retail Partner
+C0635,South,value,2024-03-03,Marketplace
+C0636,West,premium,2024-02-03,Retail Partner
+C0637,East,premium,2024-06-12,Web
+C0638,South,core,2024-08-28,Web
+C0639,North,core,2024-12-13,Retail Partner
+C0640,East,core,2025-04-27,Marketplace
+C0641,East,value,2024-11-09,Web
+C0642,South,core,,Web
+C0643,East,core,2025-03-24,Marketplace
+C0644,West,premium,2024-08-26,Marketplace
+C0645,West,core,2024-03-28,Retail Partner
+C0646,East,core,2024-01-05,Retail Partner
+C0647,South,premium,2024-09-16,Retail Partner
+C0648,East,core,2024-12-06,Marketplace
+C0649,South,core,2025-01-10,Web
+C0650,East,value,2024-04-08,Web
+C0651,East,core,2024-01-08,Web
+C0652,South,core,2024-12-03,Marketplace
+C0653,East,core,2024-04-08,Marketplace
+C0654,East,premium,2024-06-04,Marketplace
+C0655,West,value,2024-01-29,Marketplace
+C0656,South,core,2024-05-04,Web
+C0657,East,value,2024-02-16,Marketplace
+C0658,West,value,2024-09-19,Web
+C0659,West,value,2024-01-21,Marketplace
+C0660,South,value,2024-02-15,Retail Partner
+C0661,North,value,2024-08-17,Web
+C0662,East,core,2025-04-23,Retail Partner
+C0663,South,value,2025-08-10,Retail Partner
+C0664,West,core,2024-02-26,Web
+C0665,West,core,2024-12-22,Retail Partner
+C0666,North,value,2024-10-16,Retail Partner
+C0667,North,core,2024-01-01,Marketplace
+C0668,West,core,2024-04-24,Marketplace
+C0669,South,value,2025-05-09,Retail Partner
+C0670,North,core,2025-11-20,Marketplace
+C0671,West,premium,2024-04-13,Web
+C0672,East,core,2024-01-05,Retail Partner
+C0673,East,core,2024-12-16,Web
+C0674,South,core,2024-07-26,Retail Partner
+C0675,East,value,2025-10-28,Web
+C0676,East,core,2024-01-08,Marketplace
+C0677,North,core,2024-04-07,Marketplace
+C0678,North,core,2024-07-23,Web
+C0679,East,value,2024-02-12,Retail Partner
+C0680,East,core,2024-12-03,Marketplace
+C0681,West,value,2024-04-10,Web
+C0682,West,value,2024-01-13,Web
+C0683,East,core,2024-04-13,Marketplace
+C0684,East,core,2024-01-03,Retail Partner
+C0685,South,core,2024-02-01,Marketplace
+C0686,East,premium,2024-10-27,Retail Partner
+C0687,West,value,2024-01-21,Retail Partner
+C0688,North,premium,2024-05-15,Web
+C0689,East,core,2024-08-26,Retail Partner
+C0690,East,value,,Web
+C0691,West,core,2024-05-28,Web
+C0692,South,core,2024-06-04,Retail Partner
+C0693,East,value,2024-01-24,Marketplace
+C0694,East,value,2024-01-11,Retail Partner
+C0695,West,core,2024-03-29,Web
+C0696,South,core,2024-08-14,Retail Partner
+C0697,East,core,2024-02-29,Web
+C0698,West,core,2024-02-02,Retail Partner
+C0699,East,premium,2024-04-09,Marketplace
+C0700,West,core,2024-11-10,Web
+C0701,West,value,2024-05-15,Retail Partner
+C0702,West,core,2024-07-10,Web
+C0703,East,value,2024-03-28,Marketplace
+C0704,East,premium,2024-02-15,Marketplace
+C0705,West,core,2024-02-17,Web
+C0706,North,core,2024-02-04,Marketplace
+C0707,West,core,2024-03-15,Web
+C0708,North,value,2024-07-20,Marketplace
+C0709,East,value,2024-03-19,Retail Partner
+C0710,South,core,2024-09-14,Web
+C0711,East,core,2025-04-25,Web
+C0712,East,core,2024-02-22,Marketplace
+C0713,North,value,2025-10-17,Retail Partner
+C0714,North,value,2024-10-16,Marketplace
+C0715,South,core,2024-07-07,Marketplace
+C0716,West,value,2024-01-04,Web
+C0717,East,value,2024-03-19,Retail Partner
+C0718,South,core,2025-04-28,Web
+C0719,West,core,2024-06-15,Retail Partner
+C0720,South,core,2024-02-27,Web
+C0721,West,core,2024-09-04,Retail Partner
+C0722,West,value,2025-03-19,Retail Partner
+C0723,West,core,2024-03-13,Web
+C0724,East,premium,2024-03-08,Web
+C0725,East,core,2024-01-18,Retail Partner
+C0726,North,value,2025-05-01,Marketplace
+C0727,East,value,2024-08-10,Retail Partner
+C0728,South,core,2024-07-13,Marketplace
+C0729,West,core,2025-03-26,Retail Partner
+C0730,North,core,2024-06-11,Marketplace
+C0731,East,core,2025-06-02,Retail Partner
+C0732,North,core,2024-05-18,Web
+C0733,West,premium,2024-06-14,Marketplace
+C0734,East,value,2024-08-25,Retail Partner
+C0735,North,value,2024-06-09,Web
+C0736,East,value,2024-02-13,Marketplace
+C0737,South,core,2025-02-09,Retail Partner
+C0738,West,premium,2024-03-08,Retail Partner
+C0739,West,core,2024-01-11,Retail Partner
+C0740,South,core,2025-09-21,Retail Partner
+C0741,East,core,2024-04-09,Web
+C0742,West,core,2024-01-16,Web
+C0743,West,core,2024-04-10,Marketplace
+C0744,South,core,2025-08-30,Marketplace
+C0745,North,premium,2024-06-17,Web
+C0746,South,premium,2024-04-29,Marketplace
+C0747,North,core,2025-05-03,Web
+C0748,West,core,2024-07-03,Retail Partner
+C0749,West,core,2024-02-15,Web
+C0750,East,premium,2024-06-02,Web
+C0751,South,value,2024-10-26,Web
+C0752,East,value,2025-02-09,Web
+C0753,West,value,2024-04-08,Web
+C0754,West,premium,2024-01-14,Marketplace
+C0755,East,core,2024-01-19,Web
+C0756,South,core,2024-06-01,Retail Partner
+C0757,East,core,2024-02-16,Marketplace
+C0758,West,core,2025-06-12,Web
+C0759,South,core,2024-08-03,Retail Partner
+C0760,West,value,2024-06-17,Marketplace
+C0761,South,value,2024-07-07,Retail Partner
+C0762,West,core,2024-08-23,Marketplace
+C0763,East,core,,Web
+C0764,East,premium,2024-09-06,Marketplace
+C0765,South,value,2024-03-28,Marketplace
+C0766,West,core,2024-07-28,Retail Partner
+C0767,South,core,2024-09-30,Retail Partner
+C0768,South,core,2024-01-30,Marketplace
+C0769,West,value,2024-05-07,Retail Partner
+C0770,North,core,2025-05-16,Web
+C0771,North,value,2024-10-03,Web
+C0772,East,value,2024-05-05,Web
+C0773,West,value,2024-02-02,Retail Partner
+C0774,North,core,2025-10-09,Web
+C0775,North,premium,2024-01-07,Retail Partner
+C0776,South,core,2024-08-28,Web
+C0777,West,core,2024-09-18,Marketplace
+C0778,East,core,2024-02-05,Marketplace
+C0779,South,value,2024-12-15,Web
+C0780,West,core,,Web
+C0781,South,core,2025-01-09,Web
+C0782,North,core,2024-02-21,Web
+C0783,West,value,2024-04-06,Marketplace
+C0784,North,core,2024-04-16,Retail Partner
+C0785,North,core,2024-06-17,Retail Partner
+C0786,East,value,2024-04-19,Retail Partner
+C0787,North,value,2024-06-30,Retail Partner
+C0788,West,core,2024-07-04,Retail Partner
+C0789,South,premium,2024-01-14,Web
+C0790,South,core,2024-04-30,Web
+C0791,East,value,2025-12-17,Marketplace
+C0792,East,core,2024-09-26,Retail Partner
+C0793,East,core,2024-07-25,Marketplace
+C0794,East,core,2024-03-31,Marketplace
+C0795,South,core,2025-02-19,Marketplace
+C0796,East,core,2024-10-23,Retail Partner
+C0797,South,premium,2024-11-27,Retail Partner
+C0798,East,core,2024-04-28,Retail Partner
+C0799,South,core,2024-05-22,Marketplace
+C0800,West,premium,2024-11-13,Marketplace
