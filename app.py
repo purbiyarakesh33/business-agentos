@@ -28,6 +28,7 @@ from planner import PlannerError, PlannerPlan, PlannerTask, approve_plan, plan_r
 from output_guardrails import screen_business_output
 from rag import RagError, ensure_index, ingest_uploaded_files, retrieve_relevant, retrieval_tenant_scope
 from public_safety import PublicDemoError, configure_public_demo, public_demo_enabled, reserve_public_request
+from observability import configure_langsmith, trace_component
 
 
 _STREAMLIT_SECRET_NAMES = (
@@ -45,6 +46,9 @@ _STREAMLIT_SECRET_NAMES = (
     "PUBLIC_DEMO_MODE",
     "PUBLIC_DAILY_REQUEST_LIMIT",
     "PUBLIC_HOURLY_REQUEST_LIMIT",
+    "LANGSMITH_API_KEY",
+    "LANGSMITH_TRACING",
+    "LANGSMITH_PROJECT",
 )
 
 def _load_streamlit_secrets_into_environment() -> None:
@@ -63,6 +67,8 @@ def _load_streamlit_secrets_into_environment() -> None:
 
 
 _load_streamlit_secrets_into_environment()
+load_local_environment()
+configure_langsmith()
 PUBLIC_DEMO_MODE = public_demo_enabled()
 configure_public_demo()
 
@@ -157,6 +163,7 @@ def _public_upload_preflight(files: list) -> str | None:
     return None
 
 
+@trace_component("Document RAG answer", run_type="chain")
 def _answer_from_documents(question: str) -> str:
     """Answer an explicit document question using retrieved, untrusted passages only."""
     try:
@@ -188,6 +195,7 @@ class ChatGatewayError(RuntimeError):
     """Raised when the Featherless chat completion cannot be obtained."""
 
 
+@trace_component("Featherless general chat", run_type="llm")
 def _chat_completion(conversation: list[dict[str, str]]) -> str:
     load_local_environment()
     api_key = os.getenv("FEATHERLESS_API_KEY", "").strip()
@@ -571,6 +579,7 @@ def _render_evidence(evidence: list[dict]) -> None:
             })
 
 
+@trace_component("Approved plan and output screening", run_type="chain")
 def _run_approved_entry(entry: dict, approved_plan: PlannerPlan) -> None:
     """Execute and persist an already human-approved plan, including failures."""
     entry["_plan"] = approved_plan
@@ -949,6 +958,11 @@ with st.sidebar:
             "I understand questions and attached document text are sent to Featherless for AI processing.",
             key="public_ai_provider_consent",
         )
+        if os.getenv("LANGSMITH_TRACING", "").strip().lower() in {"1", "true", "yes", "on"}:
+            st.caption(
+                "LangSmith receives component names, timing, and error classes only; "
+                "questions, SQL, document text, and model inputs/outputs are redacted."
+            )
         with st.expander("Synthetic document knowledge base", expanded=False):
             try:
                 rag_status = ensure_index()

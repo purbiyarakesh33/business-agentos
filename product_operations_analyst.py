@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from analyst import AnalystError, DataAnalystAgent
+from observability import trace_component
 from planner import PlannerTask
 
 
@@ -51,6 +52,7 @@ class ProductOperationsAgent(DataAnalystAgent):
             allow_cleaning=False,
         )
 
+    @trace_component("Product and Operations Analyst", run_type="chain")
     def run_task(self, question: str, task: PlannerTask) -> list[dict[str, Any]]:
         if task.agent != self.agent_name:
             raise AnalystError(f"{self.agent_name} cannot accept a {task.agent} task.")

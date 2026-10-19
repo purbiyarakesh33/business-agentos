@@ -12,6 +12,7 @@ from pathlib import Path
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 from urllib.parse import urlsplit
+from observability import trace_component
 
 DEFAULT_BASE_URL = "https://api.featherless.ai/v1"
 DEFAULT_JEV_BASE_URL = "https://simple-jev-demo-api.featherless.ai/v1"
@@ -79,6 +80,7 @@ def uses_public_classifier_demo() -> bool:
     return urlsplit(configured_classifier_base_url()).hostname == "simple-jev-demo-api.featherless.ai"
 
 
+@trace_component("Jev classifier API", run_type="llm")
 def _post_json(url: str, payload: dict, api_key: str | None = None) -> dict:
     headers = {
         "Content-Type": "application/json",
@@ -121,6 +123,7 @@ def _confidence(answer: dict, choice: str) -> float | None:
     return value if math.isfinite(value) and 0.0 <= value <= 1.0 else None
 
 
+@trace_component("Jev input screening", run_type="chain")
 def classify_request(user_text: str) -> JevDecision:
     """Classify security risk and request intent. Uncertain security fails closed."""
     text = user_text.strip()

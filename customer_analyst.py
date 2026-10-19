@@ -8,6 +8,7 @@ import re
 from typing import Any, Callable
 
 from analyst import AnalystError, DataAnalystAgent
+from observability import trace_component
 
 
 CUSTOMER_ANALYST_GUIDANCE = """CUSTOMER ANALYST SPECIALTY
@@ -88,6 +89,7 @@ class CustomerAnalystAgent(DataAnalystAgent):
             allow_cleaning=False,
         )
 
+    @trace_component("Customer Analyst", run_type="chain")
     def run_task(self, question: str, task: Any) -> list[dict[str, Any]]:
         """Run aggregate identity checks before any customer-grain analysis."""
         required = {"customers", "orders"}

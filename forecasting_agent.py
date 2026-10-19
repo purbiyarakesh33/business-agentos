@@ -6,6 +6,7 @@ import calendar
 import math
 import re
 from typing import Any, Callable
+from observability import trace_component
 
 
 class ForecastingError(RuntimeError):
@@ -481,6 +482,7 @@ class ForecastingAgent:
     def __init__(self, query_executor: Callable[[str, Any], dict[str, Any]]):
         self.query_executor = query_executor
 
+    @trace_component("Forecasting Agent", run_type="chain")
     def run_task(self, question: str, task: Any, allowed_tables: set[str], schemas: list[dict[str, Any]]) -> list[dict[str, Any]]:
         try:
             request = parse_forecast_request(question)

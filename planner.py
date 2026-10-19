@@ -13,6 +13,7 @@ import uuid
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 from typing import Any
+from observability import trace_component
 
 from jev import JevDecision, load_local_environment
 
@@ -143,6 +144,7 @@ def _repair_response_text(content: Any) -> str:
         return repr(content)[:12000]
 
 
+@trace_component("Planner model request", run_type="llm")
 def _request_plan(question: str, catalog: list[dict[str, Any]],
                   dictionary: str, *, repair_error: str | None = None,
                   previous_response: Any = None) -> tuple[Any, str]:
@@ -440,6 +442,7 @@ def _validate(raw: dict[str, Any], question: str, model: str,
     )
 
 
+@trace_component("Planning agent", run_type="chain")
 def plan_request(question: str, jev_decision: JevDecision, *,
                  catalog_path: str | Path | None = None,
                  dictionary_path: str | Path | None = None) -> PlannerPlan:

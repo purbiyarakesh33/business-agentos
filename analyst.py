@@ -17,6 +17,7 @@ from typing import Any, Callable
 
 from analysis_methods import AnalysisMethodError, welch_tests_from_summaries
 from planner import PlannerTask
+from observability import trace_component
 
 
 class AnalystError(RuntimeError):
@@ -785,6 +786,7 @@ class DataAnalystAgent:
             "y": selected_measures[:3],
         }
 
+    @trace_component("Analyst execution engine", run_type="chain")
     def run_task(self, question: str, task: PlannerTask) -> list[dict[str, Any]]:
         """Iteratively analyze an approved task and return query-by-query evidence."""
         if task.agent != self.agent_name:

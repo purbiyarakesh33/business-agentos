@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from observability import trace_component
 import re
 
 
@@ -113,6 +114,7 @@ def _sensitive_table_columns(evidence: list[dict]) -> bool:
     return False
 
 
+@trace_component("Output privacy guard", run_type="chain")
 def screen_business_output(report: str, evidence: list[dict] | None = None) -> OutputGuardDecision:
     """Block user-visible reports/evidence with direct identifiers or credentials.
 

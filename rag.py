@@ -26,6 +26,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
 from jev import load_local_environment
+from observability import trace_component
 
 ROOT = Path(__file__).resolve().parent
 BUSINESS_DB_PATH = ROOT / "demo_company" / "data" / "business_demo.sqlite3"
@@ -201,6 +202,7 @@ def ensure_index() -> dict[str, Any]:
     }
 
 
+@trace_component("Featherless embedding request", run_type="llm")
 def _embedding_request(texts: list[str]) -> list[list[float]]:
     load_local_environment()
     api_key = os.getenv("FEATHERLESS_API_KEY", "").strip()
@@ -786,6 +788,7 @@ def _requested_product_categories(query: str) -> list[str]:
             if re.search(r"(?<!\w)" + re.escape(category) + r"(?!\w)", query, re.IGNORECASE)]
 
 
+@trace_component("Semantic document retrieval", run_type="retriever")
 def retrieve_relevant(
     query: str,
     top_k: int = 5,

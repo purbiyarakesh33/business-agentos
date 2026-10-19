@@ -33,6 +33,7 @@ from analysis_methods import AnalysisMethodError, causal_evidence_review
 from jev import load_local_environment
 from planner import PlannerPlan, PlannerTask
 from rag import RagError, retrieve_relevant
+from observability import trace_component
 
 DEFAULT_MODEL = "zai-org/GLM-5.3-Flash"
 DEFAULT_ANALYST_MODEL = "Qwen/Qwen3-30B-A3B-Instruct-2507"
@@ -165,6 +166,7 @@ def relative_period_unavailable(question: str) -> dict[str, Any] | None:
     return {"status": "data_unavailable", "message": message, "evidence": [evidence]}
 
 
+@trace_component("Featherless specialist model", run_type="llm")
 def _featherless_text(
     messages: list[dict[str, str]],
     purpose: str,
@@ -1039,6 +1041,7 @@ def _execute_read_only(sql: str, task: PlannerTask) -> dict[str, Any]:
     }
 
 
+@trace_component("Specialist agent", run_type="chain")
 def _run_specialist(question: str, task: PlannerTask) -> dict[str, Any] | list[dict[str, Any]]:
     if task.agent == "data_analyst":
         try:
@@ -3413,6 +3416,7 @@ def _product_category_domain_evidence(
     return result
 
 
+@trace_component("Approved analysis workflow", run_type="chain")
 def execute_approved_plan(question: str, plan: PlannerPlan) -> dict[str, Any]:
     """Run approved specialists, collect SQL evidence, and verify the final report."""
     if plan.status != "ready" or not plan.requires_approval or plan.approval_status != "approved":
