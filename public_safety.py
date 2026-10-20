@@ -1,8 +1,14 @@
 """Fail-closed global usage limits for an unauthenticated public demo."""
 from __future__ import annotations
 
+import logging
 import os
 from urllib.parse import urlsplit
+
+from db_diagnostics import log_database_error
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class PublicDemoError(RuntimeError):
@@ -93,7 +99,8 @@ def reserve_public_request() -> dict[str, int] | None:
     except PublicDemoError:
         raise
     except Exception as exc:
-        # Do not echo a DSN or driver exception; either can contain credentials.
+        # Log only safe classification fields; raw driver text may expose connection details.
+        log_database_error(_LOGGER, "reserve_public_request", exc)
         raise PublicDemoError(
             "The public demo is temporarily unavailable because its usage database could not be reached."
         ) from exc

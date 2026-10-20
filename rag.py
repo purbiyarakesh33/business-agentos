@@ -7,8 +7,7 @@ PostgreSQL full-text search when an analyst explicitly requests retrieval.
 """
 from __future__ import annotations
 
-from public_safety import reserve_public_request
-
+import logging
 from collections import defaultdict
 from contextlib import contextmanager
 from contextvars import ContextVar
@@ -25,6 +24,9 @@ from urllib.parse import urlsplit
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+from db_diagnostics import log_database_error
+from public_safety import reserve_public_request
+
 from jev import load_local_environment
 from observability import trace_component
 
@@ -40,6 +42,7 @@ DEFAULT_EMBEDDING_MODEL = "Qwen/Qwen3-Embedding-8B"
 EXCLUDED_DOCS = {"scenario_truth.json"}
 SUPPORTED_EXTENSIONS = {".md", ".txt", ".json", ".sql", ".pdf", ".docx"}
 TENANT_ENV = "RAG_TENANT_ID"
+_LOGGER = logging.getLogger(__name__)
 _ACTIVE_RETRIEVAL_TENANTS: ContextVar[tuple[str, ...] | None] = ContextVar("active_retrieval_tenants", default=None)
 
 
@@ -102,7 +105,8 @@ def _connect():
             sslmode=sslmode,
         )
     except Exception as exc:
-        # Do not include driver details because connection errors can echo credentials.
+        # Log only safe classification fields; raw driver text may expose connection details.
+        log_database_error(_LOGGER, "rag_connect", exc)
         raise RagError(
             "Could not connect to the RAG PostgreSQL database. Check RAG_DATABASE_URL "
             "and start the pgvector service."
@@ -167,6 +171,7 @@ def _ensure_schema(connection: Any) -> None:
             "ON rag_chunks USING hnsw (embedding vector_cosine_ops)"
         )
     except Exception as exc:
+        log_database_error(_LOGGER, "rag_schema_initialization", exc)
         raise RagError(
             "Could not initialize the RAG schema. Confirm pgvector is enabled and the database user can create the required tables and indexes."
         ) from exc
