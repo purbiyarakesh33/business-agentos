@@ -543,6 +543,24 @@ measure, date filters, and result grain. Do not add a sort clause to address thi
 change ORDER BY only if it contains an unqualified `{column_name}`. Return the complete
 corrected read-only query, not an explanation.
 """.strip()
+        missing_column = re.search(
+            r"no such column:\s*(?:[A-Za-z_][A-Za-z0-9_]*\.)?([A-Za-z_][A-Za-z0-9_]*)",
+            error_text,
+            flags=re.IGNORECASE,
+        )
+        if missing_column:
+            column_name = missing_column.group(1)
+            system += f"""
+SQLite specifically reported `no such column: {column_name}`. Check the supplied schema
+and the SELECT list of every CTE/subquery in the failed SQL. If `{column_name}` exists on
+an approved base table but is used after that table is out of scope, project it through
+each required CTE/subquery under the exact name, include it in the appropriate grouping,
+and reference it through the immediate input alias. If it is only used for sorting, sort
+by a projected output name or remove the sort when ordering is not required. If the field
+is absent from all approved schemas, do not invent it or substitute a differently defined
+field; preserve the requested analysis and report the unsupported dimension as a limitation.
+Keep all approved dates, filters, measures, and result grain unchanged.
+""".strip()
     json_format = {"type": "json_object"}
     messages = [{"role": "system", "content": system}, {"role": "user", "content": context}]
 
