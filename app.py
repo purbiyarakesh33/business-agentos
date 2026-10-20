@@ -56,11 +56,14 @@ def _load_streamlit_secrets_into_environment() -> None:
     try:
         secrets = st.secrets
         for name in _STREAMLIT_SECRET_NAMES:
-            if name in os.environ:
-                continue
             value = secrets.get(name)
-            if value is not None and str(value).strip():
-                os.environ[name] = str(value)
+            if value is None or not str(value).strip():
+                continue
+            # The hosted app's saved database secret is authoritative. An older
+            # process environment value must not shadow a freshly updated secret.
+            if name in os.environ and name != "RAG_DATABASE_URL":
+                continue
+            os.environ[name] = str(value)
     except Exception:
         # Local runs may have no .streamlit/secrets.toml file.
         return
