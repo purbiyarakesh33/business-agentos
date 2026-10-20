@@ -20,7 +20,7 @@ from pathlib import Path
 import re
 import sqlite3
 from typing import Any, Iterable
-from urllib.parse import unquote, urlsplit
+from urllib.parse import parse_qsl, unquote, urlsplit
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -94,15 +94,29 @@ def _connect():
     except ImportError as exc:
         raise RagError("Install the project dependencies with: py -m pip install -r requirements.txt") from exc
     database_url = _database_url()
-    host = (urlsplit(database_url).hostname or "").casefold()
+    parsed_url = urlsplit(database_url)
+    host = (parsed_url.hostname or "").casefold()
     sslmode = "prefer" if host in {"localhost", "127.0.0.1", "::1"} else "require"
     try:
+        # Decode URI components before passing credentials separately. This
+        # keeps passwords with reserved URL characters equivalent to the
+        # explicit host/user/password connection used by deployment checks.
+        connection_options = dict(parse_qsl(parsed_url.query, keep_blank_values=True))
+        connection_options.update(
+            {
+                "host": parsed_url.hostname,
+                "port": parsed_url.port or 5432,
+                "dbname": unquote(parsed_url.path.lstrip("/")),
+                "user": unquote(parsed_url.username or ""),
+                "password": unquote(parsed_url.password or ""),
+                "sslmode": sslmode,
+            }
+        )
         # Supabase transaction poolers do not support prepared statements.
         return psycopg.connect(
-            database_url,
+            **connection_options,
             connect_timeout=5,
             prepare_threshold=None,
-            sslmode=sslmode,
         )
     except Exception as exc:
         # Log only safe classification fields; raw driver text may expose connection details.
