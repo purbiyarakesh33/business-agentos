@@ -1067,7 +1067,14 @@ class DataAnalystAgent:
                 if repair_attempts >= MAX_QUERY_REPAIRS:
                     order_match = re.search(r"\bORDER\s+BY\b[\s\S]*", sql, flags=re.IGNORECASE)
                     order_preview = " ".join(order_match.group(0).split())[:240] if order_match else ""
-                    diagnostic = f" Failed ORDER BY clause: {order_preview}" if order_preview else ""
+                    # SQLite's ambiguous-column error does not identify which
+                    # clause referenced the name. Showing any trailing ORDER BY
+                    # here can falsely suggest the sort caused the failure.
+                    order_error = "order by" in error_text.casefold()
+                    diagnostic = (
+                        f" ORDER BY context: {order_preview}"
+                        if order_preview and order_error else ""
+                    )
                     raise AnalystError(
                         f"The analyst could not repair its query after {MAX_QUERY_REPAIRS} attempts: "
                         + error_text + diagnostic

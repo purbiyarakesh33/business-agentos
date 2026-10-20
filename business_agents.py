@@ -526,6 +526,23 @@ what failed. Every referenced column must exist on the named table alias; do not
 columns such as region or channel on tables whose schema does not list them. Keep the
 approved dates, filters, and measures, and return one read-only query.
 """.strip()
+        error_text = str(previous_error.get("error", ""))
+        ambiguous_column = re.search(
+            r"ambiguous column name:\s*[\"'`]?([A-Za-z_][A-Za-z0-9_]*)",
+            error_text,
+            flags=re.IGNORECASE,
+        )
+        if ambiguous_column:
+            column_name = ambiguous_column.group(1)
+            system += f"""
+SQLite specifically rejected the unqualified column `{column_name}` as ambiguous. Inspect
+the complete failed SQL and supplied schemas, identify the actual table or CTE aliases
+that expose `{column_name}`, and qualify every reference to that column with the correct
+alias in SELECT, JOIN, WHERE, GROUP BY, HAVING, and ORDER BY. Preserve the requested
+measure, date filters, and result grain. Do not add a sort clause to address this error;
+change ORDER BY only if it contains an unqualified `{column_name}`. Return the complete
+corrected read-only query, not an explanation.
+""".strip()
     json_format = {"type": "json_object"}
     messages = [{"role": "system", "content": system}, {"role": "user", "content": context}]
 
