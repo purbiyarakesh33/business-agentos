@@ -561,6 +561,17 @@ is absent from all approved schemas, do not invent it or substitute a differentl
 field; preserve the requested analysis and report the unsupported dimension as a limitation.
 Keep all approved dates, filters, measures, and result grain unchanged.
 """.strip()
+        if "order by term does not match any column" in error_text.casefold():
+            system += """
+SQLite rejected an ORDER BY term because it is not in the result columns. Locate the
+statement-level ORDER BY in the failed query; do not mistake ORDER BY inside OVER(...) for
+that final sort and preserve valid window ordering such as LAG(... OVER (ORDER BY month)).
+For a UNION/INTERSECT/EXCEPT query, the final ORDER BY can use only columns projected by
+the first SELECT (or their ordinal positions). If the requested sort key is absent, either
+project the same sort key from every arm and sort by its output alias, or remove the sort
+when row order is not needed. Keep the number and meaning of all requested metrics intact.
+Do not repeat the rejected sort term or change the date range or aggregation grain.
+""".strip()
     json_format = {"type": "json_object"}
     messages = [{"role": "system", "content": system}, {"role": "user", "content": context}]
 
