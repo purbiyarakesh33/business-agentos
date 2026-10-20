@@ -20,7 +20,7 @@ from pathlib import Path
 import re
 import sqlite3
 from typing import Any, Iterable
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -106,6 +106,21 @@ def _connect():
         )
     except Exception as exc:
         # Log only safe classification fields; raw driver text may expose connection details.
+        parsed_url = urlsplit(database_url)
+        username = unquote(parsed_url.username or "")
+        username_hint = (
+            f"{username.split('.', 1)[0]}.…{username[-4:]}"
+            if "." in username and len(username) > 4
+            else (f"…{username[-4:]}" if len(username) > 4 else "other")
+        )
+        _LOGGER.error(
+            "RAG database target: source=%s host=%s port=%s database=%s username_hint=%s",
+            os.getenv("_RAG_DATABASE_URL_SOURCE", "environment_or_dotenv"),
+            parsed_url.hostname or "unknown",
+            parsed_url.port or "default",
+            parsed_url.path.lstrip("/") or "unknown",
+            username_hint,
+        )
         log_database_error(_LOGGER, "rag_connect", exc)
         raise RagError(
             "Could not connect to the RAG PostgreSQL database. Check RAG_DATABASE_URL "

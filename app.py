@@ -64,6 +64,8 @@ def _load_streamlit_secrets_into_environment() -> None:
             if name in os.environ and name != "RAG_DATABASE_URL":
                 continue
             os.environ[name] = str(value)
+            if name == "RAG_DATABASE_URL":
+                os.environ["_RAG_DATABASE_URL_SOURCE"] = "streamlit_secrets"
     except Exception:
         # Local runs may have no .streamlit/secrets.toml file.
         return
