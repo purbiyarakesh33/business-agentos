@@ -997,9 +997,8 @@ source-column name or invent a new alias. Keep the intended result grain intact.
     return result
 
 
-def _execute_read_only(sql: str, task: PlannerTask) -> dict[str, Any]:
+def _read_only_sql_authorizer(task: PlannerTask, accessed: set[str]) -> tuple[set[str], Callable[..., int]]:
     allowed_tables, _entries = _source_tables(task.data_sources)
-    accessed: set[str] = set()
     allowed_functions = SAFE_FUNCTIONS
 
     def authorize(action: int, arg1: str | None, arg2: str | None,
@@ -1018,6 +1017,20 @@ def _execute_read_only(sql: str, task: PlannerTask) -> dict[str, Any]:
             return sqlite3.SQLITE_OK
         return sqlite3.SQLITE_DENY
 
+    return allowed_tables, authorize
+
+
+def verify_read_only_sql(sql: str, task: PlannerTask) -> dict[str, Any]:
+    """Compile a bounded read-only query against the live analytics database.
+
+    EXPLAIN QUERY PLAN asks SQLite to parse, resolve, and plan the query without
+    fetching its business rows. The zero-row projection also captures the output
+    columns while preserving the same table, function, and read-only guards used
+    by the real executor.
+    """
+    accessed: set[str] = set()
+    _allowed_tables, authorize = _read_only_sql_authorizer(task, accessed)
+
     statement = sql.strip()
     # SQL is embedded as a subquery to enforce a row cap; remove a normal final
     # terminator before wrapping it, otherwise SQLite rejects the inner query.
@@ -1025,6 +1038,7 @@ def _execute_read_only(sql: str, task: PlannerTask) -> dict[str, Any]:
         statement = statement[:-1].rstrip()
     if not re.match(r"^(?:SELECT|WITH)\b", statement, flags=re.IGNORECASE):
         raise BusinessAgentError("The analyst query must be one read-only SELECT or WITH statement.")
+    bounded_sql = "SELECT * FROM (" + statement + ") AS bounded_agent_result LIMIT " + str(MAX_ROWS + 1)
     start = time.monotonic()
     try:
         with sqlite3.connect(_db_uri(), uri=True, timeout=2) as connection:
@@ -1034,7 +1048,45 @@ def _execute_read_only(sql: str, task: PlannerTask) -> dict[str, Any]:
                 lambda: 1 if time.monotonic() - start > MAX_QUERY_SECONDS else 0,
                 10000,
             )
-            bounded_sql = "SELECT * FROM (" + statement + ") AS bounded_agent_result LIMIT " + str(MAX_ROWS + 1)
+            plan = connection.execute("EXPLAIN QUERY PLAN " + bounded_sql).fetchall()
+            # LIMIT 0 asks SQLite for the projection metadata without reading rows.
+            projection = connection.execute(
+                "SELECT * FROM (" + statement + ") AS bounded_agent_result LIMIT 0"
+            )
+            columns = [item[0] for item in projection.description or []]
+    except sqlite3.Error as exc:
+        message = " ".join(str(exc).split())[:220]
+        raise BusinessAgentError("SQL verification failed before execution: " + message) from None
+
+    if not accessed:
+        raise BusinessAgentError("The specialist query did not read an approved business dataset.")
+    return {
+        "status": "passed",
+        "method": "SQLite EXPLAIN QUERY PLAN",
+        "plan_steps": len(plan),
+        "tables_checked": sorted(accessed),
+        "columns": columns,
+        "statement": statement,
+        "bounded_sql": bounded_sql,
+    }
+
+
+def _execute_read_only(sql: str, task: PlannerTask) -> dict[str, Any]:
+    verification = verify_read_only_sql(sql, task)
+    accessed: set[str] = set()
+    _allowed_tables, authorize = _read_only_sql_authorizer(task, accessed)
+
+    statement = verification["statement"]
+    bounded_sql = verification["bounded_sql"]
+    start = time.monotonic()
+    try:
+        with sqlite3.connect(_db_uri(), uri=True, timeout=2) as connection:
+            connection.execute("PRAGMA query_only=ON")
+            connection.set_authorizer(authorize)
+            connection.set_progress_handler(
+                lambda: 1 if time.monotonic() - start > MAX_QUERY_SECONDS else 0,
+                10000,
+            )
             cursor = connection.execute(bounded_sql)
             columns = [item[0] for item in cursor.description or []]
             raw_rows = cursor.fetchmany(MAX_ROWS + 1)
@@ -1084,6 +1136,10 @@ def _execute_read_only(sql: str, task: PlannerTask) -> dict[str, Any]:
         "rows": rows,
         "row_count_returned": len(rows),
         "truncated": truncated,
+        "sql_verification": {
+            key: verification[key]
+            for key in ("status", "method", "plan_steps", "tables_checked")
+        },
     }
 
 
