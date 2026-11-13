@@ -660,13 +660,24 @@ def _run_approved_entry(entry: dict, approved_plan: PlannerPlan) -> None:
         entry["_workflow_status"] = "held"
         evidence = getattr(exc, "evidence", None)
         evidence = evidence if isinstance(evidence, list) else []
-        message = (
-            "The approved read-only query ran, but no business report was released. "
-            + str(exc)
-            if evidence else
-            "The approved workflow stopped safely. No business report was produced. "
-            + str(exc)
+        detail = str(exc)
+        sql_generation_failed = (
+            "could not repair its query" in detail.casefold()
+            or "sql verification failed before execution" in detail.casefold()
         )
+        if sql_generation_failed:
+            message = (
+                "I couldn't verify a query for this request, so I stopped before using database results. "
+                "Try asking for monthly delivered sales for a single year, or narrow the request to one metric and date range."
+            )
+        else:
+            message = (
+                "The approved read-only query ran, but no business report was released. "
+                + detail
+                if evidence else
+                "The approved workflow stopped safely. No business report was produced. "
+                + detail
+            )
         guard = screen_business_output(message, evidence)
         entry["_output_guard"] = asdict(guard)
         entry["_output_guard_blocked"] = guard.action != "ALLOW"

@@ -1102,7 +1102,18 @@ class DataAnalystAgent:
                 ]
                 chart_suggestion = {"type": "bar", "x": "group_label", "y": ["mean"]}
             else:
-                if action.get("template_id") == "demo_customer_segment_period_comparison_v1":
+                if action.get("template_id") == "demo_sales_annual_monthly_v1":
+                    result["chart_rows"] = [
+                        {
+                            "month": row.get("month_start"),
+                            "delivered_net_product_revenue_usd": row.get("delivered_net_product_revenue_usd"),
+                        }
+                        for row in result["rows"]
+                    ]
+                    chart_suggestion = {
+                        "type": "line", "x": "month", "y": ["delivered_net_product_revenue_usd"]
+                    }
+                elif action.get("template_id") == "demo_customer_segment_period_comparison_v1":
                     result["chart_rows"] = [
                         {
                             "period_customer_segment": (

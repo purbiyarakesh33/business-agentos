@@ -239,6 +239,50 @@ FROM pairs
 ORDER BY comparison_number"""
 
 
+def _annual_monthly_sales_sql(year: int) -> str:
+    """Return a fixed monthly delivered-sales series for one calendar year."""
+    month_rows = ",\n    ".join(
+        f"('{year}-{month:02d}-01')" for month in range(1, 13)
+    )
+    next_year = year + 1
+    return f"""WITH months(month_start) AS (VALUES
+    {month_rows}
+), monthly AS (
+    SELECT date(o.order_date, 'start of month') AS month_start,
+           ROUND(SUM(COALESCE(oi.line_net_sales, 0.0)), 2) AS delivered_net_product_revenue_usd,
+           COUNT(DISTINCT o.order_id) AS delivered_order_count
+    FROM orders AS o
+    LEFT JOIN order_items AS oi ON oi.order_id = o.order_id
+    WHERE o.status = 'delivered'
+      AND o.order_date >= '{year}-01-01'
+      AND o.order_date < '{next_year}-01-01'
+    GROUP BY date(o.order_date, 'start of month')
+), annual_totals AS (
+    SELECT ROUND(COALESCE(SUM(COALESCE(oi.line_net_sales, 0.0)), 0.0), 2)
+               AS annual_delivered_net_product_revenue_usd,
+           COUNT(DISTINCT o.order_id) AS annual_delivered_order_count
+    FROM orders AS o
+    LEFT JOIN order_items AS oi ON oi.order_id = o.order_id
+    WHERE o.status = 'delivered'
+      AND o.order_date >= '{year}-01-01'
+      AND o.order_date < '{next_year}-01-01'
+)
+SELECT months.month_start,
+       COALESCE(monthly.delivered_net_product_revenue_usd, 0.0)
+           AS delivered_net_product_revenue_usd,
+       COALESCE(monthly.delivered_order_count, 0) AS delivered_order_count,
+       CASE WHEN COALESCE(monthly.delivered_order_count, 0) = 0 THEN NULL
+            ELSE ROUND(monthly.delivered_net_product_revenue_usd * 1.0 /
+                       monthly.delivered_order_count, 2)
+       END AS net_product_sales_per_delivered_order_usd,
+       annual_totals.annual_delivered_net_product_revenue_usd,
+       annual_totals.annual_delivered_order_count
+FROM months
+LEFT JOIN monthly ON monthly.month_start = months.month_start
+CROSS JOIN annual_totals
+ORDER BY months.month_start"""
+
+
 def _segment_sales_sql(periods: list[tuple[int, str, str, str]]) -> str:
     return f"""WITH {_periods_cte(periods)},
 order_values AS (
@@ -940,6 +984,42 @@ def build_demo_query(question: str, task: Any, allowed: set[str], schemas: list[
         question,
         flags=re.IGNORECASE,
     )
+    annual_text = f"{question} {objective}"
+    annual_years = {int(value) for value in re.findall(r"\b(20\d{2})\b", annual_text)}
+    annual_year = next(iter(annual_years)) if len(annual_years) == 1 else None
+    annual_sales_request = bool(re.search(r"\b(?:sales|revenue)\b", annual_text, flags=re.IGNORECASE))
+    annual_breakdown_request = bool(re.search(
+        r"\b(?:by|per)\s+(?:region|category|channel|product|customer|segment)\b|"
+        r"\b(?:regions?|categories|channels?|products|customers|segments)\b",
+        annual_text,
+        flags=re.IGNORECASE,
+    ))
+    annual_special_metric_request = bool(re.search(
+        r"\b(?:gross profit|gross margin|profit|margin|discounts?|refunds?|returns?|shipping|units?|quantity)\b",
+        annual_text,
+        flags=re.IGNORECASE,
+    ))
+    if (
+        agent == "data_analyst" and not excluded_methods
+        and annual_year is not None and annual_year < 2100
+        and annual_sales_request and not annual_breakdown_request and not annual_special_metric_request
+        and {"orders", "order_items"}.issubset(source_ids)
+        and _has_schema(schemas, {
+            "orders": {"order_id", "order_date", "status"},
+            "order_items": {"order_id", "line_net_sales"},
+        })
+    ):
+        year = annual_year
+        return DemoQuery(
+            "demo_sales_annual_monthly_v1",
+            _annual_monthly_sales_sql(year),
+            (
+                "Monthly net product revenue sums order_items.line_net_sales for delivered orders; shipping and later refunds are excluded.",
+                "Delivered order counts are distinct order IDs. Sales per delivered order is monthly net product revenue divided by monthly delivered orders.",
+                "Months with no delivered orders are included with zero revenue and order count; sales per order is unavailable for those months.",
+                "The database has no ingestion watermark; results describe records currently present for the requested year and do not prove source completeness.",
+            ),
+        )
     gross_profit_window = _explicit_half_year(question)
     if (
         agent == "data_analyst" and not excluded_methods and gross_profit_window

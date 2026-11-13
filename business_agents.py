@@ -1484,6 +1484,112 @@ def _deterministic_demo_sales_findings(
 
     return {"findings": findings} if findings else None
 
+
+def _deterministic_demo_annual_sales_findings(
+    evidence: list[dict[str, Any]],
+) -> dict[str, Any] | None:
+    """Report the fixed 12-month sales template from its validated SQL rows."""
+    template_id = "demo_sales_annual_monthly_v1"
+    present_templates = {
+        item.get("query_template") for item in evidence
+        if isinstance(item.get("query_template"), str)
+    }
+    if present_templates != {template_id}:
+        return None
+    items = [item for item in evidence if item.get("query_template") == template_id]
+    if len(items) != 1:
+        raise BusinessAgentError("Annual sales reporting requires exactly one complete monthly result.")
+    item = items[0]
+    if item.get("truncated"):
+        raise BusinessAgentError("Annual sales results were truncated; no report was released.")
+    if not item.get("result_validation", {}).get("all_checks_passed", False):
+        raise BusinessAgentError("Annual sales evidence failed deterministic result validation.")
+    rows = item.get("rows")
+    if not isinstance(rows, list) or len(rows) != 12:
+        raise BusinessAgentError("Annual sales results did not contain all 12 calendar months.")
+
+    try:
+        year_match = re.fullmatch(r"(20\d{2})-01-01", str(rows[0]["month_start"]))
+        if year_match is None:
+            raise ValueError
+        year = int(year_match.group(1))
+        annual_sales = rows[0]["annual_delivered_net_product_revenue_usd"]
+        annual_orders = rows[0]["annual_delivered_order_count"]
+        if (
+            isinstance(annual_sales, bool) or not isinstance(annual_sales, (int, float))
+            or not math.isfinite(float(annual_sales))
+            or isinstance(annual_orders, bool) or not isinstance(annual_orders, int)
+            or annual_orders < 0
+        ):
+            raise ValueError
+        month_rows: dict[int, dict[str, Any]] = {}
+        for row in rows:
+            month_start = str(row["month_start"])
+            month_match = re.fullmatch(r"(20\d{2})-(\d{2})-01", month_start)
+            if month_match is None or int(month_match.group(1)) != year:
+                raise ValueError
+            month = int(month_match.group(2))
+            if month not in range(1, 13) or month in month_rows:
+                raise ValueError
+            sales = row["delivered_net_product_revenue_usd"]
+            orders = row["delivered_order_count"]
+            per_order = row["net_product_sales_per_delivered_order_usd"]
+            if isinstance(sales, bool) or not isinstance(sales, (int, float)) or not math.isfinite(float(sales)):
+                raise ValueError
+            if isinstance(orders, bool) or not isinstance(orders, int) or orders < 0:
+                raise ValueError
+            if (
+                float(row["annual_delivered_net_product_revenue_usd"]) != float(annual_sales)
+                or row["annual_delivered_order_count"] != annual_orders
+            ):
+                raise ValueError
+            expected_per_order = None if orders == 0 else round(float(sales) / orders, 2)
+            if expected_per_order is None:
+                if per_order is not None:
+                    raise ValueError
+            elif (
+                isinstance(per_order, bool) or not isinstance(per_order, (int, float))
+                or not math.isfinite(float(per_order))
+                or abs(float(per_order) - expected_per_order) > 0.011
+            ):
+                raise ValueError
+            month_rows[month] = row
+        if set(month_rows) != set(range(1, 13)):
+            raise ValueError
+    except (KeyError, TypeError, ValueError):
+        raise BusinessAgentError("Annual sales evidence has missing, duplicate, or invalid month values.") from None
+
+    monthly_sales_sum = sum(float(month_rows[month]["delivered_net_product_revenue_usd"]) for month in range(1, 13))
+    monthly_orders_sum = sum(int(month_rows[month]["delivered_order_count"]) for month in range(1, 13))
+    total_sales = round(float(annual_sales), 2)
+    total_orders = int(annual_orders)
+    if abs(monthly_sales_sum - total_sales) > 0.11 or monthly_orders_sum != total_orders:
+        raise BusinessAgentError("Annual sales totals do not reconcile to the 12 monthly results.")
+    annual_per_order = None if total_orders == 0 else total_sales / total_orders
+    monthly_summary = "; ".join(
+        f"{calendar.month_abbr[month]}: USD {float(month_rows[month]['delivered_net_product_revenue_usd']):,.2f}, "
+        f"{int(month_rows[month]['delivered_order_count']):,} delivered orders"
+        for month in range(1, 13)
+    )
+    annual_summary = (
+        f"Across {year}, delivered net product revenue was USD {total_sales:,.2f} "
+        f"across {total_orders:,} delivered orders"
+        + (f" (USD {annual_per_order:,.2f} per delivered order)." if annual_per_order is not None else ".")
+    )
+    limitations = item.get("template_limitations", [])
+    if not isinstance(limitations, list) or any(not isinstance(value, str) for value in limitations):
+        raise BusinessAgentError("Annual sales evidence has invalid methodology notes.")
+    return {"findings": [{
+        "claim": f"Monthly delivered net product revenue and order counts for {year}: {monthly_summary}. {annual_summary}",
+        "evidence_ids": [str(item["evidence_id"])],
+        "calculation": (
+            "Monthly net product revenue = SUM(order_items.line_net_sales) for delivered orders; "
+            "order count = distinct delivered order IDs; sales per order = revenue / delivered orders. "
+            "Annual values sum the 12 monthly results."
+        ),
+        "limitations": limitations,
+    }]}
+
 def _deterministic_demo_customer_findings(
     question: str, evidence: list[dict[str, Any]],
 ) -> dict[str, Any] | None:
@@ -2939,6 +3045,9 @@ def _draft_findings(
     deterministic_forecast = deterministic_forecast_findings(question, evidence)
     if deterministic_forecast is not None:
         return deterministic_forecast
+    deterministic_annual_sales = _deterministic_demo_annual_sales_findings(evidence)
+    if deterministic_annual_sales is not None:
+        return deterministic_annual_sales
     deterministic_gross_profit = _deterministic_demo_gross_profit_findings(question, evidence)
     if deterministic_gross_profit is not None:
         return deterministic_gross_profit
@@ -3044,6 +3153,7 @@ def _validate_findings(raw: dict[str, Any], evidence: list[dict[str, Any]]) -> l
             "demo_customer_segment_period_comparison_v1",
             "demo_product_performance_period_comparison_v1",
             "demo_operations_period_comparison_v1",
+            "demo_sales_annual_monthly_v1",
         }
         max_claim_length = 24000 if any(
             item.get("query_template") in report_table_templates
@@ -3163,6 +3273,7 @@ def _verify_findings(
     sales_templates = {
         "demo_sales_overall_period_comparison_v1",
         "demo_sales_segments_period_comparison_v1",
+        "demo_sales_annual_monthly_v1",
     }
     present_templates = {
         item.get("query_template") for item in evidence
@@ -3232,6 +3343,34 @@ def _verify_findings(
         ):
             return ["Category comparison report differs from independently recalculated SQL results and ranking."]
         return []
+    annual_sales_template = "demo_sales_annual_monthly_v1"
+    if present_templates == {annual_sales_template}:
+        issues: list[str] = []
+        for item in evidence:
+            if item.get("query_template") != annual_sales_template:
+                continue
+            if item.get("truncated"):
+                issues.append(f"{item.get('evidence_id')}: result is truncated")
+                continue
+            try:
+                recalculated = DataAnalystAgent.validate_result(item)
+            except AnalystError as exc:
+                issues.append(f"{item.get('evidence_id')}: deterministic recalculation failed: {str(exc)[:220]}")
+                continue
+            if not recalculated.get("all_checks_passed"):
+                issues.extend(str(check)[:300] for check in recalculated.get("failed_checks", [])[:4])
+        try:
+            expected = _validate_findings(
+                _deterministic_demo_annual_sales_findings(evidence) or {}, evidence
+            )
+        except BusinessAgentError as exc:
+            issues.append(str(exc)[:400])
+            expected = []
+        if json.dumps(findings, sort_keys=True, ensure_ascii=False) != json.dumps(
+            expected, sort_keys=True, ensure_ascii=False
+        ):
+            issues.append("Annual monthly sales findings differ from the validated SQL rows.")
+        return issues[:8]
     if present_templates and present_templates.issubset(sales_templates):
         # These claims are created from fixed SQL rows, not model-authored prose.
         # Recompute the analyst checks and require an exact match to the deterministic
