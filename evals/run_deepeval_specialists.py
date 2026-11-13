@@ -331,9 +331,23 @@ def create_metrics(judge):
         async_mode=False,
         threshold=None,
     )
+    style = GEval(
+        name="Style",
+        criteria=(
+            "Score whether the report is clear, concise, professional, and easy for a business stakeholder to scan. "
+            "Reward direct wording, useful structure, defined terms, and appropriately stated uncertainty. "
+            "Penalize confusing phrasing, unnecessary jargon, repetitive filler, and unsupported certainty. "
+            "Do not score factual correctness or missing findings here; those are measured separately."
+        ),
+        evaluation_params=[SingleTurnParams.INPUT, SingleTurnParams.ACTUAL_OUTPUT],
+        model=judge,
+        async_mode=False,
+        threshold=None,
+    )
     return [
         correctness,
         completeness,
+        style,
         AnswerRelevancyMetric(**shared, threshold=None),
         FaithfulnessMetric(**shared, threshold=0.9),
         ContextualPrecisionMetric(**shared, threshold=None),
@@ -367,7 +381,7 @@ def main() -> int:
     parser.add_argument("--predictions", type=Path, required=True, help="Fresh answer-quality predictions JSONL path.")
     parser.add_argument("--case", action="append", help="Optional case id filter; may be repeated for a targeted rerun.")
     metric_names = (
-        "Correctness [GEval]", "Completeness [GEval]", "Answer Relevancy", "Faithfulness",
+        "Correctness [GEval]", "Completeness [GEval]", "Style [GEval]", "Answer Relevancy", "Faithfulness",
         "Contextual Precision", "Contextual Recall", "Contextual Relevancy",
     )
     parser.add_argument("--metric", action="append", choices=metric_names, help="Score only this metric; may be repeated.")

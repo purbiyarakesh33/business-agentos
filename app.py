@@ -1129,11 +1129,15 @@ if not st.session_state["visible_messages"]:
                 st.session_state["queued_prompt"] = example_question
                 st.rerun()
 
+_chat_input_file_options = (
+    {}
+    if os.getenv("BUSINESS_AGENTOS_EVAL_MODE", "").strip() == "1"
+    else {"accept_file": "multiple", "file_type": ["pdf"]}
+)
 chat_submission = st.chat_input(
     "Ask a business question or attach a PDF",
     max_chars=4000,
-    accept_file="multiple",
-    file_type=["pdf"],
+    **_chat_input_file_options,
 )
 if isinstance(chat_submission, str):
     prompt = chat_submission

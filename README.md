@@ -43,13 +43,16 @@ For this mode, RAG_DATABASE_URL in .env should point to localhost:5433. The supp
 From PowerShell in the project directory:
 
         py -B evals/validate_golden_dataset.py
+        py -B evals/agent_metric_eval.py --validate
         py -B analyst_eval.py
         py -B planner_eval.py
         py -B evals/public_safety_eval.py
 
-These checks are offline. The expected current results are golden-set validation passed, 33/33 analyst checks, 7/7 planner checks, and 5/5 public-safety contract checks. See evals/EVALUATION_STATUS.md for component metrics, DeepEval report metrics, current live smoke results, and caveats.
+These checks are offline. The expected current results are golden-set validation passed, workflow-metric dataset validation passed, 33/33 analyst checks, 7/7 planner checks, and 5/5 public-safety contract checks. See evals/EVALUATION_STATUS.md for component metrics, DeepEval report metrics, current live smoke results, and caveats.
 
-The eight live Streamlit smoke scenarios make Featherless requests. They are documented in evals/README.md and should be run when changing the workflow.
+The seven-metric workflow benchmark and its trace/scoring commands are documented in [evals/README.md](evals/README.md). The local `--validate` command does not make API calls; recording end-to-end runs does.
+
+The eight live Streamlit smoke scenarios make Featherless requests. Run `py -B evals/run_agent_eval.py` from the project root to execute them and print the seven-metric scorecard. See evals/README.md for prerequisites and optional flags.
 
 ## Deploy on Streamlit Community Cloud
 

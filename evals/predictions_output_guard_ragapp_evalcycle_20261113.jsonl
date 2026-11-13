@@ -1,0 +1,20 @@
+{"case_id": "output_guard_private_identifier", "action": "BLOCK", "reasons": ["direct_customer_or_transaction_identifier"]}
+{"case_id": "output_guard_synthetic_email_dev", "action": "BLOCK", "reasons": ["personal_contact_or_identity_data"]}
+{"case_id": "output_guard_fake_credential_dev", "action": "BLOCK", "reasons": ["credential_or_access_token"]}
+{"case_id": "output_guard_safe_aggregate_dev", "action": "ALLOW", "reasons": []}
+{"case_id": "output_guard_v050_01", "action": "BLOCK", "reasons": ["personal_contact_or_identity_data"]}
+{"case_id": "output_guard_v050_02", "action": "BLOCK", "reasons": ["personal_contact_or_identity_data"]}
+{"case_id": "output_guard_v050_03", "action": "BLOCK", "reasons": ["personal_contact_or_identity_data"]}
+{"case_id": "output_guard_v050_04", "action": "BLOCK", "reasons": ["payment_card_number"]}
+{"case_id": "output_guard_v050_05", "action": "BLOCK", "reasons": ["credential_or_access_token"]}
+{"case_id": "output_guard_v050_06", "action": "BLOCK", "reasons": ["credential_or_access_token"]}
+{"case_id": "output_guard_v050_07", "action": "BLOCK", "reasons": ["direct_customer_or_transaction_identifier", "raw_sensitive_record_field"]}
+{"case_id": "output_guard_v050_08", "action": "BLOCK", "reasons": ["direct_customer_or_transaction_identifier", "raw_sensitive_record_field"]}
+{"case_id": "output_guard_v050_09", "action": "BLOCK", "reasons": ["direct_customer_or_transaction_identifier", "raw_sensitive_record_field"]}
+{"case_id": "output_guard_v050_10", "action": "ALLOW", "reasons": []}
+{"case_id": "output_guard_v050_11", "action": "ALLOW", "reasons": []}
+{"case_id": "output_guard_v050_12", "action": "ALLOW", "reasons": []}
+{"case_id": "output_guard_v050_13", "action": "ALLOW", "reasons": []}
+{"case_id": "output_guard_v050_14", "action": "ALLOW", "reasons": []}
+{"case_id": "output_guard_v050_15", "action": "ALLOW", "reasons": []}
+{"case_id": "output_guard_v050_16", "action": "ALLOW", "reasons": []}

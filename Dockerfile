@@ -15,7 +15,7 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY --chown=app:app .streamlit/config.toml ./.streamlit/config.toml
-COPY --chown=app:app app.py analysis_methods.py analyst.py business_agents.py customer_analyst.py demo_sql.py forecasting_agent.py jev.py output_guardrails.py planner.py product_operations_analyst.py rag.py ./
+COPY --chown=app:app app.py analysis_methods.py analyst.py business_agents.py customer_analyst.py db_diagnostics.py demo_sql.py forecasting_agent.py jev.py observability.py output_guardrails.py planner.py product_operations_analyst.py public_safety.py rag.py ./
 COPY --chown=app:app demo_company/data/ ./demo_company/data/
 COPY --chown=app:app demo_company/docs/ ./demo_company/docs/
 RUN mkdir -p /app/demo_company/uploads \

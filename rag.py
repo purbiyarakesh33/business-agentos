@@ -36,6 +36,9 @@ DEFAULT_DOCS_PATH = ROOT / "demo_company" / "docs"
 DEFAULT_UPLOADS_PATH = ROOT / "demo_company" / "uploads"
 MAX_CHUNK_CHARS = 1800
 CHUNK_OVERLAP = 180
+# Changing this value forces document chunks/vectors to be refreshed even when
+# the source bytes have not changed. Review vectors are stored separately.
+CHUNKING_VERSION = "focused-structured-passages-v2"
 EMBEDDING_DIMENSIONS = 1024
 EMBEDDING_BATCH_SIZE = 32
 DEFAULT_EMBEDDING_MODEL = "Qwen/Qwen3-Embedding-8B"
@@ -376,13 +379,69 @@ def _text_document_chunks(source_name: str, text: str) -> list[dict[str, str]]:
     flush()
 
     for block_section, body in blocks:
-        for label, content in _chunk_text(body, block_section):
+        lines = [line.rstrip() for line in body.splitlines() if line.strip()]
+        # A Markdown table row is an independent fact. Copy the header into
+        # each passage so retrieval still has the field names and caveats.
+        if len(lines) >= 3 and all(line.lstrip().startswith("|") for line in lines):
+            header = lines[:2]
+            structured_pieces = ["\n".join([*header, row]) for row in lines[2:]]
+            passages = [
+                item
+                for piece in structured_pieces
+                for _, item in _chunk_text(piece, block_section)
+            ]
+        elif any(re.match(r"^\s*(?:[-*+]\s+|\d+[.)]\s+)", line) for line in lines):
+            # Keep each list item together with its continuation lines, but
+            # avoid embedding several unrelated KPI definitions in one chunk.
+            entries: list[str] = []
+            current: list[str] = []
+            for line in lines:
+                if re.match(r"^\s*(?:[-*+]\s+|\d+[.)]\s+)", line):
+                    if current:
+                        entries.append("\n".join(current))
+                    current = [line.strip()]
+                elif current:
+                    current.append(line.strip())
+                else:
+                    # Preamble text remains available as its own passage.
+                    entries.extend(piece for _, piece in _chunk_text(line, block_section))
+            if current:
+                entries.append("\n".join(current))
+            passages = [
+                item
+                for entry in entries
+                for _, item in _chunk_text(entry, block_section)
+            ]
+        else:
+            passages = [content for _, content in _chunk_text(body, block_section)]
+        for content in passages:
             chunks.append({
                 "title": title,
-                "section": label,
+                "section": block_section,
                 "content": content,
                 "source_ref": "",
             })
+    for number, chunk in enumerate(chunks, 1):
+        chunk["source_ref"] = f"{source_name}#chunk-{number}"
+    return chunks
+
+
+def _json_document_chunks(source_name: str, value: Any) -> list[dict[str, str]]:
+    """Keep array records independently retrievable while retaining their IDs."""
+    title = Path(source_name).stem.replace("_", " ").strip() or "Company document"
+    if isinstance(value, list):
+        records = value
+    else:
+        records = [value]
+    chunks: list[dict[str, str]] = []
+    for index, record in enumerate(records, 1):
+        if isinstance(record, dict):
+            label = str(record.get("id") or record.get("name") or f"Record {index}")
+        else:
+            label = f"Record {index}"
+        content = json.dumps(record, ensure_ascii=False, indent=2)
+        for _, piece in _chunk_text(content, label):
+            chunks.append({"title": title, "section": label, "content": piece, "source_ref": ""})
     for number, chunk in enumerate(chunks, 1):
         chunk["source_ref"] = f"{source_name}#chunk-{number}"
     return chunks
@@ -470,11 +529,17 @@ def _read_file_chunks(path: Path, source_name: str) -> tuple[str, list[dict[str,
             raise RagError(f"{path.name} is not valid UTF-8 text.") from exc
         if suffix == ".json":
             try:
-                text = json.dumps(json.loads(text), ensure_ascii=False, indent=2)
+                value = json.loads(text)
             except json.JSONDecodeError:
-                pass
-        chunks = _text_document_chunks(source_name, text)
-    return sha256(raw).hexdigest(), chunks
+                value = None
+            if value is not None:
+                chunks = _json_document_chunks(source_name, value)
+            else:
+                chunks = _text_document_chunks(source_name, text)
+        else:
+            chunks = _text_document_chunks(source_name, text)
+    content_hash = sha256(CHUNKING_VERSION.encode("utf-8") + b"\0" + raw).hexdigest()
+    return content_hash, chunks
 
 
 def _collect_document_sources(include_uploads: bool = True) -> dict[tuple[str, str], dict[str, Any]]:
@@ -584,15 +649,17 @@ def _uploaded_document_sources(uploaded_files: Iterable[Any]) -> tuple[dict[tupl
                 raise RagError(f"{safe_name} is not valid UTF-8 text.") from exc
             if suffix == ".json":
                 try:
-                    text = json.dumps(json.loads(text), ensure_ascii=False, indent=2)
+                    value = json.loads(text)
                 except json.JSONDecodeError:
-                    pass
-            chunks = _text_document_chunks(safe_name, text)
+                    value = None
+                chunks = _json_document_chunks(safe_name, value) if value is not None else _text_document_chunks(safe_name, text)
+            else:
+                chunks = _text_document_chunks(safe_name, text)
         if not chunks:
             raise RagError(f"{safe_name} contains no extractable text.")
         source_name = f"session_uploads/{safe_name}"
         sources[("company_document", source_name)] = {
-            "content_hash": sha256(raw).hexdigest(),
+            "content_hash": sha256(CHUNKING_VERSION.encode("utf-8") + b"\0" + raw).hexdigest(),
             "chunks": chunks,
         }
     return sources, len(sources)
@@ -822,6 +889,86 @@ def _requested_product_categories(query: str) -> list[str]:
             if re.search(r"(?<!\w)" + re.escape(category) + r"(?!\w)", query, re.IGNORECASE)]
 
 
+def _retrieval_source_scope(query: str) -> list[str] | None:
+    """Route clearly document-oriented and review-analysis queries by corpus.
+
+    Ambiguous queries retain the existing cross-corpus hybrid retrieval. This
+    keeps routing conservative while preventing review text from diluting
+    explicit documentation lookups, and vice versa.
+    """
+    value = query.casefold()
+    document_intent = re.search(
+        r"\b(kpi|defin\w*|data dictionary|schema|field|fields|table|tables|"
+        r"source catalog|company profile|documentation|documents?|docs|recorded|"
+        r"reporting setup|reporting timezone|date coverage|order-date|currency|timezone|"
+        r"overview|on[- ]time delivery rate|net product sales|repeat customer)\b",
+        value,
+    )
+    review_intent = re.search(
+        r"\b(reviews?|sentiment|ratings?|customer feedback|customer voice|themes|"
+        r"what customers (?:say|think))\b",
+        value,
+    )
+    if document_intent:
+        return ["company_document"]
+    if review_intent:
+        return ["customer_review"]
+    return None
+
+
+def _explicit_document_source_scope(query: str) -> list[str] | None:
+    """Honor a user request to answer from a named, narrow document source."""
+    value = query.casefold()
+    if re.search(r"\b(?:based|using|answer)\s+only\b.{0,80}\b(?:overview|company profile)\b", value):
+        return ["company_docs/company_profile.md"]
+    return None
+
+
+def _query_term_coverage(query: str, item: dict[str, Any]) -> float:
+    """Return a small, deterministic lexical coverage signal for reranking."""
+    stop_words = {
+        "a", "an", "and", "are", "as", "at", "according", "be", "based", "by",
+        "do", "does", "for", "from", "give", "how", "in", "include", "included",
+        "is", "it", "of", "on", "or", "the", "to", "what", "when", "where",
+        "which", "who", "why", "with", "use", "uses", "used",
+    }
+
+    def normalize(token: str) -> str:
+        if token in {"coverage", "coverages"}:
+            return "cover"
+        if len(token) > 5 and token.endswith("ies"):
+            return token[:-3] + "y"
+        if len(token) > 5 and token.endswith("ing"):
+            return token[:-3]
+        if len(token) > 5 and token.endswith("ed"):
+            return token[:-2] + "e"
+        if len(token) > 4 and token.endswith("s") and not token.endswith("ss"):
+            return token[:-1]
+        return token
+
+    query_terms = {
+        normalize(token)
+        for token in re.findall(r"[a-z0-9]+", query.casefold())
+        if len(token) > 2 and token not in stop_words
+    }
+    if not query_terms:
+        return 0.0
+    document = " ".join(str(item.get(key, "")) for key in ("title", "section", "content")).casefold()
+    document_terms = {normalize(token) for token in re.findall(r"[a-z0-9]+", document)}
+    return len(query_terms & document_terms) / len(query_terms)
+
+
+def _query_facets(query: str) -> list[str]:
+    """Split explicit multi-part questions into their independently answerable asks."""
+    facets: list[str] = []
+    for sentence in re.split(r"[?;.!]+", query):
+        for part in re.split(r"\s*,\s*|\s+and\s+", sentence, flags=re.IGNORECASE):
+            facet = re.sub(r"^\s*(?:and|then)\s+", "", part, flags=re.IGNORECASE).strip(" ,")
+            if facet and len(re.findall(r"[A-Za-z0-9]+", facet)) >= 2:
+                facets.append(facet)
+    return facets if len(facets) > 1 else []
+
+
 @trace_component("Semantic document retrieval", run_type="retriever")
 def retrieve_relevant(
     query: str,
@@ -842,13 +989,21 @@ def retrieve_relevant(
     if not tenants or any(len(value) > 128 for value in tenants):
         raise RagError("The retrieval tenant identifier is invalid.")
     limit = max(1, min(int(top_k), 10))
+    source_scope = _retrieval_source_scope(query)
+    scope_sql = " AND source_type = ANY(%s)" if source_scope else ""
+    scope_params = (source_scope,) if source_scope else ()
+    document_scope = _explicit_document_source_scope(query)
+    document_sql = " AND source_name = ANY(%s)" if document_scope else ""
+    document_params = (document_scope,) if document_scope else ()
     with _connect() as connection:
         _ensure_schema(connection)
         total = connection.execute(
-            "SELECT count(*) FROM rag_chunks WHERE tenant_id = ANY(%s)",
-            (tenants,),
+            "SELECT count(*) FROM rag_chunks WHERE tenant_id = ANY(%s)" + scope_sql + document_sql,
+            (tenants, *scope_params, *document_params),
         ).fetchone()[0]
         if not total:
+            if source_scope:
+                return []
             raise RagError("The semantic index is empty. Index company documents in the sidebar first.")
 
         # Check the local index before transmitting a query for embedding.
@@ -857,10 +1012,10 @@ def retrieve_relevant(
             """SELECT id, source_type, source_name, source_ref, title, section, content,
                       1 - (embedding <=> %s::vector) AS score
                FROM rag_chunks
-               WHERE tenant_id = ANY(%s)
+               WHERE tenant_id = ANY(%s)""" + scope_sql + document_sql + """
                ORDER BY embedding <=> %s::vector
                LIMIT 25""",
-            (query_vector, tenants, query_vector),
+            (query_vector, tenants, *scope_params, *document_params, query_vector),
         ).fetchall()
         lexical_terms = [token for token in re.findall(r"[A-Za-z0-9]+", query) if len(token) > 1]
         lexical_query = " | ".join(lexical_terms)
@@ -869,10 +1024,10 @@ def retrieve_relevant(
                       ts_rank_cd(search_tsv, to_tsquery('english', %s)) AS score
                FROM rag_chunks
                WHERE tenant_id = ANY(%s)
-                 AND search_tsv @@ to_tsquery('english', %s)
+                 AND search_tsv @@ to_tsquery('english', %s)""" + scope_sql + document_sql + """
                ORDER BY score DESC
                LIMIT 25""",
-            (lexical_query, tenants, lexical_query),
+            (lexical_query, tenants, lexical_query, *scope_params, *document_params),
         ).fetchall() if lexical_query else []
 
         # When both review polarities are requested, retrieve examples from each
@@ -977,10 +1132,70 @@ def retrieve_relevant(
                 seen_review_themes.add(theme)
             remainder.append(item_id)
         ranked = diverse + remainder
+    final_scores = dict(rrf_scores)
+    term_coverage: dict[int, float] = {}
+    if not wants_both_polarities:
+        # RRF remains the primary signal. A small query-term coverage bonus
+        # resolves close ties in favor of passages that explicitly name more
+        # of the user's requested concepts.
+        for item_id in ranked:
+            coverage = _query_term_coverage(query, combined[item_id])
+            term_coverage[item_id] = coverage
+            final_scores[item_id] += 0.02 * coverage
+        ranked.sort(key=lambda item_id: (-final_scores[item_id], item_id))
+        facets = _query_facets(query)
+        if facets:
+            focused: list[int] = []
+            # The union of 25 semantic + 25 lexical hits can contain up to 50
+            # distinct passages. Preserve that recall when evaluating each
+            # clause; otherwise RRF can hide a clause-specific candidate just
+            # below the first 25 combined ranks.
+            candidates = ranked[:50]
+            source_lookup_intent = bool(re.search(
+                r"\b(recorded|tables?|columns|schema|source|eligible shipments?)\b",
+                query,
+                re.IGNORECASE,
+            ))
+            for facet in facets:
+                scored = sorted(
+                    (
+                        (
+                            _query_term_coverage(facet, combined[item_id]),
+                            final_scores[item_id],
+                            0.4
+                            if source_lookup_intent and str(combined[item_id].get("source_name", "")).casefold().endswith(("data_dictionary.md", "source_catalog.json"))
+                            else 0.0,
+                            item_id,
+                        )
+                        for item_id in candidates
+                    ),
+                    key=lambda value: (-(value[0] + value[2]), -value[0], -value[1], value[3]),
+                )
+                if not scored or scored[0][0] < 0.25:
+                    continue
+                take = 2 if re.search(
+                    r"\b(fields|tables|columns|sources|recorded|eligible|shipments?)\b",
+                    facet,
+                    re.IGNORECASE,
+                ) else 1
+                selected_for_facet: list[int] = []
+                for coverage, _score, _bonus, item_id in scored:
+                    if coverage < 0.25:
+                        break
+                    if item_id not in focused:
+                        focused.append(item_id)
+                    if item_id not in selected_for_facet:
+                        selected_for_facet.append(item_id)
+                    if len(selected_for_facet) >= take:
+                        break
+            if focused:
+                ranked = sorted(focused, key=lambda item_id: (-final_scores[item_id], item_id))
     return [
         {
             **combined[item_id],
-            "score": float(rrf_scores[item_id]),
+            "score": float(final_scores[item_id]),
+            "rrf_score": float(rrf_scores[item_id]),
+            "query_term_coverage": term_coverage.get(item_id),
         }
         for item_id in ranked[:limit]
     ]

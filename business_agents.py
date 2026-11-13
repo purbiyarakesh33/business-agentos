@@ -1109,7 +1109,7 @@ def _execute_read_only(sql: str, task: PlannerTask) -> dict[str, Any]:
             if column.strip().lower() in sensitive_result_columns
         )
         identity_values: set[str] = set()
-        if "customers" in allowed_tables:
+        if "customers" in _allowed_tables:
             try:
                 with sqlite3.connect(_db_uri(), uri=True, timeout=2) as connection:
                     identity_values = {
@@ -2904,7 +2904,10 @@ def _deterministic_review_text_findings(
             groups["lower"].append((item, review_text.group(1).strip()))
 
     findings = []
-    for group, label in (("higher", "Higher-rated"), ("lower", "Lower-rated")):
+    for group, label, rating_proxy in (
+        ("higher", "Higher-rated", "positive-rating proxy"),
+        ("lower", "Lower-rated", "negative-rating proxy"),
+    ):
         examples = groups[group]
         if not examples:
             continue
@@ -2912,11 +2915,15 @@ def _deterministic_review_text_findings(
         # claims and does not generalize the retrieved sample to all customers.
         quoted = "; ".join(f'“{text[:220]}”' for _item, text in examples)
         findings.append({
-            "claim": f"{label} retrieved review examples say: {quoted}.",
+            "claim": (
+                f"{label} retrieved examples from the {rating_proxy} group include "
+                f"representative passages from this sample: {quoted}."
+            ),
             "evidence_ids": [item["evidence_id"] for item, _text in examples],
             "calculation": (
                 "Review wording is quoted directly from the cited passages; examples are grouped by the rating "
-                "recorded in each passage. No review or theme frequency was calculated."
+                "recorded in each passage. The rating groups are proxies, not sentiment labels, and no review or "
+                "theme frequency was calculated."
             ),
             "limitations": [
                 "Retrieved passages are illustrative and do not represent the full review population.",
@@ -2981,6 +2988,15 @@ not imputed. If causal_review says causal_claim_allowed=false, say the data
 supports association only and do not attribute a cause. Return empty findings
 only when the query returned no relevant rows. Do not include free-standing
 claims or hidden chain-of-thought.
+
+When the supplied evidence is relevant to the question but does not state the
+requested value or fact, return a concise limitation finding that says it
+cannot be determined from the supplied evidence and cites the most relevant
+passage. Do not return an empty findings list just because a requested value is
+missing from otherwise relevant context. Never fill the gap with an estimate.
+For a comparison of two definitions, if the evidence defines one term but only
+warns not to confuse it with the other without defining that second term, state
+that the second definition is not provided. Do not infer its criteria.
 
 Return only JSON shaped as:
 {"findings":[{"claim":"concise factual finding","evidence_ids":["task_id:query1"],"calculation":"formula or direct lookup","limitations":["relevant limit"]}]}

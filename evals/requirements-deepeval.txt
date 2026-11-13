@@ -1,2 +1,4 @@
 # Evaluation-only dependency; keep separate from the Business AgentOS runtime.
 deepeval==4.2.8
+psycopg[binary]>=3.2,<4
+pypdf>=5,<7

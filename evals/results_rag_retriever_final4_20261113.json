@@ -1,0 +1,243 @@
+{
+  "dataset_version": "0.6.3",
+  "split": "development",
+  "component_filter": "rag_retrieval",
+  "case_count": 8,
+  "prediction_count": 8,
+  "coverage": 1.0,
+  "components": {
+    "rag_retrieval": {
+      "labeled_cases": 8,
+      "predicted_cases": 8,
+      "cases": [
+        {
+          "case_id": "rag_review_passages",
+          "sources": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact_match": 1.0,
+            "missing_count": 0,
+            "missing_sample": [],
+            "extra_count": 0,
+            "extra_sample": []
+          },
+          "topics": {
+            "precision": 1.0,
+            "recall": 0.6,
+            "f1": 0.7499999999999999,
+            "exact_match": 0.0,
+            "missing_count": 4,
+            "missing_sample": [
+              "delivery_negative",
+              "functionality_as_described",
+              "neutral_or_mixed",
+              "repurchase_intent_positive"
+            ],
+            "extra_count": 0,
+            "extra_sample": []
+          }
+        },
+        {
+          "case_id": "rag_repeat_customer_definition_dev",
+          "sources": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact_match": 1.0,
+            "missing_count": 0,
+            "missing_sample": [],
+            "extra_count": 0,
+            "extra_sample": []
+          },
+          "passages": {
+            "k": 5,
+            "judged_relevant_count": 1,
+            "retrieved_count": 1,
+            "precision_at_k": 0.2,
+            "precision_at_returned_count": 1.0,
+            "recall_at_k": 1.0,
+            "hit_at_k": true,
+            "mrr_at_k": 1.0,
+            "ndcg_at_k": 1.0
+          }
+        },
+        {
+          "case_id": "rag_company_reporting_context_dev",
+          "sources": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact_match": 1.0,
+            "missing_count": 0,
+            "missing_sample": [],
+            "extra_count": 0,
+            "extra_sample": []
+          },
+          "passages": {
+            "k": 5,
+            "judged_relevant_count": 4,
+            "retrieved_count": 2,
+            "precision_at_k": 0.4,
+            "precision_at_returned_count": 1.0,
+            "recall_at_k": 0.5,
+            "hit_at_k": true,
+            "mrr_at_k": 1.0,
+            "ndcg_at_k": 0.6366824387328317
+          }
+        },
+        {
+          "case_id": "rag_v050_01",
+          "sources": {
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8,
+            "exact_match": 0.0,
+            "missing_count": 0,
+            "missing_sample": [],
+            "extra_count": 1,
+            "extra_sample": [
+              "company_docs/source_catalog.json"
+            ]
+          },
+          "passages": {
+            "k": 5,
+            "judged_relevant_count": 4,
+            "retrieved_count": 3,
+            "precision_at_k": 0.4,
+            "precision_at_returned_count": 0.6666666666666666,
+            "recall_at_k": 0.5,
+            "hit_at_k": true,
+            "mrr_at_k": 1.0,
+            "ndcg_at_k": 0.5855700749881525
+          }
+        },
+        {
+          "case_id": "rag_v050_02",
+          "sources": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact_match": 1.0,
+            "missing_count": 0,
+            "missing_sample": [],
+            "extra_count": 0,
+            "extra_sample": []
+          },
+          "passages": {
+            "k": 5,
+            "judged_relevant_count": 2,
+            "retrieved_count": 2,
+            "precision_at_k": 0.4,
+            "precision_at_returned_count": 1.0,
+            "recall_at_k": 1.0,
+            "hit_at_k": true,
+            "mrr_at_k": 1.0,
+            "ndcg_at_k": 1.0
+          }
+        },
+        {
+          "case_id": "rag_v050_03",
+          "sources": {
+            "precision": 0.6666666666666666,
+            "recall": 1.0,
+            "f1": 0.8,
+            "exact_match": 0.0,
+            "missing_count": 0,
+            "missing_sample": [],
+            "extra_count": 1,
+            "extra_sample": [
+              "company_docs/scenario_catalog.md"
+            ]
+          },
+          "passages": {
+            "k": 5,
+            "judged_relevant_count": 2,
+            "retrieved_count": 3,
+            "precision_at_k": 0.4,
+            "precision_at_returned_count": 0.6666666666666666,
+            "recall_at_k": 1.0,
+            "hit_at_k": true,
+            "mrr_at_k": 1.0,
+            "ndcg_at_k": 1.0
+          }
+        },
+        {
+          "case_id": "rag_v050_04",
+          "sources": {
+            "precision": 0.3333333333333333,
+            "recall": 0.5,
+            "f1": 0.4,
+            "exact_match": 0.0,
+            "missing_count": 1,
+            "missing_sample": [
+              "company_docs/data_dictionary.md"
+            ],
+            "extra_count": 2,
+            "extra_sample": [
+              "company_docs/demo_questions.md",
+              "company_docs/evidence_queries.sql"
+            ]
+          },
+          "passages": {
+            "k": 5,
+            "judged_relevant_count": 2,
+            "retrieved_count": 3,
+            "precision_at_k": 0.2,
+            "precision_at_returned_count": 0.3333333333333333,
+            "recall_at_k": 0.5,
+            "hit_at_k": true,
+            "mrr_at_k": 0.5,
+            "ndcg_at_k": 0.38685280723454163
+          }
+        },
+        {
+          "case_id": "rag_v050_05",
+          "sources": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1": 1.0,
+            "exact_match": 1.0,
+            "missing_count": 0,
+            "missing_sample": [],
+            "extra_count": 0,
+            "extra_sample": []
+          },
+          "passages": {
+            "k": 5,
+            "judged_relevant_count": 2,
+            "retrieved_count": 2,
+            "precision_at_k": 0.4,
+            "precision_at_returned_count": 1.0,
+            "recall_at_k": 1.0,
+            "hit_at_k": true,
+            "mrr_at_k": 1.0,
+            "ndcg_at_k": 1.0
+          }
+        }
+      ],
+      "macro_scores": {
+        "sources": {
+          "precision": 0.8333333333333334,
+          "recall": 0.9375,
+          "f1": 0.875,
+          "exact_match": 0.625
+        },
+        "passages": {
+          "precision_at_k": 0.3428571428571429,
+          "precision_at_returned_count": 0.8095238095238095,
+          "recall_at_k": 0.7857142857142857,
+          "hit_at_k": 1.0,
+          "mrr_at_k": 0.9285714285714286,
+          "ndcg_at_k": 0.8013007601365036
+        },
+        "topics": {
+          "precision": 1.0,
+          "recall": 0.6,
+          "f1": 0.7499999999999999,
+          "exact_match": 0.0
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "dataset_version": "1.0.1",
+  "purpose": "Isolate evidence-to-answer generation by supplying reviewed oracle passages without calling the retriever.",
+  "split": "development",
+  "cases": [
+    {
+      "case_id": "kpi_repeat_definition",
+      "query": "According to the KPI definitions, how is a repeat customer defined, and how is that different from lifetime returning status?",
+      "oracle_context_refs": [
+        "company_docs/kpi_definitions.md#chunk-13"
+      ],
+      "expected_terms": [
+        "at least two delivered orders",
+        "selected analysis window",
+        "lifetime returning status"
+      ],
+      "forbidden_patterns": [
+        "(?i)lifetime repeat-purchase rate",
+        "(?i)exactly two delivered orders"
+      ]
+    },
+    {
+      "case_id": "kpi_net_product_sales_definition",
+      "query": "According to the KPI definitions, what is net product sales, and are shipping and later refunds included?",
+      "oracle_context_refs": [
+        "company_docs/kpi_definitions.md#chunk-5"
+      ],
+      "expected_terms": [
+        "gross product sales",
+        "line-item discounts",
+        "shipping",
+        "later refunds"
+      ],
+      "forbidden_patterns": [
+        "(?i)net product sales includes shipping",
+        "(?i)later refunds are included in net product sales"
+      ]
+    },
+    {
+      "case_id": "company_reporting_context",
+      "query": "What currency, reporting timezone, and order-date coverage does Cedar & Stone use?",
+      "oracle_context_refs": [
+        "company_docs/company_profile.md#chunk-2",
+        "company_docs/company_profile.md#chunk-3",
+        "company_docs/company_profile.md#chunk-4",
+        "company_docs/data_dictionary.md#chunk-1"
+      ],
+      "expected_terms": [
+        "USD",
+        "UTC",
+        "January 2024",
+        "December 2025"
+      ],
+      "forbidden_patterns": [
+        "(?i)Eastern Time",
+        "(?i)EUR"
+      ]
+    },
+    {
+      "case_id": "gross_margin_abstention",
+      "query": "Based only on the fictional-business overview, what was Cedar & Stone's 2025 gross margin? Give the exact percentage.",
+      "oracle_context_refs": [
+        "company_docs/company_profile.md#chunk-1"
+      ],
+      "expected_terms": [],
+      "forbidden_patterns": [
+        "(?i)\\b\\d+(?:\\.\\d+)?\\s*%",
+        "(?i)\\bUSD\\s*[\\d,]+"
+      ],
+      "must_abstain": true
+    }
+  ]
+}

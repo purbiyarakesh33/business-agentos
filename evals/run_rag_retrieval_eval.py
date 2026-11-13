@@ -62,6 +62,7 @@ def main() -> int:
         raise FileExistsError(f"Refusing to overwrite predictions file: {output}")
 
     import rag
+    failures = 0
     with output.open("x", encoding="utf-8", newline="\n") as stream:
         for number, case in enumerate(cases, 1):
             row = {"case_id": case["case_id"]}
@@ -71,7 +72,7 @@ def main() -> int:
                 row["relevant_passages"] = [str(hit["source_ref"]) for hit in hits]
                 row["retrieved_passages"] = [
                     {key: hit.get(key) for key in
-                     ("source_type", "source_name", "source_ref", "title", "section", "content", "score", "retrieval_method")}
+                     ("source_type", "source_name", "source_ref", "title", "section", "content", "score", "rrf_score", "semantic_score", "query_term_coverage", "retrieval_method")}
                     for hit in hits
                 ]
                 topics = set()
@@ -83,6 +84,7 @@ def main() -> int:
                 row["retrieved_topics"] = sorted(topics)
                 print(f"{number}/{len(cases)} {case['case_id']}: retrieved {len(hits)} passage(s)")
             except Exception as exc:
+                failures += 1
                 row["error"] = f"{type(exc).__name__}: retrieval failed; details withheld"
                 row["relevant_sources"] = []
                 row["relevant_passages"] = []
@@ -90,7 +92,8 @@ def main() -> int:
             stream.write(json.dumps(row, ensure_ascii=False) + "\n")
             stream.flush()
     print(f"Saved predictions to {output}")
-    return 0
+    print(f"RAG retrieval cases failed: {failures}/{len(cases)}")
+    return 1 if failures else 0
 
 
 if __name__ == "__main__":

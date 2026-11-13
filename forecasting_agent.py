@@ -915,10 +915,10 @@ def deterministic_forecast_findings(
     if isinstance(reconciliation, dict):
         aggregate_rows = reconciliation.get("rows", [])
         aggregate_estimates = "; ".join(
-            f"{date.fromisoformat(row['period_start']):%b %Y}: {forecast['metric_label']} {row['forecast']:,.2f} "
-            f"(empirical 80% band {row['lower_80']:,.2f}–{row['upper_80']:,.2f})"
+            f"{date.fromisoformat(row['period_start']):%B %Y}: {forecast['metric_label']} {row['forecast']:,.2f} "
+            f"(empirical 80% uncertainty interval, {row['lower_80']:,.2f}–{row['upper_80']:,.2f})"
             + (f"; assumed scenario {forecast['scenario_change_pct']:+.2f}%: {row['scenario_forecast']:,.2f} "
-               f"(band {row['scenario_lower_80']:,.2f}–{row['scenario_upper_80']:,.2f})" if forecast.get("scenario_change_pct") is not None else "")
+               f"(scenario interval {row['scenario_lower_80']:,.2f}–{row['scenario_upper_80']:,.2f})" if forecast.get("scenario_change_pct") is not None else "")
             for row in aggregate_rows
         )
         aggregate_score = reconciliation.get("score")
@@ -941,10 +941,10 @@ def deterministic_forecast_findings(
         })
     for label, series_rows in sorted(by_series.items()):
         estimates = "; ".join(
-            f"{date.fromisoformat(row['period_start']):%b %Y}: {forecast['metric_label']} {row['forecast']:,.2f} "
-            f"(empirical 80% band {row['lower_80']:,.2f}–{row['upper_80']:,.2f})"
+            f"{date.fromisoformat(row['period_start']):%B %Y}: {forecast['metric_label']} {row['forecast']:,.2f} "
+            f"(empirical 80% uncertainty interval, {row['lower_80']:,.2f}–{row['upper_80']:,.2f})"
             + (f"; assumed scenario {forecast['scenario_change_pct']:+.2f}%: {row['scenario_forecast']:,.2f} "
-               f"(band {row['scenario_lower_80']:,.2f}–{row['scenario_upper_80']:,.2f})" if forecast.get("scenario_change_pct") is not None else "")
+               f"(scenario interval {row['scenario_lower_80']:,.2f}–{row['scenario_upper_80']:,.2f})" if forecast.get("scenario_change_pct") is not None else "")
             for row in series_rows
         )
         metadata = forecast.get("model_comparison", {}).get(label, {})
@@ -954,7 +954,7 @@ def deterministic_forecast_findings(
         score_text = f"{float(score) * 100:.2f}% WAPE" if score_name == "WAPE" and isinstance(score, (float, int)) else f"MAE {float(score):,.2f}" if isinstance(score, (float, int)) else "backtest score unavailable"
         status_note = " This is a retrospective forecast; its target months are already past." if forecast.get("forecast_status") == "retrospective" else ""
         claim = f"For {label}, the {forecast['metric_label']} forecast is: {estimates}.{status_note}"
-        calc = f"Selected {method} using the lowest {score_text} across {metadata.get('folds', 0)} rolling-origin folds. Band: empirical 10th–90th percentiles of horizon-matched backtest residuals."
+        calc = f"Selected {method} using the lowest {score_text} across {metadata.get('folds', 0)} rolling-origin folds. The uncertainty interval uses empirical 10th–90th percentiles of horizon-matched backtest residuals."
         if reconciliation:
             calc += " Group point estimates and interval bounds were shifted by the recorded reconciliation adjustment so group point forecasts add to the aggregate forecast."
         limitations = list(forecast.get("limitations", []))[:6]

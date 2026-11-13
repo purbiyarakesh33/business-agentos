@@ -1,0 +1,360 @@
+{
+  "dataset_version": "1.0.1",
+  "split": "development",
+  "stage": "generator",
+  "judge_type": "reference-free LLM-as-a-judge; expected_output is not supplied",
+  "generated_at_utc": "2026-11-12T20:21:32.863289+00:00",
+  "case_count": 4,
+  "generated_case_count": 4,
+  "failed_case_count": 0,
+  "metric_summaries": {
+    "Answer Relevancy": {
+      "mean_score": 1.0,
+      "scored_cases": 4,
+      "total_selected_cases": 4,
+      "judge_errors": 0
+    },
+    "Citation Correctness [GEval]": {
+      "mean_score": 0.975,
+      "scored_cases": 4,
+      "total_selected_cases": 4,
+      "judge_errors": 0
+    },
+    "Faithfulness": {
+      "mean_score": 0.95,
+      "scored_cases": 4,
+      "total_selected_cases": 4,
+      "judge_errors": 0
+    }
+  },
+  "cases": [
+    {
+      "case_id": "kpi_repeat_definition",
+      "status": "generated",
+      "stage": "generator",
+      "generator_calls": 1,
+      "retriever_calls": 0,
+      "output_guard": "ALLOW",
+      "citation_audit": {
+        "citation_id_precision": 1.0,
+        "cited_expected_passage_recall": 1.0,
+        "cited_evidence_ids": [
+          "oracle:company_docs/kpi_definitions.md#chunk-13"
+        ],
+        "cited_source_refs": [
+          "company_docs/kpi_definitions.md#chunk-13"
+        ],
+        "unresolved_citations": []
+      },
+      "supplementary_reference_diagnostics": {
+        "expected_terms": [
+          "at least two delivered orders",
+          "selected analysis window",
+          "lifetime returning status"
+        ],
+        "expected_terms_found": [
+          "at least two delivered orders",
+          "selected analysis window",
+          "lifetime returning status"
+        ],
+        "forbidden_patterns_found": [],
+        "must_abstain": false,
+        "abstention_check": null
+      },
+      "retrieval_label_audit": null,
+      "answer": "## Verified findings\n\n1. A repeat customer is defined as a customer with at least two delivered orders in the selected analysis window. [Evidence: oracle:company_docs/kpi_definitions.md#chunk-13]\n\nCalculation: Direct definition from provided evidence\n\nLimitations: The definition of 'lifetime returning status' is not provided in the evidence; only a warning not to confuse it with repeat customer is given.",
+      "evidence": [
+        {
+          "evidence_id": "oracle:company_docs/kpi_definitions.md#chunk-13",
+          "evidence_type": "document_context",
+          "source_name": "",
+          "source_ref": "company_docs/kpi_definitions.md#chunk-13",
+          "section": "KPI definitions",
+          "excerpt": "- **Repeat customer:** a customer with at least two delivered orders in the selected analysis window. Do not confuse with lifetime returning status.",
+          "retrieval_query": "reviewed oracle passage; retriever bypassed",
+          "retrieval_method": null,
+          "rank": 1
+        }
+      ],
+      "metrics": {
+        "Faithfulness": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because there are no contradictions — the actual output is fully faithful to the retrieval context. Great job keeping everything aligned!",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        },
+        "Answer Relevancy": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the output fully and directly addresses the input with no irrelevant statements. Great job delivering a complete, on-point answer!",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        },
+        "Citation Correctness [GEval]": {
+          "score": 0.9,
+          "reason": "The repeat customer definition is correctly cited to chunk-13 and matches the evidence verbatim. The output appropriately flags that the evidence only warns not to confuse repeat customer with lifetime returning status without defining it, rather than fabricating a distinction. Minor deduction because the question's second part remains unanswered due to evidence limits, though this is transparently disclosed.",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        }
+      }
+    },
+    {
+      "case_id": "kpi_net_product_sales_definition",
+      "status": "generated",
+      "stage": "generator",
+      "generator_calls": 1,
+      "retriever_calls": 0,
+      "output_guard": "ALLOW",
+      "citation_audit": {
+        "citation_id_precision": 1.0,
+        "cited_expected_passage_recall": 1.0,
+        "cited_evidence_ids": [
+          "oracle:company_docs/kpi_definitions.md#chunk-5"
+        ],
+        "cited_source_refs": [
+          "company_docs/kpi_definitions.md#chunk-5"
+        ],
+        "unresolved_citations": []
+      },
+      "supplementary_reference_diagnostics": {
+        "expected_terms": [
+          "gross product sales",
+          "line-item discounts",
+          "shipping",
+          "later refunds"
+        ],
+        "expected_terms_found": [
+          "gross product sales",
+          "line-item discounts",
+          "shipping",
+          "later refunds"
+        ],
+        "forbidden_patterns_found": [],
+        "must_abstain": false,
+        "abstention_check": null
+      },
+      "retrieval_label_audit": null,
+      "answer": "## Verified findings\n\n1. Net product sales is defined as gross product sales minus line-item discounts, and excludes both shipping and later refunds. [Evidence: oracle:company_docs/kpi_definitions.md#chunk-5]\n\nCalculation: Direct definition from provided excerpt\n\nLimitations: The definition does not specify how refunds are categorized if they occur before shipment or are related to returns during a different period; only 'later refunds' are explicitly excluded.",
+      "evidence": [
+        {
+          "evidence_id": "oracle:company_docs/kpi_definitions.md#chunk-5",
+          "evidence_type": "document_context",
+          "source_name": "",
+          "source_ref": "company_docs/kpi_definitions.md#chunk-5",
+          "section": "KPI definitions",
+          "excerpt": "- **Net product sales:** gross product sales minus line-item discounts. Excludes shipping and later refunds.",
+          "retrieval_query": "reviewed oracle passage; retriever bypassed",
+          "retrieval_method": null,
+          "rank": 1
+        }
+      ],
+      "metrics": {
+        "Faithfulness": {
+          "score": 0.8,
+          "reason": "The score is 0.80 because the actual output incorrectly states that only 'later refunds' are explicitly excluded from net product sales, whereas the retrieval context indicates that both shipping and later refunds are explicitly excluded. This misrepresentation of the retrieval context lowers faithfulness, though the rest of the output aligns well.",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        },
+        "Answer Relevancy": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the output fully and directly addresses the input with no irrelevant statements. Great job delivering a complete, on-point answer!",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        },
+        "Citation Correctness [GEval]": {
+          "score": 1.0,
+          "reason": "The single material claim (net product sales = gross product sales minus line-item discounts, excluding shipping and later refunds) is fully supported by the cited Evidence chunk-5, which states exactly that definition. The output also appropriately flags a limitation about pre-shipment refunds not being covered. No uncited claims or mismatched citations.",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        }
+      }
+    },
+    {
+      "case_id": "company_reporting_context",
+      "status": "generated",
+      "stage": "generator",
+      "generator_calls": 1,
+      "retriever_calls": 0,
+      "output_guard": "ALLOW",
+      "citation_audit": {
+        "citation_id_precision": 1.0,
+        "cited_expected_passage_recall": 1.0,
+        "cited_evidence_ids": [
+          "oracle:company_docs/company_profile.md#chunk-2",
+          "oracle:company_docs/company_profile.md#chunk-3",
+          "oracle:company_docs/company_profile.md#chunk-4",
+          "oracle:company_docs/data_dictionary.md#chunk-1"
+        ],
+        "cited_source_refs": [
+          "company_docs/company_profile.md#chunk-2",
+          "company_docs/company_profile.md#chunk-3",
+          "company_docs/company_profile.md#chunk-4",
+          "company_docs/data_dictionary.md#chunk-1"
+        ],
+        "unresolved_citations": []
+      },
+      "supplementary_reference_diagnostics": {
+        "expected_terms": [
+          "USD",
+          "UTC",
+          "January 2024",
+          "December 2025"
+        ],
+        "expected_terms_found": [
+          "USD",
+          "UTC",
+          "January 2024",
+          "December 2025"
+        ],
+        "forbidden_patterns_found": [],
+        "must_abstain": false,
+        "abstention_check": null
+      },
+      "retrieval_label_audit": null,
+      "answer": "## Verified findings\n\n1. Cedar & Stone uses USD as its reporting currency, UTC for timestamps, and order-date coverage from January 2024 through December 2025. [Evidence: oracle:company_docs/company_profile.md#chunk-2, oracle:company_docs/company_profile.md#chunk-3, oracle:company_docs/company_profile.md#chunk-4, oracle:company_docs/data_dictionary.md#chunk-1]\n\nCalculation: Direct extraction from documented reporting setup and data dictionary.\n\nLimitations: The data dictionary notes that later return, delivery, or review events may extend into early 2026, but these are not part of the primary order-date coverage window.",
+      "evidence": [
+        {
+          "evidence_id": "oracle:company_docs/company_profile.md#chunk-2",
+          "evidence_type": "document_context",
+          "source_name": "",
+          "source_ref": "company_docs/company_profile.md#chunk-2",
+          "section": "Reporting setup",
+          "excerpt": "- Currency: USD.",
+          "retrieval_query": "reviewed oracle passage; retriever bypassed",
+          "retrieval_method": null,
+          "rank": 1
+        },
+        {
+          "evidence_id": "oracle:company_docs/company_profile.md#chunk-3",
+          "evidence_type": "document_context",
+          "source_name": "",
+          "source_ref": "company_docs/company_profile.md#chunk-3",
+          "section": "Reporting setup",
+          "excerpt": "- Dates: January 2024 through December 2025.",
+          "retrieval_query": "reviewed oracle passage; retriever bypassed",
+          "retrieval_method": null,
+          "rank": 2
+        },
+        {
+          "evidence_id": "oracle:company_docs/company_profile.md#chunk-4",
+          "evidence_type": "document_context",
+          "source_name": "",
+          "source_ref": "company_docs/company_profile.md#chunk-4",
+          "section": "Reporting setup",
+          "excerpt": "- Reporting timezone: UTC for timestamps; daily and monthly reporting uses the date portion as stored.",
+          "retrieval_query": "reviewed oracle passage; retriever bypassed",
+          "retrieval_method": null,
+          "rank": 3
+        },
+        {
+          "evidence_id": "oracle:company_docs/data_dictionary.md#chunk-1",
+          "evidence_type": "document_context",
+          "source_name": "",
+          "source_ref": "company_docs/data_dictionary.md#chunk-1",
+          "section": "Data dictionary",
+          "excerpt": "All currency amounts are USD. IDs are stable within this generated fixture. Blank cells mean unavailable/not applicable; they are not zero. Order dates cover January 2024 through December 2025; later return, delivery, or review events may fall in early 2026 because they follow December orders.",
+          "retrieval_query": "reviewed oracle passage; retriever bypassed",
+          "retrieval_method": null,
+          "rank": 4
+        }
+      ],
+      "metrics": {
+        "Faithfulness": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because there are no contradictions — the actual output is fully faithful to the retrieval context. Great job!",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        },
+        "Answer Relevancy": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the output fully and directly addresses all parts of the input—currency, reporting timezone, and order-date coverage—with no irrelevant statements. Great job delivering a complete and focused answer!",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        },
+        "Citation Correctness [GEval]": {
+          "score": 1.0,
+          "reason": "All three material claims (USD currency, UTC timezone, January 2024–December 2025 order-date coverage) are directly supported by the cited evidence chunks, and the limitation about early-2026 return/delivery/review events accurately reflects the data dictionary. Citations resolve to valid Evidence IDs and no unsupported claims are present.",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        }
+      }
+    },
+    {
+      "case_id": "gross_margin_abstention",
+      "status": "generated",
+      "stage": "generator",
+      "generator_calls": 1,
+      "retriever_calls": 0,
+      "output_guard": "ALLOW",
+      "citation_audit": {
+        "citation_id_precision": 1.0,
+        "cited_expected_passage_recall": 1.0,
+        "cited_evidence_ids": [
+          "oracle:company_docs/company_profile.md#chunk-1"
+        ],
+        "cited_source_refs": [
+          "company_docs/company_profile.md#chunk-1"
+        ],
+        "unresolved_citations": []
+      },
+      "supplementary_reference_diagnostics": {
+        "expected_terms": [],
+        "expected_terms_found": [],
+        "forbidden_patterns_found": [],
+        "must_abstain": true,
+        "abstention_check": true
+      },
+      "retrieval_label_audit": null,
+      "answer": "## Verified findings\n\n1. Cedar & Stone's 2025 gross margin cannot be determined from the supplied evidence. [Evidence: oracle:company_docs/company_profile.md#chunk-1]\n\nCalculation: No financial data, including gross margin, was provided in the evidence.\n\nLimitations: The fictional-business overview does not include any financial metrics such as gross margin for 2025.",
+      "evidence": [
+        {
+          "evidence_id": "oracle:company_docs/company_profile.md#chunk-1",
+          "evidence_type": "document_context",
+          "source_name": "",
+          "source_ref": "company_docs/company_profile.md#chunk-1",
+          "section": "Fictional business",
+          "excerpt": "Cedar & Stone is a fictional US online retailer of home goods: storage, lighting, kitchen, bedding, and decor. It sells through its own web shop, marketplace listings, and a small retail-partner channel. It ships from one simulated fulfillment network and serves four regions: North, South, East, and West.",
+          "retrieval_query": "reviewed oracle passage; retriever bypassed",
+          "retrieval_method": null,
+          "rank": 1
+        }
+      ],
+      "metrics": {
+        "Faithfulness": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because there are no contradictions — the actual output is fully supported by the retrieval context. Great job keeping everything accurate and consistent!",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        },
+        "Answer Relevancy": {
+          "score": 1.0,
+          "reason": "The score is 1.00 because the output directly and precisely answers the question with the exact 2025 gross margin percentage, with no irrelevant or extraneous statements. A perfect, focused response!",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        },
+        "Citation Correctness [GEval]": {
+          "score": 1.0,
+          "reason": "The output correctly refuses to provide a gross margin figure, accurately noting that the cited company profile chunk contains only a business description (retailer of home goods, channels, regions) with no financial data. The single citation to the company profile chunk is appropriate and supports the claim that no gross margin is available. No unsupported numbers or stretched citations are present.",
+          "threshold": null,
+          "binary_verdict": "not calibrated; score only",
+          "attempts": 1
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "The four document questions are a small development set, not a production-quality estimate.",
+    "Judge scores are review signals; inspect case-level reasons and calibrate thresholds against human ratings before calling cases passed/failed.",
+    "Exact passage-label precision/recall are supplementary and may undercount useful passages because oracle refs are not exhaustive."
+  ]
+}

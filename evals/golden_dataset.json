@@ -1,5 +1,5 @@
 {
-  "dataset_version": "0.6.1",
+  "dataset_version": "0.6.3",
   "company": "Cedar & Stone synthetic demo",
   "cases": [
     {
@@ -550,9 +550,9 @@
           "company_docs/kpi_definitions.md"
         ],
         "relevant_passages": [
-          "company_docs/kpi_definitions.md#chunk-2"
+          "company_docs/kpi_definitions.md#chunk-13"
         ],
-        "notes": "The reviewed KPI-definition chunk contains the repeat-customer rule and warns not to confuse it with lifetime returning status."
+        "notes": "Human-reviewed focused passage containing the selected-window repeat-customer rule and warning against confusing it with lifetime returning status."
       },
       "family_id": "rag_repeat_customer_definition_dev"
     },
@@ -568,9 +568,11 @@
         ],
         "relevant_passages": [
           "company_docs/company_profile.md#chunk-2",
+          "company_docs/company_profile.md#chunk-3",
+          "company_docs/company_profile.md#chunk-4",
           "company_docs/data_dictionary.md#chunk-1"
         ],
-        "notes": "Both passages contain relevant currency/date coverage; the company profile also states reporting timezone."
+        "notes": "Human-reviewed focused passages: profile bullets state currency, reporting date range, and timezone; dictionary overview independently states currency and order-date coverage."
       },
       "family_id": "rag_company_reporting_context_dev"
     },
@@ -1375,7 +1377,13 @@
           "company_docs/data_dictionary.md",
           "company_docs/kpi_definitions.md"
         ],
-        "notes": "Source-level discovery is labeled; passage relevance was not scored for this case."
+        "notes": "Human-reviewed passages cover order shipping/order_total, line-item sales fields, return/refund fields, and the net product sales definition.",
+        "relevant_passages": [
+          "company_docs/data_dictionary.md#chunk-4",
+          "company_docs/data_dictionary.md#chunk-5",
+          "company_docs/data_dictionary.md#chunk-9",
+          "company_docs/kpi_definitions.md#chunk-5"
+        ]
       }
     },
     {
@@ -1389,7 +1397,11 @@
           "company_docs/data_dictionary.md",
           "company_docs/source_catalog.json"
         ],
-        "notes": "Source-level discovery is labeled; passage relevance was not scored for this case."
+        "notes": "Human-reviewed return-table row and matching source-catalog record list return reason, refund amount, and return date.",
+        "relevant_passages": [
+          "company_docs/data_dictionary.md#chunk-9",
+          "company_docs/source_catalog.json#chunk-8"
+        ]
       }
     },
     {
@@ -1403,7 +1415,11 @@
           "company_docs/data_dictionary.md",
           "company_docs/source_catalog.json"
         ],
-        "notes": "Source-level discovery is labeled; passage relevance was not scored for this case."
+        "notes": "Human-reviewed marketing-campaign table row and matching source-catalog record identify spend and attributed-order fields.",
+        "relevant_passages": [
+          "company_docs/data_dictionary.md#chunk-7",
+          "company_docs/source_catalog.json#chunk-6"
+        ]
       }
     },
     {
@@ -1417,7 +1433,11 @@
           "company_docs/data_dictionary.md",
           "company_docs/kpi_definitions.md"
         ],
-        "notes": "Source-level discovery is labeled; passage relevance was not scored for this case."
+        "notes": "Human-reviewed fulfillment-table row identifies the required dates/status fields; KPI passage defines eligible shipments and the on-time rate.",
+        "relevant_passages": [
+          "company_docs/data_dictionary.md#chunk-8",
+          "company_docs/kpi_definitions.md#chunk-12"
+        ]
       }
     },
     {
@@ -1431,7 +1451,11 @@
           "company_docs/data_dictionary.md",
           "company_docs/source_catalog.json"
         ],
-        "notes": "Source-level discovery is labeled; passage relevance was not scored for this case."
+        "notes": "Human-reviewed product-table row and matching source-catalog record list product fields, including category.",
+        "relevant_passages": [
+          "company_docs/data_dictionary.md#chunk-3",
+          "company_docs/source_catalog.json#chunk-2"
+        ]
       }
     },
     {
@@ -1998,7 +2022,40 @@
           44.63
         ]
       }
+    },
+    {
+      "case_id": "jev_scope_recipe_alu_bhujia_dev",
+      "split": "development",
+      "component": "jev",
+      "family_id": "scope-offtopic-recipe",
+      "query": "Give me an alu bhujia recipe.",
+      "expected": {
+        "security": "normal",
+        "intent": "general_conversation"
+      }
+    },
+    {
+      "case_id": "jev_scope_first_aid_bandage_dev",
+      "split": "development",
+      "component": "jev",
+      "family_id": "scope-offtopic-first-aid",
+      "query": "How do I apply a bandage to a small cut?",
+      "expected": {
+        "security": "normal",
+        "intent": "general_conversation"
+      }
+    },
+    {
+      "case_id": "jev_scope_local_ui_code_dev",
+      "split": "development",
+      "component": "jev",
+      "family_id": "scope-offtopic-software",
+      "query": "Write code for a local user interface.",
+      "expected": {
+        "security": "normal",
+        "intent": "software_development_request"
+      }
     }
   ],
-  "case_count_notes": "Development examples are manually authored for component coverage. Scores are development diagnostics, not estimates of production error rates. The eight-case holdout split is unchanged and is not run during development."
+  "case_count_notes": "Development examples are manually authored for component coverage. Version 0.6.2 adds three explicit off-topic scope cases; no holdout cases or labels changed. Scores are development diagnostics, not estimates of production error rates. The eight-case holdout split is unchanged and is not run during development."
 }

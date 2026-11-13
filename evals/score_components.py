@@ -14,6 +14,14 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 GOLD_PATH = Path(__file__).with_name("golden_dataset.json")
+IN_SCOPE_INTENTS = {
+    "document_question",
+    "business_performance",
+    "customer_analysis",
+    "product_or_operations_analysis",
+    "forecast_or_what_if",
+    "report_or_data_request",
+}
 
 
 def load_predictions(path: Path) -> dict[str, dict]:
@@ -109,6 +117,7 @@ def ranking_scores(expected: list[str], actual: list[str], k: int) -> dict:
         "judged_relevant_count": len(relevant),
         "retrieved_count": len(ranked),
         "precision_at_k": len(hits) / k if k else 0.0,
+        "precision_at_returned_count": len(hits) / len(ranked) if ranked else 0.0,
         "recall_at_k": len(hits) / len(relevant) if relevant else None,
         "hit_at_k": bool(hits),
         "mrr_at_k": 1.0 / hits[0] if hits else 0.0,
@@ -125,6 +134,27 @@ def injection_scores(pairs: list[tuple[bool, bool]]) -> dict:
             "precision": tp / (tp + fp) if tp + fp else 0.0,
             "recall": tp / (tp + fn) if tp + fn else 0.0,
             "false_positive_rate": fp / (fp + tn) if fp + tn else 0.0}
+
+
+def binary_classification_scores(pairs: list[tuple[bool, bool]]) -> dict:
+    """Score a binary decision where True is the positive class."""
+    tp = sum(expected and predicted for expected, predicted in pairs)
+    fp = sum(not expected and predicted for expected, predicted in pairs)
+    fn = sum(expected and not predicted for expected, predicted in pairs)
+    tn = sum(not expected and not predicted for expected, predicted in pairs)
+    precision = tp / (tp + fp) if tp + fp else 0.0
+    recall = tp / (tp + fn) if tp + fn else 0.0
+    return {
+        "tp": tp,
+        "fp": fp,
+        "fn": fn,
+        "tn": tn,
+        "accuracy": (tp + tn) / len(pairs) if pairs else None,
+        "precision": precision,
+        "recall": recall,
+        "f1": 2 * precision * recall / (precision + recall) if precision + recall else 0.0,
+        "false_positive_rate": fp / (fp + tn) if fp + tn else 0.0,
+    }
 
 
 def numeric_presence(answer: str, values: list[float], tolerance: float = 0.011) -> dict:
@@ -241,8 +271,12 @@ def main() -> int:
     parser.add_argument("--predictions", required=True, type=Path)
     parser.add_argument("--split", choices=("development", "holdout", "all"), default="all")
     parser.add_argument("--component", choices=("all", "jev", "planner_selection", "rag_retrieval", "answer_quality", "output_guard"), default="all")
+    parser.add_argument("--retrieval-top-k", type=int, default=5,
+                        help="Fixed K used for RAG passage-ranking metrics.")
     parser.add_argument("--judge", action="store_true", help="Make opt-in, billable Featherless calls for answer cases.")
     args = parser.parse_args()
+    if not 1 <= args.retrieval_top_k <= 10:
+        parser.error("--retrieval-top-k must be between 1 and 10")
     gold_data = json.loads(GOLD_PATH.read_text(encoding="utf-8"))
     cases = gold_data["cases"]
     by_id = {case["case_id"]: case for case in cases}
@@ -259,7 +293,7 @@ def main() -> int:
     grouped = defaultdict(list)
     for case in selected:
         grouped[case["component"]].append(case)
-    jev_pairs, sec_ok, intent_ok = [], [], []
+    jev_pairs, scope_pairs, sec_ok, intent_ok = [], [], [], []
     for component, group in grouped.items():
         rows = []
         for case in group:
@@ -274,6 +308,10 @@ def main() -> int:
                     sec_ok.append(pred["security"] == exp["security"])
                 if "intent" in pred:
                     intent_ok.append(pred["intent"] == exp["intent"])
+                    scope_pairs.append((
+                        exp["intent"] in IN_SCOPE_INTENTS,
+                        pred["intent"] in IN_SCOPE_INTENTS,
+                    ))
                 rows.append({"case_id": case["case_id"], "security": pred.get("security"),
                              "intent": pred.get("intent")})
             elif component == "planner_selection":
@@ -299,7 +337,7 @@ def main() -> int:
                     retrieved = pred.get("relevant_passages", [])
                     row["passages"] = ranking_scores(
                         exp["relevant_passages"], retrieved,
-                        int(exp.get("top_k", len(retrieved) or 5)),
+                        int(exp.get("top_k", args.retrieval_top_k)),
                     )
                 if "relevant_themes" in exp:
                     row["themes"] = set_scores(exp["relevant_themes"], pred.get("retrieved_themes", []))
@@ -364,6 +402,12 @@ def main() -> int:
         report["components"]["jev"]["security_label_accuracy"] = sum(sec_ok) / len(sec_ok)
     if intent_ok:
         report["components"]["jev"]["intent_accuracy"] = sum(intent_ok) / len(intent_ok)
+    if scope_pairs:
+        report["components"]["jev"]["scope_gate"] = {
+            "positive_class": "in_scope",
+            "in_scope_intents": sorted(IN_SCOPE_INTENTS),
+            **binary_classification_scores(scope_pairs),
+        }
 
     planner_rows = report["components"].get("planner_selection", {}).get("cases", [])
     contracts = [row["workflow_contract"] for row in planner_rows if "workflow_contract" in row]
@@ -398,7 +442,7 @@ def main() -> int:
             values = [row[field] for row in case_rows if field in row]
             if values:
                 metrics = (
-                    ("precision_at_k", "recall_at_k", "hit_at_k", "mrr_at_k", "ndcg_at_k")
+                    ("precision_at_k", "precision_at_returned_count", "recall_at_k", "hit_at_k", "mrr_at_k", "ndcg_at_k")
                     if field == "passages" else
                     ("precision", "recall", "f1", "exact_match")
                 )
